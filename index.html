@@ -404,10 +404,134 @@ footer{padding:48px 0;border-top:1px solid var(--card-border);position:relative;
 .mission-tier-example{font-size:11px;color:var(--text-dim);line-height:1.5;margin-bottom:8px}
 .mission-tier-desc{font-size:10px;color:var(--text-dim);line-height:1.5}
 
+/* ── MOBILE COLLAPSIBLE SECTIONS ── */
+.mobile-expand-indicator{display:none}
+.sticky-download-bar{display:none}
+
 /* ── RESPONSIVE ── */
 @media(max-width:1024px){.fleet-grid{grid-template-columns:repeat(3,1fr)}.feat-grid{grid-template-columns:repeat(2,1fr)}.rank-detail{flex-direction:column;text-align:center;gap:20px}.rank-bar-node{width:30px;height:30px;font-size:13px}.missions-tiers{grid-template-columns:repeat(3,1fr)}.career-stats{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:768px){.nav-links{display:none}.hamburger{display:flex}.nav-links.mobile-open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(12,12,14,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:24px;gap:20px;border-bottom:1px solid var(--card-border)}.fleet-grid{grid-template-columns:repeat(2,1fr)}.feat-grid{grid-template-columns:1fr}.faq-grid{grid-template-columns:1fr}.stats-row{gap:40px}.how-phones{flex-direction:column;align-items:center}.ac-modal{padding:32px 24px}.map-stats{gap:32px}.rank-bar-node{width:26px;height:26px;font-size:11px}.pilot-id-body{flex-direction:column;align-items:center;text-align:center}.pilot-id-right{width:100%}.coming-card [style*="grid-template-columns:repeat(4"]{grid-template-columns:repeat(2,1fr) !important}.stakes-grid{grid-template-columns:1fr;gap:16px}.stakes-vs{padding:8px 0;font-size:18px}.sp-row{flex-direction:column;gap:16px}.sp-divider{display:none}.missions-tiers{grid-template-columns:repeat(2,1fr)}.career-stats{grid-template-columns:repeat(2,1fr)}.career-header{flex-direction:column;text-align:center}.career-logbook{padding:24px 20px}.career-flight{gap:10px}}
-@media(max-width:480px){.fleet-grid{grid-template-columns:repeat(2,1fr);gap:10px}.ac-card{padding:16px 10px 12px}.hero h1{letter-spacing:-2px}.hero-btns{flex-direction:column;align-items:center}.rank-bar-node{width:22px;height:22px;font-size:9px}.rank-detail{padding:24px 20px}.missions-tiers{grid-template-columns:1fr}.stakes-panel{padding:32px 24px}.career-stat-val{font-size:22px}}
+@media(max-width:768px){
+/* Nav */
+.nav-links{display:none}.hamburger{display:flex}
+.nav-links.mobile-open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(12,12,14,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:24px;gap:20px;border-bottom:1px solid var(--card-border)}
+/* Reduced section padding */
+.how,.stakes,.afterburner,.fleet,.world-map,.ranks,.features,.career,.missions,.stats,.faq,.cta{padding:60px 0!important}
+.passport{padding:40px 0!important}
+section.coming{padding:48px 0!important}
+.section-sub{margin-bottom:28px}
+/* Hero compact */
+.hero{min-height:auto;padding:100px 24px 48px}
+.hero-icon{width:72px;height:72px;border-radius:18px;margin-bottom:12px}
+.hero-brand{font-size:22px;letter-spacing:4px;margin-bottom:20px}
+.hero-sub{font-size:16px;margin-bottom:28px}
+.scroll-hint{display:none}
+/* Social proof compact */
+.sp-row{flex-direction:column;gap:12px;padding:4px 0}
+.sp-divider{display:none}
+.sp-testimonial{min-width:auto;height:auto;min-height:20px}.sp-quote{position:relative;display:none;transform:none!important;transition:opacity .5s ease}.sp-quote.active{display:block;opacity:1;transform:none!important}
+/* How It Works compact */
+.how-phones{flex-direction:column;align-items:center;gap:24px}
+.how-phone{width:180px}
+.mini-phone{width:170px;height:340px;border-radius:22px}
+.how-phone-desc{font-size:13px}
+/* Fleet */
+.fleet-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+.ac-card{padding:16px 10px 12px}
+.ac-card-img{width:70px;height:70px}
+.tier-row{gap:12px}
+.tier-dot{font-size:11px}
+/* Map */
+.map-stats{gap:24px}
+.map-stat-val{font-size:32px}
+/* Ranks */
+.rank-bar-node{width:26px;height:26px;font-size:11px}
+.rank-detail{padding:24px 20px}
+/* Passport */
+.pilot-id-body{flex-direction:column;align-items:center;text-align:center}
+.pilot-id-right{width:100%}
+/* Features */
+.feat-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+.feat-card{padding:20px 16px}
+.feat-icon-emoji{font-size:28px}
+.feat-count{font-size:22px}
+.feat-name{font-size:15px}
+.feat-desc{font-size:12px;margin-bottom:8px}
+/* Career */
+.career-stats{grid-template-columns:repeat(3,1fr)}
+.career-stat{padding:16px 8px}
+.career-stat-val{font-size:20px}
+.career-header{flex-direction:column;text-align:center;padding:20px;gap:12px}
+.career-logbook{padding:16px 20px}
+.career-flight{gap:10px}
+/* Missions */
+.missions-tiers{grid-template-columns:repeat(2,1fr);gap:10px}
+.mission-tier{padding:20px 14px}
+.missions-featured{padding:24px 20px}
+/* Stats compact */
+.stats-row{gap:20px;justify-content:space-between}
+.stat-num{font-size:clamp(36px,6vw,48px)}
+.stat-label{font-size:11px;letter-spacing:1px}
+/* FAQ */
+.faq-grid{grid-template-columns:1fr}
+.faq-item.mobile-hidden{display:none}
+.faq-show-more{display:block!important;text-align:center;margin-top:16px}
+.faq-show-more button{background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold);font-size:13px;font-weight:700;padding:10px 24px;border-radius:10px;cursor:pointer;font-family:inherit}
+/* Coming Soon compact */
+.coming-card [style*="grid-template-columns:repeat(4"]{grid-template-columns:repeat(2,1fr)!important;gap:10px!important}
+/* Stakes */
+.stakes-grid{grid-template-columns:1fr;gap:16px}
+.stakes-vs{padding:8px 0;font-size:18px}
+.stakes-panel{padding:28px 20px}
+/* Modal */
+.ac-modal{padding:32px 24px}
+/* Afterburner compact */
+.ab-card{padding:40px 24px}
+.ab-logo{width:100px;height:100px}
+.ab-2x{font-size:64px}
+.ab-title{font-size:32px}
+/* Collapsible sections */
+.mobile-collapse>.container>[style*="text-align:center"]:first-child{cursor:pointer;-webkit-tap-highlight-color:transparent;position:relative;padding-bottom:8px}
+.mobile-expand-indicator{display:block;font-size:12px;color:var(--gold);font-weight:600;letter-spacing:1px;margin-top:4px;transition:color .3s}
+.mobile-expand-indicator::after{content:' ▾';transition:transform .3s}
+.mobile-collapse.section-open .mobile-expand-indicator{color:var(--text-dim)}
+.mobile-collapse.section-open .mobile-expand-indicator::after{content:' ▴'}
+.mobile-collapse .section-body-wrap{max-height:0;overflow:hidden;transition:max-height 0.6s cubic-bezier(0.22,1,0.36,1),opacity 0.3s ease;opacity:0}
+.mobile-collapse.section-open .section-body-wrap{max-height:8000px;opacity:1;transition:max-height 0.8s ease-in,opacity 0.4s ease}
+/* Sticky download bar */
+.sticky-download-bar{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:999;padding:12px 20px;background:rgba(12,12,14,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--gold-border);justify-content:center;align-items:center;gap:12px;transform:translateY(100%);transition:transform .3s ease}
+.sticky-download-bar.visible{transform:translateY(0)}
+.sticky-download-btn{background:linear-gradient(135deg,#D4A843,#C49B38);color:#0C0C0E;font-size:14px;font-weight:700;padding:12px 28px;border-radius:10px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;white-space:nowrap}
+.sticky-download-label{font-size:12px;color:var(--text-mid);font-weight:600}
+footer{padding-bottom:80px!important}
+}
+@media(max-width:480px){
+.hero{padding:90px 20px 40px}
+.hero h1{letter-spacing:-2px;font-size:clamp(32px,8vw,42px)}
+.hero-btns{flex-direction:column;align-items:center;gap:10px}
+.hero-sub{font-size:15px}
+.fleet-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+.ac-card{padding:12px 8px 10px}
+.ac-card-img{width:56px;height:56px;margin-bottom:8px}
+.ac-card-name{font-size:13px}
+.ac-card-badge{font-size:8px;padding:3px 8px}
+.rank-bar-node{width:22px;height:22px;font-size:9px}
+.rank-detail{padding:20px 16px}
+.rank-detail-emoji{font-size:40px}
+.rank-detail-name{font-size:22px}
+.missions-tiers{grid-template-columns:1fr}
+.stakes-panel{padding:24px 16px}
+.career-stat-val{font-size:18px}
+.career-stat-label{font-size:9px}
+.career-stats{grid-template-columns:repeat(3,1fr)}
+.stat-num{font-size:clamp(28px,5vw,36px)}
+.how,.stakes,.afterburner,.fleet,.world-map,.ranks,.features,.career,.missions,.stats,.faq,.cta{padding:48px 0!important}
+.feat-grid{grid-template-columns:1fr 1fr;gap:8px}
+.feat-card{padding:16px 12px}
+.map-stat-val{font-size:28px}
+.section-title{font-size:clamp(28px,5vw,36px)}
+.section-sub{font-size:15px}
+.coming-card [style*="grid-template-columns:repeat(4"]{grid-template-columns:1fr 1fr!important}
+}
 </style>
 </head>
 <body>
@@ -436,10 +560,10 @@ footer{padding:48px 0;border-top:1px solid var(--card-border);position:relative;
     <img src="assets/icon.png" alt="Skytime" class="hero-icon reveal">
     <div class="hero-brand reveal reveal-d1">Skytime</div>
     <h1 class="reveal reveal-d2">Your Screen Time,<br><span class="gold-word">Reimagined.</span></h1>
-    <p class="hero-sub reveal reveal-d3">Every focused minute earns nautical miles. Unlock legendary aircraft, fly real-world routes, and build your aviation career — all by putting your phone down.</p>
+    <p class="hero-sub reveal reveal-d3">Every focused minute earns <strong style="color:var(--gold)">Nautical Miles (NM)</strong> — your in-app currency for unlocking aircraft, routes &amp; upgrades. Stay off your phone. Fly further.</p>
     <div class="hero-btns reveal reveal-d4">
       <a href="#download" class="btn-primary">Download Free</a>
-      <a href="#demo" class="btn-outline">Try the Demo</a>
+      <a href="#how" class="btn-outline">See How It Works</a>
     </div>
   </div>
   <div class="scroll-hint"><span></span></div>
@@ -562,6 +686,13 @@ footer{padding:48px 0;border-top:1px solid var(--card-border);position:relative;
         <div class="how-phone-desc">Land successfully. Earn NM, unlock aircraft, and progress through pilot ranks.</div>
       </div>
     </div>
+    <div class="nm-explainer reveal" style="max-width:620px;margin:40px auto 0;background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:16px;padding:20px 28px;display:flex;align-items:flex-start;gap:16px">
+      <div style="flex-shrink:0"><img src="assets/focus-tab.png" alt="NM" style="width:32px;height:32px;object-fit:contain;opacity:0.9"></div>
+      <div>
+        <div style="font-size:13px;font-weight:800;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">What is NM?</div>
+        <div style="font-size:14px;color:var(--text-mid);line-height:1.7"><strong style="color:var(--text)">Nautical Miles (NM)</strong> are Skytime's in-app currency — earned every time you complete a focus session. Spend them in the Hangar to unlock aircraft, routes, callsigns, and airline liveries. The longer you focus, the more NM you earn.</div>
+      </div>
+    </div>
   </div>
 </section>
 <style>@keyframes grow-bar{0%{width:30%}100%{width:95%}}</style>
@@ -642,7 +773,7 @@ footer{padding:48px 0;border-top:1px solid var(--card-border);position:relative;
 
 
 <!-- FLEET -->
-<section class="fleet" id="fleet">
+<section class="fleet mobile-collapse" id="fleet">
   <div class="container">
     <div style="text-align:center">
       <span class="section-badge reveal">The Collection</span>
@@ -665,7 +796,7 @@ footer{padding:48px 0;border-top:1px solid var(--card-border);position:relative;
 </section>
 
 <!-- WORLD MAP -->
-<section class="world-map" id="map">
+<section class="world-map mobile-collapse" id="map">
   <div class="container">
     <div style="text-align:center">
       <span class="section-badge reveal">Global Network</span>
@@ -686,7 +817,7 @@ footer{padding:48px 0;border-top:1px solid var(--card-border);position:relative;
 </section>
 
 <!-- RANKS -->
-<section class="ranks" id="ranks">
+<section class="ranks mobile-collapse" id="ranks">
   <div class="container">
     <div style="text-align:center">
       <span class="section-badge reveal">Progression</span>
@@ -759,7 +890,7 @@ footer{padding:48px 0;border-top:1px solid var(--card-border);position:relative;
 </section>
 
 <!-- FEATURES -->
-<section class="features" id="features">
+<section class="features mobile-collapse" id="features">
   <div class="container">
     <div style="text-align:center">
       <span class="section-badge reveal">Endless Depth</span>
@@ -767,7 +898,7 @@ footer{padding:48px 0;border-top:1px solid var(--card-border);position:relative;
       <p class="section-sub reveal reveal-d2">Every corner of Skytime is packed with aviation detail and unlockable content.</p>
     </div>
     <div class="feat-grid">
-      <div class="feat-card reveal"><div class="feat-icon"><img src="assets/hangar-tab.png" alt="Fleet"></div><div class="feat-name">Callsigns</div><div class="feat-desc">Choose from legendary pilot callsigns. MAVERICK, GHOST RIDER, VIPER, ICEMAN, and 24 more.</div><div class="feat-count">28</div></div>
+      <div class="feat-card reveal"><div class="feat-icon"><div class="feat-icon-emoji">&#127908;</div></div><div class="feat-name">Callsigns</div><div class="feat-desc">Choose from legendary pilot callsigns. MAVERICK, GHOST RIDER, VIPER, ICEMAN, and 24 more.</div><div class="feat-count">28</div></div>
       <div class="feat-card reveal reveal-d1"><div class="feat-icon"><div class="feat-icon-emoji">&#9992;&#65039;</div></div><div class="feat-name">Ambient Sounds</div><div class="feat-desc">Jet cabin rumble, storm fronts, high altitude winds, coastal approaches — immersive audio.</div><div class="feat-count">9</div></div>
       <div class="feat-card reveal reveal-d2"><div class="feat-icon"><div class="feat-icon-emoji">&#127899;&#65039;</div></div><div class="feat-name">Cockpit Themes</div><div class="feat-desc">Night Vision green, Stealth Black, Sunset Horizon, Arctic Ops — transform your cockpit.</div><div class="feat-count">5</div></div>
       <div class="feat-card reveal reveal-d3"><div class="feat-icon"><div class="feat-icon-emoji">&#127878;</div></div><div class="feat-name">Landing Animations</div><div class="feat-desc">Fireworks, water cannon salutes, formation flybys, confetti drops on every successful landing.</div><div class="feat-count">7</div></div>
@@ -780,7 +911,7 @@ footer{padding:48px 0;border-top:1px solid var(--card-border);position:relative;
 </section>
 
 <!-- YOUR AVIATION CAREER -->
-<section class="career" id="career">
+<section class="career mobile-collapse" id="career">
   <div class="container">
     <div style="text-align:center">
       <span class="section-badge reveal">The Journey</span>
@@ -829,7 +960,7 @@ footer{padding:48px 0;border-top:1px solid var(--card-border);position:relative;
 </section>
 
 <!-- MISSIONS COMMAND CENTER -->
-<section class="missions" id="missions">
+<section class="missions mobile-collapse" id="missions">
   <div class="container">
     <div style="text-align:center">
       <span class="section-badge reveal">Daily Challenge</span>
@@ -912,6 +1043,7 @@ footer{padding:48px 0;border-top:1px solid var(--card-border);position:relative;
       <p class="section-sub reveal reveal-d2">Everything you need to know about Skytime.</p>
     </div>
     <div class="faq-grid" id="faq-grid"></div>
+    <div class="faq-show-more" id="faq-show-more" style="display:none"><button onclick="showAllFaq()">Show All Questions</button></div>
   </div>
 </section>
 
@@ -955,7 +1087,7 @@ footer{padding:48px 0;border-top:1px solid var(--card-border);position:relative;
     <p class="reveal reveal-d1">Download Skytime free. Your first flight is waiting.</p>
     <div class="cta-stores reveal reveal-d2">
       <a href="#" class="store-btn"><span class="store-btn-icon">&#63743;</span><span class="store-btn-text"><small>Download on the</small>App Store</span></a>
-      <a href="#" class="store-btn"><span class="store-btn-icon">&#9654;</span><span class="store-btn-text"><small>Get it on</small>Google Play</span></a>
+      <a href="#" class="store-btn" style="opacity:0.5;pointer-events:none;position:relative"><span class="store-btn-icon">&#9654;</span><span class="store-btn-text"><small>Coming Soon on</small>Google Play</span></a>
     </div>
   </div>
 </section>
@@ -968,6 +1100,12 @@ footer{padding:48px 0;border-top:1px solid var(--card-border);position:relative;
     </div>
   </div>
 </footer>
+
+<!-- STICKY DOWNLOAD BAR (mobile) -->
+<div class="sticky-download-bar" id="sticky-download">
+  <span class="sticky-download-label">&#9992;&#65039; Your first flight awaits</span>
+  <a href="#download" class="sticky-download-btn">&#63743; Download Free</a>
+</div>
 
 <!-- MODAL -->
 <div class="ac-modal-overlay" id="ac-modal" onclick="closeModal(event)">
@@ -1017,19 +1155,19 @@ const RANKS = [
 
 const FAQS = [
   {q:'Is Skytime really free?',a:'Yes. The full game is free. Every aircraft, every route, every rank can be earned through focus. Afterburner is optional and never required.'},
-  {q:'How does the focus timer work?',a:'Set your desired duration (10-120 min), pick your aircraft and sound, then tap Begin Takeoff. If you leave the app, your flight crashes and you lose half your earnings.'},
+  {q:'How does the focus timer work?',a:'Set your desired duration (10-120 min), pick your aircraft and sound, then tap Begin Takeoff. If you leave the app, your flight crashes and you earn zero nautical miles for that session.'},
   {q:'What are Nautical Miles (NM)?',a:"NM is Skytime's in-game currency. Earn them by completing focus sessions. Use NM to unlock aircraft, routes, callsigns, themes, and more."},
   {q:'How many aircraft can I collect?',a:'58 aircraft across 8 tiers — from the Cessna 172 to the legendary Wright Flyer, SR-71 Blackbird, and Concorde. Each has real specs and unique artwork.'},
   {q:'Does it work offline?',a:'Yes. Skytime works fully offline. Your progress is saved locally. Focus anywhere — on a plane, in a library, or off the grid.'},
   {q:'Is there a streak system?',a:'Yes. Fly daily to build your streak. Miss a day and it resets — unless you have Streak Shields. Streaks unlock bonus rewards.'},
   {q:'Can I use Skytime while studying?',a:'Absolutely. Skytime was designed for students. Set your study duration, pick ambient cabin sounds, and earn NM while you work.'},
-  {q:'What happens if I leave the app?',a:'Your flight crashes. You lose half your NM earnings for that session. Stay committed and you land safely with full rewards.'},
+  {q:'What happens if I leave the app?',a:'Your flight crashes. You earn zero NM for that session — all progress is lost. Stay committed and you land safely with full rewards.'},
   {q:'How do I unlock new aircraft?',a:'Earn NM through focus sessions and spend them in the Hangar. Higher-tier aircraft cost more NM, rewarding longer dedication.'},
   {q:"What's the best strategy to earn NM quickly?",a:'Longer sessions earn more NM per minute. Use aircraft with NM bonuses and maintain your daily streak for multipliers.'},
   {q:'Can I change my aircraft during a flight?',a:"No. Once you've taken off, your aircraft is locked until landing. Choose wisely before each flight."},
   {q:'Is there multiplayer?',a:'Not yet — but competitive features and multiplayer challenges are on our roadmap. Stay tuned for updates.'},
   {q:'How do Streak Shields work?',a:'Streak Shields protect your streak if you miss a day. Earn them through missions or purchase in the store. They activate automatically.'},
-  {q:'What platforms is Skytime available on?',a:'Skytime is available on iOS and Android. Download free from the App Store or Google Play.'},
+  {q:'What platforms is Skytime available on?',a:'Skytime is available now on iOS — download free from the App Store. Android support is coming soon.'},
   {q:'How often is new content added?',a:'We regularly update Skytime with new aircraft, routes, missions, and features. The universe is always expanding.'},
   {q:'Can I listen to my own music while using Skytime?',a:"Yes. Skytime's ambient sounds play alongside your music. Or mute the in-app audio and use your own."},
   {q:"What's the difference between aircraft tiers?",a:'8 tiers from Starter to Legendary. Higher tiers feature faster, rarer aircraft with bigger NM bonuses and real historical significance.'},
@@ -1195,6 +1333,110 @@ tiersEl.querySelectorAll('.mission-tier').forEach((t,i)=>{
 setTimeout(()=>t.classList.add('visible'),i*100)});
 }}),{threshold:.2}).observe(featured);
 })();
+
+/* ═══ MOBILE COLLAPSIBLE SECTIONS ═══ */
+(function(){
+const mq=window.matchMedia('(max-width:768px)');
+if(!mq.matches)return;
+document.querySelectorAll('.mobile-collapse').forEach(function(section){
+  const container=section.querySelector('.container');
+  if(!container)return;
+  const headerDiv=container.children[0];
+  if(!headerDiv)return;
+  /* Wrap all content after header in a collapsible body */
+  const bodyEls=Array.from(container.children).slice(1);
+  if(!bodyEls.length)return;
+  const wrap=document.createElement('div');
+  wrap.className='section-body-wrap';
+  bodyEls.forEach(function(el){wrap.appendChild(el)});
+  container.appendChild(wrap);
+  /* Add expand indicator */
+  const hint=document.createElement('div');
+  hint.className='mobile-expand-indicator';
+  hint.textContent='Tap to explore';
+  headerDiv.appendChild(hint);
+  /* Click to toggle */
+  headerDiv.addEventListener('click',function(e){
+    if(e.target.closest('a'))return;
+    const wasOpen=section.classList.contains('section-open');
+    section.classList.toggle('section-open');
+    if(!wasOpen){
+      /* Trigger reveal animations for newly visible elements */
+      wrap.querySelectorAll('.reveal:not(.visible)').forEach(function(el){
+        el.classList.add('visible');
+      });
+      /* Trigger counter animations */
+      wrap.querySelectorAll('[data-target]').forEach(function(c){
+        if(!c.dataset.counted){c.dataset.counted='1';animateCounter(c,parseInt(c.dataset.target))}
+      });
+      /* Trigger map route animations */
+      document.querySelectorAll('.map-route').forEach(function(r){r.style.strokeDashoffset='0'});
+      /* Trigger career flight animations */
+      var cf0=document.getElementById('cf-0');if(cf0)cf0.classList.add('visible');
+      var cf1=document.getElementById('cf-1');if(cf1)setTimeout(function(){cf1.classList.add('visible')},200);
+      var cf2=document.getElementById('cf-2');if(cf2)setTimeout(function(){cf2.classList.add('visible')},400);
+      /* Trigger mission tier animations */
+      wrap.querySelectorAll('.mission-tier').forEach(function(t,i){setTimeout(function(){t.classList.add('visible')},i*80)});
+      /* Trigger missions fill */
+      var mf=document.getElementById('missions-fill');if(mf)mf.style.width='33%';
+      /* Trigger stakes animations */
+      var sb=document.getElementById('stakes-safe-bar');if(sb)sb.style.width='100%';
+      var cb=document.getElementById('stakes-crash-bar');if(cb)cb.style.width='48%';
+    }
+  });
+});
+})();
+
+/* ═══ MOBILE NAV → OPEN COLLAPSED SECTION ═══ */
+(function(){
+const mq=window.matchMedia('(max-width:768px)');
+if(!mq.matches)return;
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(){
+    var id=a.getAttribute('href');
+    if(id==='#')return;
+    var target=document.querySelector(id);
+    if(target&&target.classList.contains('mobile-collapse')&&!target.classList.contains('section-open')){
+      target.classList.add('section-open');
+      var wrap=target.querySelector('.section-body-wrap');
+      if(wrap){
+        wrap.querySelectorAll('.reveal:not(.visible)').forEach(function(el){el.classList.add('visible')});
+        wrap.querySelectorAll('[data-target]').forEach(function(c){if(!c.dataset.counted){c.dataset.counted='1';animateCounter(c,parseInt(c.dataset.target))}});
+      }
+    }
+  });
+});
+})();
+
+/* ═══ STICKY DOWNLOAD BAR ═══ */
+(function(){
+const mq=window.matchMedia('(max-width:768px)');
+if(!mq.matches)return;
+const bar=document.getElementById('sticky-download');
+if(!bar)return;
+var shown=false;
+window.addEventListener('scroll',function(){
+  var shouldShow=window.scrollY>window.innerHeight*0.6;
+  if(shouldShow&&!shown){bar.classList.add('visible');shown=true}
+  else if(!shouldShow&&shown){bar.classList.remove('visible');shown=false}
+});
+})();
+
+/* ═══ MOBILE FAQ LIMIT ═══ */
+(function(){
+const mq=window.matchMedia('(max-width:768px)');
+if(!mq.matches)return;
+var items=document.querySelectorAll('.faq-item');
+var showMore=document.getElementById('faq-show-more');
+if(items.length>8){
+  for(var i=8;i<items.length;i++){items[i].classList.add('mobile-hidden')}
+  if(showMore)showMore.style.display='block';
+}
+})();
+function showAllFaq(){
+document.querySelectorAll('.faq-item.mobile-hidden').forEach(function(el){el.classList.remove('mobile-hidden')});
+var btn=document.getElementById('faq-show-more');if(btn)btn.style.display='none';
+}
 </script>
 </body>
 </html>
