@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skytime — Your Focus. Your Flight.</title>
+<meta name="description" content="Turn every focused minute into a real flight. Skytime is the aviation-themed productivity app that transforms focus sessions into immersive flight experiences.">
+<meta name="theme-color" content="#0C0C0E">
+<meta property="og:title" content="Skytime — Your Focus. Your Flight.">
+<meta property="og:description" content="Turn every focused minute into a real flight. 58 aircraft. 60 routes. 26 airports. All earned through focus.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0C0C0E; --bg-alt:#12120F; --gold:#D4A843; --gold-dim:rgba(212,168,67,0.08);
+  --gold-border:rgba(212,168,67,0.25); --gold-light:rgba(212,168,67,0.6);
+  --text:#EEEEE8; --text-dim:rgba(255,255,255,0.4); --text-mid:rgba(255,255,255,0.6);
+  --text-light:rgba(255,255,255,0.8); --green:#3FB06A; --red:#E24A3F;
+  --border:rgba(255,255,255,0.1); --card-border:rgba(255,255,255,0.07);
+  --card-bg:rgba(255,255,255,0.04); --tier-legendary:#FFD700; --tier-military:#E53935;
+  --tier-epic:#FF9800; --tier-wide:#AB47BC; --tier-classic:#D4A574;
+  --tier-narrow:#66BB6A; --tier-regional:#42A5F5; --tier-starter:#78909C;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+a{text-decoration:none;color:inherit}img{max-width:100%;display:block}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+.section-badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-border);background:var(--gold-dim);padding:6px 16px;border-radius:20px;margin-bottom:20px}
+.section-title{font-size:clamp(36px,5vw,56px);font-weight:800;line-height:1.1;margin-bottom:16px;letter-spacing:-2px}
+.section-sub{font-size:17px;color:var(--text-mid);max-width:620px;margin:0 auto 56px;line-height:1.7}
+.text-gold{color:var(--gold)}
+
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.8s cubic-bezier(0.22,1,0.36,1),transform 0.8s cubic-bezier(0.22,1,0.36,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:.1s}.reveal-d2{transition-delay:.2s}.reveal-d3{transition-delay:.3s}
+.reveal-d4{transition-delay:.4s}.reveal-d5{transition-delay:.5s}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 0;transition:background .3s,backdrop-filter .3s}
+nav.scrolled{background:rgba(12,12,14,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--card-border)}
+nav .container{display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;letter-spacing:-0.5px}
+.nav-logo img{width:32px;height:32px;border-radius:8px}
+.nav-links{display:flex;align-items:center;gap:32px;list-style:none}
+.nav-links a{font-size:14px;font-weight:600;color:var(--text-mid);transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--gold);color:#0C0C0E;font-size:13px;font-weight:700;padding:10px 20px;border-radius:10px;transition:transform .2s,box-shadow .2s}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(212,168,67,0.3)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.hamburger span{width:22px;height:2px;background:var(--text);border-radius:2px}
+
+/* ── HERO ── */
+#particles-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;z-index:1}
+.hero-glow{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(212,168,67,0.07) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.hero-content{position:relative;z-index:2;max-width:800px}
+.hero-icon{width:100px;height:100px;border-radius:24px;margin:0 auto 16px;box-shadow:0 12px 50px rgba(212,168,67,0.2);animation:pulse-glow 3s ease-in-out infinite}
+@keyframes pulse-glow{0%,100%{box-shadow:0 12px 50px rgba(212,168,67,0.2)}50%{box-shadow:0 12px 70px rgba(212,168,67,0.35)}}
+.hero-brand{font-size:28px;font-weight:800;letter-spacing:6px;text-transform:uppercase;margin-bottom:32px;background:linear-gradient(135deg,#D4A843,#F0D78C,#D4A843);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% 100%;animation:shimmer 4s ease-in-out infinite}
+@keyframes shimmer{0%{background-position:100% 0}50%{background-position:0% 0}100%{background-position:100% 0}}
+.hero h1{font-size:clamp(42px,7vw,76px);font-weight:800;line-height:1.05;letter-spacing:-3px;margin-bottom:20px}
+.hero h1 .gold-word{background:linear-gradient(135deg,#D4A843,#F0D78C,#D4A843);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:18px;color:var(--text-mid);max-width:520px;margin:0 auto 40px;line-height:1.7}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:linear-gradient(135deg,#D4A843,#C49B38);color:#0C0C0E;font-size:15px;font-weight:700;padding:16px 36px;border-radius:12px;transition:transform .2s,box-shadow .2s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(212,168,67,0.3)}
+.btn-outline{background:transparent;color:var(--text);font-size:15px;font-weight:600;padding:16px 36px;border-radius:12px;border:1px solid var(--border);transition:border-color .2s,background .2s}
+.btn-outline:hover{border-color:var(--gold-border);background:var(--gold-dim)}
+.scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);animation:bounce 2s infinite}
+.scroll-hint span{display:block;width:24px;height:24px;border-right:2px solid var(--text-dim);border-bottom:2px solid var(--text-dim);transform:rotate(45deg)}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(12px)}}
+
+/* ── HOW IT WORKS ── */
+.how{padding:140px 0;position:relative;z-index:1}
+.how-phones{display:flex;gap:40px;justify-content:center;align-items:flex-start;margin-top:20px;flex-wrap:wrap}
+.how-phone{width:220px;text-align:center}
+.how-phone-label{font-size:13px;font-weight:700;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.how-phone-desc{font-size:14px;color:var(--text-mid);margin-top:12px;line-height:1.6}
+.mini-phone{width:200px;height:400px;border-radius:28px;border:2px solid rgba(255,255,255,0.1);background:var(--bg);position:relative;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.4);margin:0 auto}
+.mini-notch{width:80px;height:20px;background:#000;border-radius:0 0 10px 10px;position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:10}
+.mini-screen{padding:32px 14px 14px;height:100%;display:flex;flex-direction:column;align-items:center;background:linear-gradient(180deg,#0C0C0E,#12120F)}
+/* Phone 1 - Timer */
+.mini-timer-ring{width:110px;height:110px;border-radius:50%;border:2px solid var(--gold-border);display:flex;align-items:center;justify-content:center;flex-direction:column;margin:20px 0 10px}
+.mini-timer-val{font-size:36px;font-weight:800;color:var(--text);letter-spacing:-1px;animation:cycle-timer 4s steps(1) infinite}
+@keyframes cycle-timer{0%{content:'15'}25%{content:'25'}50%{content:'50'}75%{content:'90'}}
+.mini-timer-label{font-size:7px;color:var(--text-dim);letter-spacing:2px}
+.mini-presets{display:flex;gap:4px;margin-top:8px}
+.mini-preset{padding:3px 8px;border-radius:10px;font-size:9px;font-weight:600;color:var(--text-dim);border:1px solid var(--card-border);background:var(--card-bg)}
+.mini-preset.active{color:var(--gold);border-color:var(--gold-border);background:var(--gold-dim)}
+.mini-gold-btn{width:100%;padding:8px;border-radius:8px;background:linear-gradient(135deg,#D4A843,#C49B38);text-align:center;font-size:11px;font-weight:700;color:#0C0C0E;margin-top:auto}
+/* Phone 2 - Flight */
+.mini-flight-phase{font-size:10px;color:var(--gold);font-weight:700;letter-spacing:1px;margin-top:12px;animation:phase-cycle 6s linear infinite}
+@keyframes phase-cycle{0%,16%{opacity:1}17%{opacity:0}18%{opacity:1}100%{opacity:1}}
+.mini-altitude{width:100%;height:80px;margin:16px 0;position:relative;border-left:1px solid var(--card-border);border-bottom:1px solid var(--card-border)}
+.mini-alt-line{position:absolute;bottom:0;left:0;width:100%;height:2px;background:var(--gold);animation:alt-wave 6s ease-in-out infinite}
+@keyframes alt-wave{0%{height:5%;width:10%}20%{height:60%;width:30%}50%{height:80%;width:60%}80%{height:40%;width:85%}100%{height:5%;width:100%}}
+.mini-alt-dot{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px rgba(212,168,67,0.5);animation:fly-dot 6s ease-in-out infinite}
+@keyframes fly-dot{0%{bottom:5%;left:5%}20%{bottom:60%;left:25%}50%{bottom:80%;left:55%}80%{bottom:40%;left:80%}100%{bottom:5%;left:95%}}
+.mini-countdown{font-size:28px;font-weight:800;color:var(--text);margin-top:12px}
+.mini-phase-text{font-size:9px;color:var(--text-dim);letter-spacing:1px;margin-top:4px}
+/* Phone 3 - Success */
+.mini-success-check{width:60px;height:60px;border-radius:50%;border:3px solid var(--green);display:flex;align-items:center;justify-content:center;margin:24px 0 12px;animation:check-pop 2s ease infinite}
+@keyframes check-pop{0%,100%{transform:scale(1)}10%{transform:scale(1.15)}}
+.mini-success-check span{font-size:24px}
+.mini-success-nm{font-size:32px;font-weight:800;color:var(--gold);margin:4px 0}
+.mini-success-label{font-size:10px;color:var(--text-dim);letter-spacing:2px}
+.mini-success-badge{display:inline-block;padding:4px 10px;border-radius:8px;background:rgba(63,176,106,0.1);border:1px solid rgba(63,176,106,0.2);color:var(--green);font-size:9px;font-weight:700;margin-top:12px}
+
+/* ── FLEET ── */
+.fleet{padding:140px 0;position:relative;z-index:1}
+.fleet-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;margin-top:24px}
+.ac-card{position:relative;background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;padding:28px 16px 20px;text-align:center;cursor:pointer;transition:transform .3s,border-color .3s,box-shadow .3s;overflow:hidden}
+.ac-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--tier-legendary),transparent);opacity:0;transition:opacity .3s}
+.ac-card:hover{transform:translateY(-8px);border-color:rgba(255,215,0,0.3);box-shadow:0 16px 50px rgba(255,215,0,0.08)}
+.ac-card:hover::before{opacity:1}
+.ac-card-img{width:100px;height:100px;object-fit:contain;margin:0 auto 14px;filter:drop-shadow(0 6px 16px rgba(0,0,0,0.4));transition:transform .3s}
+.ac-card:hover .ac-card-img{transform:scale(1.12) rotate(-2deg)}
+.ac-card-name{font-size:15px;font-weight:700;margin-bottom:4px}
+.ac-card-tag{font-size:11px;color:var(--tier-legendary);font-weight:600}
+.ac-card-badge{display:inline-block;font-size:9px;font-weight:700;letter-spacing:2px;color:var(--tier-legendary);border:1px solid rgba(255,215,0,0.25);background:rgba(255,215,0,0.06);padding:4px 10px;border-radius:8px;margin-top:10px}
+/* Locked cards */
+.ac-card.locked{cursor:default}
+.ac-card.locked:hover{transform:none;border-color:var(--card-border);box-shadow:none}
+.ac-card.locked::before{display:none}
+.ac-card.locked .ac-card-img{filter:grayscale(1) brightness(0.4);transform:none !important}
+.ac-card.locked .ac-card-name{color:var(--text-dim)}
+.ac-card.locked .ac-card-tag{color:var(--text-dim)}
+.ac-card.locked .ac-card-badge{color:var(--text-dim);border-color:var(--card-border);background:var(--card-bg)}
+.lock-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3;pointer-events:none}
+.lock-overlay-icon{font-size:44px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.8));opacity:0.85}
+
+.fleet-note{text-align:center;margin-top:40px;font-size:16px;color:var(--text-dim)}
+.fleet-note strong{color:var(--text-mid)}
+.tier-row{display:flex;justify-content:center;gap:24px;margin-top:32px;flex-wrap:wrap}
+.tier-dot{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--text-dim)}
+.tier-dot span{width:12px;height:12px;border-radius:50%;display:inline-block}
+
+/* ── COMING SOON ── */
+.coming{padding:80px 0 120px;position:relative;z-index:1;text-align:center}
+.coming-card{max-width:800px;margin:0 auto;padding:48px 40px;border-radius:24px;border:1px solid var(--gold-border);background:var(--gold-dim);position:relative;overflow:hidden}
+.coming-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(212,168,67,0.05) 0%,transparent 70%);pointer-events:none}
+.coming h3{font-size:28px;font-weight:800;letter-spacing:-1px;margin-bottom:8px;position:relative}
+.coming p{font-size:16px;color:var(--text-mid);position:relative;line-height:1.7}
+.coming-items{display:flex;justify-content:center;gap:32px;margin-top:24px;flex-wrap:wrap;position:relative}
+.coming-item{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--gold-light)}
+.coming-item span{font-size:18px}
+
+/* ── AIRCRAFT MODAL ── */
+.ac-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);z-index:2000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;padding:24px}
+.ac-modal-overlay.open{opacity:1;pointer-events:all}
+.ac-modal{background:var(--bg-alt);border:1px solid var(--card-border);border-radius:28px;padding:56px 48px;max-width:560px;width:100%;text-align:center;position:relative;transform:scale(0.9) translateY(20px);transition:transform .4s cubic-bezier(0.22,1,0.36,1)}
+.ac-modal-overlay.open .ac-modal{transform:scale(1) translateY(0)}
+.ac-modal-close{position:absolute;top:16px;right:16px;width:40px;height:40px;border-radius:50%;background:var(--card-bg);border:1px solid var(--card-border);color:var(--text-mid);font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s}
+.ac-modal-close:hover{background:var(--border)}
+.ac-modal-legendary{display:inline-block;font-size:10px;font-weight:700;letter-spacing:3px;color:var(--tier-legendary);border:1px solid rgba(255,215,0,0.25);background:rgba(255,215,0,0.06);padding:5px 16px;border-radius:10px;margin-bottom:20px}
+.ac-modal-img{width:180px;height:180px;object-fit:contain;margin:0 auto 24px;filter:drop-shadow(0 10px 30px rgba(0,0,0,0.5))}
+.ac-modal-name{font-size:32px;font-weight:800;letter-spacing:-1px;margin-bottom:6px}
+.ac-modal-tagline{font-size:16px;color:var(--gold);font-weight:600;margin-bottom:4px}
+.ac-modal-year{font-size:13px;color:var(--text-dim);margin-bottom:20px}
+.ac-modal-desc{font-size:15px;color:var(--text-mid);line-height:1.7;margin-bottom:28px}
+.ac-modal-specs{display:flex;justify-content:center;gap:40px}
+.ac-modal-spec{text-align:center}
+.ac-modal-spec-val{font-size:22px;font-weight:800;color:var(--text)}
+.ac-modal-spec-label{font-size:10px;font-weight:600;color:var(--text-dim);letter-spacing:1px;margin-top:2px}
+
+/* ── WORLD MAP ── */
+.world-map{padding:140px 0;position:relative;z-index:1}
+.map-container{position:relative;width:100%;max-width:1100px;margin:0 auto;border-radius:20px;border:1px solid var(--card-border);background:rgba(0,0,0,0.3);overflow:hidden}
+.map-container svg{width:100%;height:auto;display:block}
+.map-stats{display:flex;justify-content:center;gap:64px;margin-top:40px;flex-wrap:wrap}
+.map-stat{text-align:center}
+.map-stat-val{font-size:48px;font-weight:800;color:var(--gold);letter-spacing:-2px}
+.map-stat-label{font-size:13px;color:var(--text-dim);font-weight:600;letter-spacing:2px;margin-top:4px}
+
+/* ── RANKS ── */
+.ranks{padding:140px 0;position:relative;z-index:1}
+/* ── PASSPORT CARD ── */
+.passport{position:relative;z-index:1;text-align:center}
+
+/* ── FEATURES ── */
+.features{padding:140px 0;position:relative;z-index:1}
+.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.feat-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;padding:32px 24px;transition:border-color .3s,transform .3s}
+.feat-card:hover{border-color:var(--gold-border);transform:translateY(-6px)}
+.feat-icon{width:48px;height:48px;margin-bottom:16px;display:flex;align-items:center;justify-content:center}
+.feat-icon img{width:40px;height:40px;object-fit:contain}
+.feat-icon-emoji{font-size:36px;line-height:1}
+.feat-name{font-size:17px;font-weight:700;margin-bottom:6px}
+.feat-desc{font-size:13px;color:var(--text-dim);line-height:1.6;margin-bottom:12px}
+.feat-count{font-size:28px;font-weight:800;color:var(--gold)}
+
+/* ── STATS ── */
+.stats{padding:120px 0;position:relative;z-index:1;background:linear-gradient(180deg,transparent,rgba(212,168,67,0.02),transparent)}
+.stats-row{display:flex;justify-content:center;gap:80px;flex-wrap:wrap}
+.stat-item{text-align:center}
+.stat-num{font-size:clamp(56px,8vw,80px);font-weight:800;color:var(--gold);letter-spacing:-3px;line-height:1}
+.stat-label{font-size:14px;font-weight:700;color:var(--text-dim);margin-top:8px;letter-spacing:2px}
+
+/* ── AFTERBURNER ── */
+.afterburner{padding:140px 0;position:relative;z-index:1;text-align:center}
+.ab-card{max-width:700px;margin:0 auto;padding:64px 48px;border-radius:28px;border:1px solid rgba(255,120,20,0.2);background:rgba(255,120,20,0.03);position:relative;overflow:hidden}
+.ab-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(255,120,20,0.08) 0%,transparent 60%);pointer-events:none}
+.ab-glow{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,120,20,0.15) 0%,transparent 60%);top:50%;left:50%;transform:translate(-50%,-50%);animation:abPulse 3s ease-in-out infinite;pointer-events:none}
+@keyframes abPulse{0%,100%{opacity:.5;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.3)}}
+.ab-logo{width:150px;height:150px;margin:0 auto 24px;position:relative;filter:drop-shadow(0 8px 30px rgba(255,120,20,0.3))}
+.ab-title{font-size:42px;font-weight:800;letter-spacing:-1px;margin-bottom:12px;position:relative;background:linear-gradient(135deg,#FF7814,#FFB347,#FF7814);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ab-sub{font-size:17px;color:var(--text-mid);position:relative;line-height:1.7;max-width:420px;margin:0 auto}
+.ab-perks{display:flex;justify-content:center;gap:32px;margin-top:28px;flex-wrap:wrap;position:relative}
+.ab-perk{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;color:#FF7814}
+
+/* ── FAQ ── */
+.faq{padding:140px 0;position:relative;z-index:1}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:1000px;margin:0 auto}
+.faq-item{border:1px solid var(--card-border);border-radius:14px;overflow:hidden;transition:border-color .3s}
+.faq-item.open{border-color:var(--gold-border)}
+.faq-q{padding:18px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:14px;font-weight:600;color:var(--text-light);transition:color .2s;user-select:none;gap:12px}
+.faq-item.open .faq-q{color:var(--gold)}
+.faq-arrow{font-size:18px;transition:transform .3s;color:var(--text-dim);flex-shrink:0}
+.faq-item.open .faq-arrow{transform:rotate(180deg);color:var(--gold)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(0.22,1,0.36,1)}
+.faq-a-inner{padding:0 20px 18px;font-size:13px;color:var(--text-mid);line-height:1.7}
+
+/* ── CTA ── */
+.cta{padding:140px 0;position:relative;z-index:1;text-align:center}
+.cta h2{font-size:clamp(40px,6vw,64px);font-weight:800;letter-spacing:-2px;margin-bottom:16px}
+.cta p{font-size:18px;color:var(--text-mid);margin-bottom:36px}
+.cta-stores{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.store-btn{display:flex;align-items:center;gap:12px;padding:16px 32px;border-radius:14px;background:var(--text);color:var(--bg);font-size:15px;font-weight:700;transition:transform .2s,box-shadow .2s}
+.store-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,255,255,0.1)}
+.store-btn-icon{font-size:24px}
+.store-btn-text{text-align:left}
+.store-btn-text small{display:block;font-size:10px;font-weight:500;opacity:.7}
+
+/* ── FOOTER ── */
+footer{padding:48px 0;border-top:1px solid var(--card-border);position:relative;z-index:1}
+.footer-content{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-left{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--text-dim)}
+.footer-left img{width:24px;height:24px;border-radius:6px}
+.footer-links{display:flex;gap:24px;list-style:none}
+.footer-links a{font-size:13px;color:var(--text-dim);transition:color .2s}
+.footer-links a:hover{color:var(--text)}
+
+/* ── MINI PHONE ENHANCED ── */
+.mini-ac-card{display:flex;align-items:center;gap:6px;width:100%;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:6px 8px;margin-top:8px}
+.mini-ac-card img{width:22px;height:22px;object-fit:contain}
+.mini-ac-info{flex:1;font-size:8px}
+.mini-ac-name{font-weight:700;color:var(--text-mid)}
+.mini-ac-bonus{color:var(--green);font-weight:700}
+.mini-ac-nm{text-align:right}
+.mini-ac-nm-val{font-size:14px;font-weight:800;color:var(--gold)}
+.mini-ac-nm-label{font-size:6px;color:var(--text-dim);letter-spacing:1px}
+.mini-route-label{font-size:8px;color:var(--text-dim);letter-spacing:1px;margin-top:10px}
+.mini-pax-row{display:flex;align-items:center;gap:2px;font-size:7px;color:var(--text-dim);margin-top:6px;letter-spacing:0.5px}
+.mini-summary-card{width:100%;background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:8px;margin-top:8px}
+.mini-summary-title{font-size:6px;color:var(--text-dim);letter-spacing:2px;margin-bottom:6px}
+.mini-summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:8px}
+.mini-summary-grid span{color:var(--text-dim);font-size:6px;display:block}
+.mini-flight-chart{margin:8px 0}
+
+/* ── HORIZONTAL RANK BAR ── */
+.rank-bar-section{max-width:900px;margin:0 auto}
+.rank-bar-wrap{position:relative;padding:40px 20px 60px}
+.rank-bar-track{width:100%;height:6px;border-radius:3px;background:rgba(255,255,255,0.06);position:relative}
+.rank-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--tier-starter),var(--gold));width:0%;transition:width 1.5s cubic-bezier(0.22,1,0.36,1)}
+.rank-bar-nodes{position:absolute;top:50%;left:0;right:0;transform:translateY(-50%)}
+.rank-bar-node{position:absolute;transform:translate(-50%,-50%);top:50%;width:36px;height:36px;border-radius:50%;background:var(--bg);border:2px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;transition:all .3s;z-index:2}
+.rank-bar-node:hover,.rank-bar-node.active{border-color:var(--gold);box-shadow:0 0 16px rgba(212,168,67,0.25);transform:translate(-50%,-50%) scale(1.15)}
+.rank-bar-node.passed{border-color:var(--gold-border)}
+.rank-bar-label{position:absolute;top:28px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--text-dim);white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none;font-weight:600}
+.rank-bar-node:hover .rank-bar-label,.rank-bar-node.active .rank-bar-label{opacity:1;color:var(--gold)}
+.rank-detail{display:flex;gap:40px;align-items:center;background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;padding:36px 40px;transition:all .4s ease;min-height:180px}
+.rank-detail-emoji{font-size:56px;flex-shrink:0}
+.rank-detail-info{flex:1}
+.rank-detail-name{font-size:28px;font-weight:800;letter-spacing:-1px;margin-bottom:4px}
+.rank-detail-hours{font-size:14px;color:var(--gold);font-weight:700;margin-bottom:12px}
+.rank-detail-desc{font-size:15px;color:var(--text-mid);line-height:1.7;margin-bottom:16px}
+.rank-detail-bar{width:100%;height:6px;border-radius:3px;background:rgba(255,255,255,0.06);overflow:hidden}
+.rank-detail-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--tier-starter),var(--gold));transition:width .6s ease}
+.rank-detail-pct{font-size:11px;color:var(--text-dim);margin-top:6px;font-weight:600}
+
+/* ── PILOT ID CARD ── */
+.pilot-id{max-width:560px;margin:24px auto 0;background:var(--bg-alt);border:2px solid var(--gold-border);border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+.pilot-id-header{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:linear-gradient(90deg,rgba(212,168,67,0.12),rgba(212,168,67,0.04));border-bottom:1px solid var(--gold-border)}
+.pilot-id-header-text{font-size:10px;font-weight:700;letter-spacing:3px;color:var(--gold)}
+.pilot-id-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(63,176,106,0.5)}
+.pilot-id-body{display:flex;gap:20px;padding:24px;align-items:flex-start}
+.pilot-id-left{display:flex;flex-direction:column;align-items:center;gap:4px}
+.pilot-id-avatar{width:56px;height:56px;border-radius:14px;background:var(--card-bg);border:1px solid var(--card-border);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:var(--text-dim)}
+.pilot-id-rank-icon{font-size:20px}
+.pilot-id-right{flex:1}
+.pilot-id-callsign{font-size:20px;font-weight:800;letter-spacing:0.5px;margin-bottom:2px}
+.pilot-id-rank-title{font-size:12px;color:var(--gold);font-weight:600;margin-bottom:10px}
+.pilot-id-progress{margin-bottom:4px}
+.pilot-id-bar{width:100%;height:5px;border-radius:3px;background:rgba(255,255,255,0.06);overflow:hidden}
+.pilot-id-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gold),#F0D78C);transition:width 1s ease}
+.pilot-id-hours{font-size:10px;color:var(--text-dim);margin-top:4px;font-weight:600}
+.pilot-id-next{font-size:10px;color:var(--text-dim);margin-top:2px}
+.pilot-id-tags{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border-top:1px solid var(--card-border)}
+.pilot-id-tag{display:flex;flex-direction:column;align-items:center;gap:4px;padding:16px 12px;text-align:center;border-right:1px solid var(--card-border);cursor:default;transition:background .2s}
+.pilot-id-tag:last-child{border-right:none}
+.pilot-id-tag:hover{background:var(--gold-dim)}
+.pilot-id-tag-icon{font-size:18px}
+.pilot-id-tag-label{font-size:10px;font-weight:600;color:var(--text-mid)}
+
+/* ── AFTERBURNER 2X ── */
+.ab-2x-wrap{position:relative;margin:24px 0 16px;display:inline-block}
+.ab-2x{font-size:96px;font-weight:900;letter-spacing:-4px;background:linear-gradient(135deg,#FF7814,#FFB347,#FF5500);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:ab2xPulse 2s ease-in-out infinite;position:relative;line-height:1}
+@keyframes ab2xPulse{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.08);filter:brightness(1.3)}}
+.ab-2x-label{font-size:14px;font-weight:700;letter-spacing:4px;color:rgba(255,120,20,0.6);margin-top:4px}
+.ab-2x-ring{position:absolute;inset:-24px;border-radius:50%;border:2px solid rgba(255,120,20,0.15);animation:ab2xRing 2s ease-in-out infinite}
+@keyframes ab2xRing{0%,100%{transform:scale(1);opacity:0.5}50%{transform:scale(1.3);opacity:0}}
+.ab-phrases{height:28px;overflow:hidden;position:relative;margin:16px 0 24px}
+.ab-phrase{position:absolute;width:100%;text-align:center;font-size:16px;color:var(--text-mid);font-weight:600;opacity:0;transform:translateY(20px);transition:all .5s ease}
+.ab-phrase.active{opacity:1;transform:translateY(0)}
+
+/* ── SOCIAL PROOF BANNER ── */
+.social-proof{padding:28px 0;position:relative;z-index:1;background:linear-gradient(90deg,rgba(212,168,67,0.03),rgba(212,168,67,0.07),rgba(212,168,67,0.03));border-top:1px solid var(--gold-border);border-bottom:1px solid var(--gold-border)}
+.sp-row{display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap}
+.sp-stat{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--text-light)}
+.sp-stat-num{font-size:20px;font-weight:800;color:var(--gold)}
+.sp-divider{width:1px;height:24px;background:var(--gold-border)}
+.sp-testimonial{height:28px;overflow:hidden;position:relative;min-width:260px;text-align:center}
+.sp-quote{position:absolute;width:100%;font-size:13px;color:var(--text-mid);font-style:italic;opacity:0;transform:translateY(20px);transition:all .5s ease}
+.sp-quote.active{opacity:1;transform:translateY(0)}
+
+/* ── THE STAKES ── */
+.stakes{padding:140px 0;position:relative;z-index:1}
+.stakes-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:0;max-width:900px;margin:0 auto;align-items:stretch}
+.stakes-panel{padding:48px 40px;border-radius:20px;border:1px solid var(--card-border);background:var(--card-bg);position:relative;overflow:hidden}
+.stakes-panel.safe{border-color:rgba(63,176,106,0.2)}
+.stakes-panel.safe::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(63,176,106,0.04) 0%,transparent 70%);pointer-events:none}
+.stakes-panel.crash{border-color:rgba(226,74,63,0.2)}
+.stakes-panel.crash::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(226,74,63,0.04) 0%,transparent 70%);pointer-events:none}
+.stakes-icon{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:20px}
+.stakes-panel.safe .stakes-icon{border:2px solid rgba(63,176,106,0.3);background:rgba(63,176,106,0.08)}
+.stakes-panel.crash .stakes-icon{border:2px solid rgba(226,74,63,0.3);background:rgba(226,74,63,0.08)}
+.stakes-nm{font-size:28px;font-weight:800;margin:12px 0 8px}
+.stakes-panel.safe .stakes-nm{color:var(--green)}
+.stakes-panel.crash .stakes-nm{color:var(--red)}
+.stakes-bar{width:100%;height:8px;border-radius:4px;background:rgba(255,255,255,0.06);overflow:hidden;margin:16px 0}
+.stakes-bar-fill{height:100%;border-radius:4px;width:0%;transition:width 1.5s cubic-bezier(0.22,1,0.36,1)}
+.stakes-panel.safe .stakes-bar-fill{background:var(--green)}
+.stakes-panel.crash .stakes-bar-fill{background:var(--red)}
+.stakes-desc{font-size:14px;color:var(--text-mid);line-height:1.7}
+.stakes-vs{display:flex;align-items:center;justify-content:center;padding:0 24px;font-size:24px;font-weight:800;color:var(--text-dim);letter-spacing:2px}
+.stakes-warning{max-width:900px;margin:24px auto 0;padding:16px 24px;border-radius:12px;background:rgba(226,74,63,0.06);border:1px solid rgba(226,74,63,0.2);text-align:center;font-size:13px;font-weight:600;color:var(--red)}
+@keyframes shake{0%,100%{transform:translateX(0)}10%,30%,50%,70%,90%{transform:translateX(-2px)}20%,40%,60%,80%{transform:translateX(2px)}}
+.stakes-panel.crash.animate{animation:shake 0.6s ease}
+@keyframes safe-glow{0%,100%{box-shadow:0 0 0 rgba(63,176,106,0)}50%{box-shadow:0 0 30px rgba(63,176,106,0.1)}}
+.stakes-panel.safe.animate{animation:safe-glow 2s ease-in-out infinite}
+
+/* (Fleet Wall + Cockpit sections removed) */
+
+/* ── YOUR AVIATION CAREER ── */
+.career{padding:140px 0;position:relative;z-index:1}
+.career-card{max-width:800px;margin:0 auto;border-radius:28px;border:2px solid var(--gold-border);background:var(--bg-alt);position:relative;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,0.3)}
+.career-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top center,rgba(212,168,67,0.06) 0%,transparent 60%);pointer-events:none}
+.career-header{display:flex;align-items:center;gap:20px;padding:32px 36px;position:relative}
+.career-avatar{width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,rgba(212,168,67,0.1),rgba(212,168,67,0.03));border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0}
+.career-meta{flex:1}
+.career-callsign{font-size:22px;font-weight:800;letter-spacing:1px}
+.career-rank{font-size:13px;color:var(--gold);font-weight:600}
+.career-aircraft{font-size:12px;color:var(--text-dim);margin-top:2px}
+.career-streak{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:700;color:#FF7814;background:rgba(255,120,20,0.08);border:1px solid rgba(255,120,20,0.2);padding:4px 12px;border-radius:8px}
+.career-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--card-border);border-bottom:1px solid var(--card-border)}
+.career-stat{padding:24px;text-align:center;border-right:1px solid var(--card-border)}
+.career-stat:last-child{border-right:none}
+.career-stat-val{font-size:28px;font-weight:800;color:var(--gold)}
+.career-stat-label{font-size:10px;font-weight:600;color:var(--text-dim);letter-spacing:2px;margin-top:4px}
+.career-logbook{padding:24px 36px}
+.career-logbook-title{font-size:10px;font-weight:700;letter-spacing:3px;color:var(--text-dim);margin-bottom:16px}
+.career-flight{display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--card-border);opacity:0;transform:translateX(-20px);transition:opacity .5s ease,transform .5s ease}
+.career-flight.visible{opacity:1;transform:translateX(0)}
+.career-flight:last-child{border-bottom:none}
+.career-flight-icon{width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.career-flight-info{flex:1}
+.career-flight-ac{font-size:13px;font-weight:700}
+.career-flight-route{font-size:11px;color:var(--text-dim)}
+.career-flight-nm{font-size:16px;font-weight:800;color:var(--green)}
+.career-footer{text-align:center;padding:20px 36px 28px;font-size:14px;color:var(--text-dim);font-style:italic}
+
+/* ── MISSIONS COMMAND CENTER ── */
+.missions{padding:140px 0;position:relative;z-index:1}
+.missions-featured{max-width:700px;margin:0 auto 48px;padding:36px 40px;border-radius:20px;border:1px solid var(--gold-border);background:linear-gradient(135deg,rgba(212,168,67,0.04),rgba(212,168,67,0.01));position:relative;overflow:hidden}
+.missions-featured::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top right,rgba(212,168,67,0.06) 0%,transparent 60%);pointer-events:none}
+.missions-featured-label{display:inline-block;font-size:10px;font-weight:700;letter-spacing:3px;color:var(--gold);margin-bottom:12px;position:relative}
+.missions-featured-title{font-size:20px;font-weight:800;margin-bottom:6px;position:relative}
+.missions-featured-desc{font-size:14px;color:var(--text-mid);margin-bottom:16px;position:relative}
+.missions-featured-bar{width:100%;height:8px;border-radius:4px;background:rgba(255,255,255,0.06);overflow:hidden;position:relative}
+.missions-featured-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--gold),#F0D78C);width:0%;transition:width 1.5s cubic-bezier(0.22,1,0.36,1)}
+.missions-featured-reward{display:inline-block;margin-top:12px;padding:6px 14px;border-radius:8px;background:rgba(63,176,106,0.08);border:1px solid rgba(63,176,106,0.2);font-size:12px;font-weight:700;color:var(--green);position:relative}
+.missions-tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1000px;margin:0 auto}
+.mission-tier{padding:28px 20px;border-radius:18px;background:var(--card-bg);border:1px solid var(--card-border);text-align:center;transition:transform .3s,border-color .3s,box-shadow .3s;opacity:0;transform:translateY(20px)}
+.mission-tier.visible{opacity:1;transform:translateY(0)}
+.mission-tier:hover{transform:translateY(-6px)}
+.mission-tier-icon{font-size:32px;margin-bottom:12px}
+.mission-tier-name{font-size:14px;font-weight:700;margin-bottom:4px}
+.mission-tier-reward{font-size:11px;font-weight:700;margin-bottom:10px}
+.mission-tier-example{font-size:11px;color:var(--text-dim);line-height:1.5;margin-bottom:8px}
+.mission-tier-desc{font-size:10px;color:var(--text-dim);line-height:1.5}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){.fleet-grid{grid-template-columns:repeat(3,1fr)}.feat-grid{grid-template-columns:repeat(2,1fr)}.rank-detail{flex-direction:column;text-align:center;gap:20px}.rank-bar-node{width:30px;height:30px;font-size:13px}.missions-tiers{grid-template-columns:repeat(3,1fr)}.career-stats{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:768px){.nav-links{display:none}.hamburger{display:flex}.nav-links.mobile-open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(12,12,14,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:24px;gap:20px;border-bottom:1px solid var(--card-border)}.fleet-grid{grid-template-columns:repeat(2,1fr)}.feat-grid{grid-template-columns:1fr}.faq-grid{grid-template-columns:1fr}.stats-row{gap:40px}.how-phones{flex-direction:column;align-items:center}.ac-modal{padding:32px 24px}.map-stats{gap:32px}.rank-bar-node{width:26px;height:26px;font-size:11px}.pilot-id-body{flex-direction:column;align-items:center;text-align:center}.pilot-id-right{width:100%}.coming-card [style*="grid-template-columns:repeat(4"]{grid-template-columns:repeat(2,1fr) !important}.stakes-grid{grid-template-columns:1fr;gap:16px}.stakes-vs{padding:8px 0;font-size:18px}.sp-row{flex-direction:column;gap:16px}.sp-divider{display:none}.missions-tiers{grid-template-columns:repeat(2,1fr)}.career-stats{grid-template-columns:repeat(2,1fr)}.career-header{flex-direction:column;text-align:center}.career-logbook{padding:24px 20px}.career-flight{gap:10px}}
+@media(max-width:480px){.fleet-grid{grid-template-columns:repeat(2,1fr);gap:10px}.ac-card{padding:16px 10px 12px}.hero h1{letter-spacing:-2px}.hero-btns{flex-direction:column;align-items:center}.rank-bar-node{width:22px;height:22px;font-size:9px}.rank-detail{padding:24px 20px}.missions-tiers{grid-template-columns:1fr}.stakes-panel{padding:32px 24px}.career-stat-val{font-size:22px}}
+</style>
+</head>
+<body>
+<canvas id="particles-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="container">
+    <a href="#" class="nav-logo"><img src="assets/icon.png" alt="Skytime">Skytime</a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#fleet">Fleet</a></li>
+      <li><a href="#map">World Map</a></li>
+      <li><a href="#ranks">Ranks</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#download" class="nav-cta">Download Free</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <img src="assets/icon.png" alt="Skytime" class="hero-icon reveal">
+    <div class="hero-brand reveal reveal-d1">Skytime</div>
+    <h1 class="reveal reveal-d2">Your Screen Time,<br><span class="gold-word">Reimagined.</span></h1>
+    <p class="hero-sub reveal reveal-d3">Every focused minute earns nautical miles. Unlock legendary aircraft, fly real-world routes, and build your aviation career — all by putting your phone down.</p>
+    <div class="hero-btns reveal reveal-d4">
+      <a href="#download" class="btn-primary">Download Free</a>
+      <a href="#demo" class="btn-outline">Try the Demo</a>
+    </div>
+  </div>
+  <div class="scroll-hint"><span></span></div>
+</section>
+
+<!-- SOCIAL PROOF BANNER -->
+<section class="social-proof reveal" id="social-proof">
+  <div class="container">
+    <div class="sp-row">
+      <div class="sp-stat"><span class="sp-stat-num" data-target="10000" id="sp-pilots">0</span>+ PILOTS FLYING</div>
+      <div class="sp-divider"></div>
+      <div class="sp-stat">4.8 &#11088;&#11088;&#11088;&#11088;&#11088; App Store</div>
+      <div class="sp-divider"></div>
+      <div class="sp-stat"><span class="sp-stat-num" data-target="2400000" id="sp-nm">0</span>+ NM EARNED</div>
+      <div class="sp-divider"></div>
+      <div class="sp-testimonial" id="sp-testimonial">
+        <div class="sp-quote active">"Best focus app I've ever used. The aviation theme is genius." &mdash; App Store Review</div>
+        <div class="sp-quote">"I study 3x longer now. Skytime made me addicted to focus." &mdash; Reddit</div>
+        <div class="sp-quote">"My screen time dropped 40% in the first week." &mdash; Twitter</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="container">
+    <div style="text-align:center">
+      <span class="section-badge reveal">How It Works</span>
+      <h2 class="section-title reveal reveal-d1">Three Steps to <span class="text-gold">Takeoff</span></h2>
+      <p class="section-sub reveal reveal-d2">Set your timer. Stay focused. Earn your wings.</p>
+    </div>
+    <div class="how-phones">
+      <!-- Phone 1: Set Timer -->
+      <div class="how-phone reveal">
+        <div class="how-phone-label">Step 1</div>
+        <div class="mini-phone">
+          <div class="mini-notch"></div>
+          <div class="mini-screen">
+            <div style="width:100%;display:flex;justify-content:flex-end;margin-bottom:4px"><div style="background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:4px;padding:2px 8px;font-size:8px;font-weight:700;color:var(--gold)">4,280 NM</div></div>
+            <div class="mini-timer-ring">
+              <div class="mini-timer-val" id="how-timer">25</div>
+              <div class="mini-timer-label">MINUTES</div>
+            </div>
+            <div class="mini-presets" id="how-presets">
+              <div class="mini-preset">10</div>
+              <div class="mini-preset active">25</div>
+              <div class="mini-preset">50</div>
+              <div class="mini-preset">90</div>
+              <div class="mini-preset">120</div>
+            </div>
+            <div class="mini-ac-card">
+              <img src="assets/aircraft/concorde.png" alt="Concorde" style="width:28px;height:28px;object-fit:contain">
+              <div class="mini-ac-info"><div class="mini-ac-name">Concorde</div><div class="mini-ac-bonus">+55% NM</div></div>
+              <div class="mini-ac-nm"><div class="mini-ac-nm-val" id="how-nm">+78</div><div class="mini-ac-nm-label">NM</div></div>
+            </div>
+            <div style="flex:1"></div>
+            <div class="mini-gold-btn">Begin Takeoff</div>
+          </div>
+        </div>
+        <div class="how-phone-desc">Set your focus duration. Pick your aircraft and ambient cockpit sound.</div>
+      </div>
+      <!-- Phone 2: In Flight -->
+      <div class="how-phone reveal reveal-d1">
+        <div class="how-phone-label">Step 2</div>
+        <div class="mini-phone">
+          <div class="mini-notch"></div>
+          <div class="mini-screen" style="align-items:center">
+            <div style="margin-top:8px"><img src="assets/aircraft/concorde.png" alt="Concorde" style="width:80px;height:80px;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(212,168,67,0.3))"></div>
+            <div class="mini-countdown" id="how-countdown" style="margin-top:8px">18:42</div>
+            <div class="mini-flight-phase" id="how-phase" style="margin-top:4px">&#9992;&#65039; CRUISING</div>
+            <div class="mini-phase-text" style="margin-top:4px">FL510 &bull; 1,150 kts</div>
+            <svg viewBox="0 0 172 70" class="mini-flight-chart" style="width:100%;margin-top:8px">
+              <path d="M0,56 L18,56 C28,56 33,20 42,15 L70,12 L110,12 C120,12 128,30 138,48 L155,54 L172,56 L172,70 L0,70 Z" fill="rgba(212,168,67,0.06)"/>
+              <path d="M0,56 L18,56 C28,56 33,20 42,15 L70,12 L110,12 C120,12 128,30 138,48 L155,54 L172,56" fill="none" stroke="rgba(212,168,67,0.4)" stroke-width="1"/>
+              <line x1="42" y1="12" x2="110" y2="12" stroke="rgba(255,255,255,0.08)" stroke-width="0.5" stroke-dasharray="3,2"/>
+              <circle r="3" fill="#D4A843" opacity="0.9">
+                <animate attributeName="cx" values="5;25;38;90;120;148;168" dur="8s" repeatCount="indefinite"/>
+                <animate attributeName="cy" values="56;48;22;12;12;42;55" dur="8s" repeatCount="indefinite"/>
+              </circle>
+              <text x="5" y="67" font-size="5" fill="rgba(255,255,255,0.2)" font-family="DM Sans">TAX</text>
+              <text x="25" y="67" font-size="5" fill="rgba(255,255,255,0.2)" font-family="DM Sans">T/O</text>
+              <text x="48" y="67" font-size="5" fill="rgba(255,255,255,0.2)" font-family="DM Sans">CLB</text>
+              <text x="82" y="67" font-size="5" fill="rgba(212,168,67,0.5)" font-family="DM Sans" font-weight="700">CRZ</text>
+              <text x="125" y="67" font-size="5" fill="rgba(255,255,255,0.2)" font-family="DM Sans">DES</text>
+              <text x="155" y="67" font-size="5" fill="rgba(255,255,255,0.2)" font-family="DM Sans">LND</text>
+            </svg>
+            <div class="mini-pax-row" style="margin-top:4px">&#128104;&#128103;&#128102; 100 PASSENGERS ON BOARD</div>
+            <div style="flex:1"></div>
+            <div style="width:100%;height:4px;border-radius:2px;background:rgba(255,255,255,0.06);overflow:hidden">
+              <div style="width:62%;height:100%;background:linear-gradient(90deg,var(--gold),var(--green));border-radius:2px;animation:grow-bar 8s ease-in-out infinite"></div>
+            </div>
+          </div>
+        </div>
+        <div class="how-phone-desc">Stay focused. Leave the app and your flight crashes — no NM earned.</div>
+      </div>
+      <!-- Phone 3: Success -->
+      <div class="how-phone reveal reveal-d2">
+        <div class="how-phone-label">Step 3</div>
+        <div class="mini-phone">
+          <div class="mini-notch"></div>
+          <div class="mini-screen" style="justify-content:center;align-items:center">
+            <img src="assets/aircraft/concorde.png" alt="Concorde" style="width:70px;height:70px;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));margin-bottom:6px">
+            <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:2px">Concorde</div>
+            <div style="display:flex;align-items:center;gap:4px;margin-bottom:4px"><div style="width:5px;height:5px;border-radius:50%;background:var(--green)"></div><div style="font-size:9px;font-weight:700;color:var(--green);letter-spacing:2px">SAFE LANDING</div></div>
+            <div class="mini-success-nm" id="how-success-nm">+78</div>
+            <div class="mini-success-label">NAUTICAL MILES</div>
+            <div class="mini-summary-card">
+              <div class="mini-summary-title">FLIGHT SUMMARY</div>
+              <div class="mini-summary-grid" style="grid-template-columns:1fr 1fr 1fr">
+                <div><span>DURATION</span><strong>25m</strong></div>
+                <div><span>PAX</span><strong>100</strong></div>
+                <div><span>AC BONUS</span><strong style="color:var(--green)">+55%</strong></div>
+              </div>
+            </div>
+            <div style="flex:1"></div>
+            <div class="mini-gold-btn">Back to Runway</div>
+          </div>
+        </div>
+        <div class="how-phone-desc">Land successfully. Earn NM, unlock aircraft, and progress through pilot ranks.</div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>@keyframes grow-bar{0%{width:30%}100%{width:95%}}</style>
+
+<!-- THE STAKES -->
+<section class="stakes" id="stakes-section">
+  <div class="container">
+    <div style="text-align:center">
+      <span class="section-badge reveal">Real Consequences</span>
+      <h2 class="section-title reveal reveal-d1">Stay Focused. <span class="text-gold">Or Crash.</span></h2>
+      <p class="section-sub reveal reveal-d2">Skytime doesn't reward quitting. Leave the app mid-flight and you pay the price.</p>
+    </div>
+    <div class="stakes-grid reveal reveal-d3" id="stakes-grid">
+      <div class="stakes-panel safe" id="stakes-safe">
+        <div class="stakes-icon">&#10003;</div>
+        <div style="font-size:12px;font-weight:700;color:var(--green);letter-spacing:2px;margin-bottom:8px">SAFE LANDING</div>
+        <div class="stakes-nm">+60 NM EARNED IN FULL</div>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:4px">Progress</div>
+        <div class="stakes-bar"><div class="stakes-bar-fill" id="stakes-safe-bar"></div></div>
+        <div class="stakes-desc">You stayed focused for the entire session. Full nautical miles earned. Aircraft safe. Streak preserved. This is how legends are built.</div>
+      </div>
+      <div class="stakes-vs">VS</div>
+      <div class="stakes-panel crash" id="stakes-crash">
+        <div class="stakes-icon">&#10007;</div>
+        <div style="font-size:12px;font-weight:700;color:var(--red);letter-spacing:2px;margin-bottom:8px">CRASHED</div>
+        <div class="stakes-nm">0 NM EARNED</div>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:4px">Progress</div>
+        <div class="stakes-bar"><div class="stakes-bar-fill" id="stakes-crash-bar"></div></div>
+        <div class="stakes-desc">You left the app. Flight aborted at 40% progress. No nautical miles earned. The sky doesn't forgive.</div>
+        <div style="margin-top:20px;background:rgba(255,255,255,0.03);border:1px solid var(--card-border);border-radius:12px;padding:16px 20px">
+          <div style="font-size:9px;font-weight:700;letter-spacing:3px;color:var(--text-dim);margin-bottom:12px">FLIGHT RECORDER</div>
+          <svg viewBox="0 0 240 80" style="width:100%;display:block">
+            <line x1="0" y1="12" x2="240" y2="12" stroke="rgba(255,255,255,0.08)" stroke-width="0.5" stroke-dasharray="4,3"/>
+            <text x="0" y="10" font-size="7" fill="rgba(255,255,255,0.25)" font-family="DM Sans">FL510</text>
+            <line x1="0" y1="68" x2="240" y2="68" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+            <text x="0" y="78" font-size="7" fill="rgba(255,255,255,0.25)" font-family="DM Sans">GND</text>
+            <path d="M30,68 L50,68 C60,65 68,30 78,15 L96,12" fill="none" stroke="var(--green)" stroke-width="1.5"/>
+            <line x1="96" y1="12" x2="96" y2="68" stroke="var(--red)" stroke-width="1" stroke-dasharray="3,2"/>
+            <path d="M96,12 L100,25 L106,45 L112,60 L118,68" fill="none" stroke="var(--green)" stroke-width="1.5" opacity="0.4"/>
+            <circle cx="96" cy="12" r="4" fill="var(--red)" stroke="rgba(226,74,63,0.3)" stroke-width="2"/>
+            <text x="78" y="8" font-size="7" fill="var(--red)" font-family="DM Sans" font-weight="700">ABORT</text>
+          </svg>
+          <div style="font-size:10px;color:var(--text-dim);margin-top:8px;text-align:center">28% flight completed</div>
+        </div>
+      </div>
+    </div>
+    <div class="stakes-warning reveal reveal-d4">&#9888;&#65039; Leaving the app during a flight will crash your aircraft. No nautical miles earned.</div>
+  </div>
+</section>
+
+<!-- AFTERBURNER -->
+<section class="afterburner" id="afterburner">
+  <div class="container">
+    <div class="ab-card reveal">
+      <div class="ab-glow"></div>
+      <img src="assets/afterburner-logo.png" alt="Afterburner" class="ab-logo">
+      <div class="ab-2x-wrap">
+        <div class="ab-2x-ring"></div>
+        <div class="ab-2x">2X</div>
+        <div class="ab-2x-label">NAUTICAL MILES</div>
+      </div>
+      <div class="ab-title">Afterburner</div>
+      <div class="ab-phrases" id="ab-phrases">
+        <div class="ab-phrase active">Earn twice as fast. Every flight, every mile.</div>
+        <div class="ab-phrase">Unlock aircraft nobody else can fly.</div>
+        <div class="ab-phrase">Accelerate your rank. Reach Ace sooner.</div>
+        <div class="ab-phrase">Double every nautical mile you earn.</div>
+        <div class="ab-phrase">The ultimate advantage for serious pilots.</div>
+      </div>
+      <div class="ab-perks">
+        <div class="ab-perk">&#128293; 2x NM Earnings</div>
+        <div class="ab-perk">&#9992;&#65039; Exclusive Aircraft</div>
+        <div class="ab-perk">&#11088; Priority Unlocks</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FLEET -->
+<section class="fleet" id="fleet">
+  <div class="container">
+    <div style="text-align:center">
+      <span class="section-badge reveal">The Collection</span>
+      <h2 class="section-title reveal reveal-d1">Legendary Fleet</h2>
+      <p class="section-sub reveal reveal-d2">Ten aircraft that changed history. Each one earned through dedication. Click to explore — if you can see them.</p>
+    </div>
+    <div class="fleet-grid" id="fleet-grid"></div>
+    <p class="fleet-note reveal"><strong>58 aircraft</strong> across <strong>8 tiers</strong> — from the Cessna 172 to the edge of space.</p>
+    <div class="tier-row reveal">
+      <div class="tier-dot"><span style="background:var(--tier-starter)"></span> Starter</div>
+      <div class="tier-dot"><span style="background:var(--tier-regional)"></span> Regional</div>
+      <div class="tier-dot"><span style="background:var(--tier-narrow)"></span> Narrow</div>
+      <div class="tier-dot"><span style="background:var(--tier-classic)"></span> Classic</div>
+      <div class="tier-dot"><span style="background:var(--tier-wide)"></span> Wide</div>
+      <div class="tier-dot"><span style="background:var(--tier-epic)"></span> Epic</div>
+      <div class="tier-dot"><span style="background:var(--tier-military)"></span> Military</div>
+      <div class="tier-dot"><span style="background:var(--tier-legendary)"></span> Legendary</div>
+    </div>
+  </div>
+</section>
+
+<!-- WORLD MAP -->
+<section class="world-map" id="map">
+  <div class="container">
+    <div style="text-align:center">
+      <span class="section-badge reveal">Global Network</span>
+      <h2 class="section-title reveal reveal-d1">Fly the World</h2>
+      <p class="section-sub reveal reveal-d2">60 real-world routes connecting 26 airports across 6 continents. Every route unlockable through focus.</p>
+    </div>
+    <div class="map-container reveal" id="map-container">
+      <svg id="world-svg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+        <defs><radialGradient id="dot-glow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#D4A843" stop-opacity="0.6"/><stop offset="100%" stop-color="#D4A843" stop-opacity="0"/></radialGradient></defs>
+      </svg>
+    </div>
+    <div class="map-stats reveal">
+      <div class="map-stat"><div class="map-stat-val" data-target="60">0</div><div class="map-stat-label">ROUTES</div></div>
+      <div class="map-stat"><div class="map-stat-val" data-target="26">0</div><div class="map-stat-label">AIRPORTS</div></div>
+      <div class="map-stat"><div class="map-stat-val" data-target="6">0</div><div class="map-stat-label">CONTINENTS</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- RANKS -->
+<section class="ranks" id="ranks">
+  <div class="container">
+    <div style="text-align:center">
+      <span class="section-badge reveal">Progression</span>
+      <h2 class="section-title reveal reveal-d1">Rise Through the Ranks</h2>
+      <p class="section-sub reveal reveal-d2">From Student Pilot to Ace. 500 hours of earned focus separate the newcomers from the legends.</p>
+    </div>
+    <div class="rank-bar-section">
+      <div class="rank-bar-wrap reveal" id="rank-bar-wrap">
+        <div class="rank-bar-track">
+          <div class="rank-bar-fill" id="rank-bar-fill"></div>
+          <div class="rank-bar-nodes" id="rank-bar-nodes"></div>
+        </div>
+      </div>
+      <div class="rank-detail reveal reveal-d1" id="rank-detail">
+        <div class="rank-detail-emoji" id="rd-emoji">&#127942;</div>
+        <div class="rank-detail-info">
+          <div class="rank-detail-name" id="rd-name">Ace</div>
+          <div class="rank-detail-hours" id="rd-hours">500 hours required</div>
+          <div class="rank-detail-desc" id="rd-desc">The pinnacle. Only the most dedicated reach this altitude. You are aviation royalty.</div>
+          <div class="rank-detail-bar"><div class="rank-detail-bar-fill" id="rd-fill" style="width:100%"></div></div>
+          <div class="rank-detail-pct" id="rd-pct">10 of 10 ranks</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PILOT IDENTIFICATION CARD -->
+<section class="passport reveal" style="padding:100px 0">
+  <div class="container" style="text-align:center">
+    <span class="section-badge">Your Identity</span>
+    <h2 class="section-title">Pilot Identification</h2>
+    <p class="section-sub">Your rank, callsign, airline, and badges — all in one aviation ID. Earned through focus.</p>
+    <div class="pilot-id">
+      <div class="pilot-id-header">
+        <span class="pilot-id-header-text">PILOT IDENTIFICATION</span>
+        <span class="pilot-id-dot"></span>
+      </div>
+      <div class="pilot-id-body">
+        <div class="pilot-id-left">
+          <div class="pilot-id-avatar" style="font-size:36px;width:72px;height:72px;border-radius:18px;background:linear-gradient(135deg,rgba(212,168,67,0.1),rgba(212,168,67,0.03))">&#128104;&#8205;&#9992;&#65039;</div>
+          <div class="pilot-id-rank-icon" style="font-size:24px">&#127942;</div>
+        </div>
+        <div class="pilot-id-right" style="text-align:left">
+          <div class="pilot-id-callsign" style="font-size:24px;letter-spacing:1px">STARFALL</div>
+          <div class="pilot-id-rank-title" style="font-size:13px">Senior Captain</div>
+          <div class="pilot-id-progress">
+            <div class="pilot-id-bar" style="height:6px"><div class="pilot-id-bar-fill" style="width:72%"></div></div>
+            <div class="pilot-id-hours">43.2h of 60h</div>
+          </div>
+          <div class="pilot-id-next">Next: Training Captain at 60h</div>
+        </div>
+      </div>
+      <div class="pilot-id-tags">
+        <div class="pilot-id-tag">
+          <span class="pilot-id-tag-icon" style="font-size:22px">&#127941;</span>
+          <span class="pilot-id-tag-label">Gold Wings</span>
+        </div>
+        <div class="pilot-id-tag">
+          <span class="pilot-id-tag-icon" style="font-size:22px;display:flex;align-items:center;justify-content:center"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/ef/a7/12/efa71273-ba79-47de-a993-92ab79e3e6aa/AppIcon-0-0-1x_U007emarketing-0-8-0-sRGB-0-85-220.png/512x512bb.jpg" alt="Emirates" style="width:22px;height:22px;border-radius:5px"></span>
+          <span class="pilot-id-tag-label">Emirates</span>
+        </div>
+        <div class="pilot-id-tag">
+          <span class="pilot-id-tag-icon" style="font-size:22px">&#127991;&#65039;</span>
+          <span class="pilot-id-tag-label">HK-1997</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="container">
+    <div style="text-align:center">
+      <span class="section-badge reveal">Endless Depth</span>
+      <h2 class="section-title reveal reveal-d1">More Than a Timer</h2>
+      <p class="section-sub reveal reveal-d2">Every corner of Skytime is packed with aviation detail and unlockable content.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card reveal"><div class="feat-icon"><img src="assets/hangar-tab.png" alt="Fleet"></div><div class="feat-name">Callsigns</div><div class="feat-desc">Choose from legendary pilot callsigns. MAVERICK, GHOST RIDER, VIPER, ICEMAN, and 24 more.</div><div class="feat-count">28</div></div>
+      <div class="feat-card reveal reveal-d1"><div class="feat-icon"><div class="feat-icon-emoji">&#9992;&#65039;</div></div><div class="feat-name">Ambient Sounds</div><div class="feat-desc">Jet cabin rumble, storm fronts, high altitude winds, coastal approaches — immersive audio.</div><div class="feat-count">9</div></div>
+      <div class="feat-card reveal reveal-d2"><div class="feat-icon"><div class="feat-icon-emoji">&#127899;&#65039;</div></div><div class="feat-name">Cockpit Themes</div><div class="feat-desc">Night Vision green, Stealth Black, Sunset Horizon, Arctic Ops — transform your cockpit.</div><div class="feat-count">5</div></div>
+      <div class="feat-card reveal reveal-d3"><div class="feat-icon"><div class="feat-icon-emoji">&#127878;</div></div><div class="feat-name">Landing Animations</div><div class="feat-desc">Fireworks, water cannon salutes, formation flybys, confetti drops on every successful landing.</div><div class="feat-count">7</div></div>
+      <div class="feat-card reveal"><div class="feat-icon"><img src="assets/logbook-tab.png" alt="Badges"></div><div class="feat-name">Pilot Badges</div><div class="feat-desc">Collect 12 achievement badges from Silver Wings to the legendary Immortal Aviator.</div><div class="feat-count">12</div></div>
+      <div class="feat-card reveal reveal-d1"><div class="feat-icon"><div class="feat-icon-emoji">&#127991;&#65039;</div></div><div class="feat-name">Tail Numbers</div><div class="feat-desc">Custom registrations from N-ALPHA to SR-71X. Your aircraft, your identity in the sky.</div><div class="feat-count">20</div></div>
+      <div class="feat-card reveal reveal-d2"><div class="feat-icon"><img src="assets/store-tab.png" alt="Airlines"></div><div class="feat-name">50 Airlines</div><div class="feat-desc">Fly for Emirates, Singapore Airlines, British Airways, and 47 more real-world carriers.</div><div class="feat-count">50</div></div>
+      <div class="feat-card reveal reveal-d3"><div class="feat-icon"><img src="assets/focus-tab.png" alt="Missions"></div><div class="feat-name">Missions</div><div class="feat-desc">Daily and weekly challenges that push your focus further. Extra rewards for completion.</div><div class="feat-count">&infin;</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- YOUR AVIATION CAREER -->
+<section class="career" id="career">
+  <div class="container">
+    <div style="text-align:center">
+      <span class="section-badge reveal">The Journey</span>
+      <h2 class="section-title reveal reveal-d1">Your Aviation <span class="text-gold">Career</span></h2>
+      <p class="section-sub reveal reveal-d2">This is what 6 months of focused flight looks like. Every stat earned. Every mile real.</p>
+    </div>
+    <div class="career-card reveal reveal-d3">
+      <div class="career-header">
+        <div class="career-avatar">&#128104;&#8205;&#9992;&#65039;</div>
+        <div class="career-meta">
+          <div class="career-callsign">BLACKBIRD</div>
+          <div class="career-rank">Ace &mdash; Top Rank</div>
+          <div class="career-aircraft">&#9992;&#65039; SR-71 Blackbird equipped</div>
+        </div>
+        <div class="career-streak">&#128293; 63-day streak</div>
+      </div>
+      <div class="career-stats" id="career-stats">
+        <div class="career-stat"><div class="career-stat-val" data-target="523">0</div><div class="career-stat-label">HOURS FOCUSED</div></div>
+        <div class="career-stat"><div class="career-stat-val" data-target="1847">0</div><div class="career-stat-label">FLIGHTS</div></div>
+        <div class="career-stat"><div class="career-stat-val" data-target="41">0</div><div class="career-stat-label">ROUTES FLOWN</div></div>
+        <div class="career-stat"><div class="career-stat-val" data-target="49999">0</div><div class="career-stat-label">NM EARNED</div></div>
+        <div class="career-stat"><div class="career-stat-val" data-target="47">0</div><div class="career-stat-label">AIRCRAFT OWNED</div></div>
+        <div class="career-stat"><div class="career-stat-val" data-target="12">0</div><div class="career-stat-label">BADGES</div></div>
+      </div>
+      <div class="career-logbook">
+        <div class="career-logbook-title">RECENT FLIGHTS</div>
+        <div class="career-flight" id="cf-0">
+          <div class="career-flight-icon"><img src="assets/aircraft/sr71.png" alt="SR-71" style="width:32px;height:32px;object-fit:contain"></div>
+          <div class="career-flight-info"><div class="career-flight-ac">SR-71 Blackbird</div><div class="career-flight-route">SIN &rarr; LHR &bull; 120 min</div></div>
+          <div class="career-flight-nm">+220 NM</div>
+        </div>
+        <div class="career-flight" id="cf-1">
+          <div class="career-flight-icon"><img src="assets/aircraft/concorde.png" alt="Concorde" style="width:32px;height:32px;object-fit:contain"></div>
+          <div class="career-flight-info"><div class="career-flight-ac">Concorde</div><div class="career-flight-route">JFK &rarr; LHR &bull; 90 min</div></div>
+          <div class="career-flight-nm">+180 NM</div>
+        </div>
+        <div class="career-flight" id="cf-2">
+          <div class="career-flight-icon"><img src="assets/aircraft/a380.png" alt="A380" style="width:32px;height:32px;object-fit:contain"></div>
+          <div class="career-flight-info"><div class="career-flight-ac">Airbus A380</div><div class="career-flight-route">DXB &rarr; SYD &bull; 50 min</div></div>
+          <div class="career-flight-nm">+96 NM</div>
+        </div>
+      </div>
+      <div class="career-footer">Starting today. One focused session at a time.</div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSIONS COMMAND CENTER -->
+<section class="missions" id="missions">
+  <div class="container">
+    <div style="text-align:center">
+      <span class="section-badge reveal">Daily Challenge</span>
+      <h2 class="section-title reveal reveal-d1">Missions <span class="text-gold">Command</span></h2>
+      <p class="section-sub reveal reveal-d2">Daily and weekly missions that push your focus further. Complete them for bonus NM and exclusive rewards.</p>
+    </div>
+    <div class="missions-featured reveal reveal-d3" id="missions-featured">
+      <div class="missions-featured-label">&#127919; TODAY'S CHALLENGE</div>
+      <div class="missions-featured-title">Transatlantic Sprint</div>
+      <div class="missions-featured-desc">Complete 3 flights of 60+ minutes on transatlantic routes.</div>
+      <div class="missions-featured-bar"><div class="missions-featured-fill" id="missions-fill"></div></div>
+      <div class="missions-featured-reward">+450 NM BONUS</div>
+    </div>
+    <div class="missions-tiers" id="missions-tiers">
+      <div class="mission-tier" style="transition-delay:0s">
+        <div class="mission-tier-icon">&#128218;</div>
+        <div class="mission-tier-name">Rookie</div>
+        <div class="mission-tier-reward" style="color:var(--tier-starter)">+50 NM</div>
+        <div class="mission-tier-example">"Complete 1 focus session of any length"</div>
+        <div class="mission-tier-desc">Perfect for getting started. Achievable every single day.</div>
+      </div>
+      <div class="mission-tier" style="transition-delay:.1s">
+        <div class="mission-tier-icon">&#128747;</div>
+        <div class="mission-tier-name">Navigator</div>
+        <div class="mission-tier-reward" style="color:var(--tier-regional)">+120 NM</div>
+        <div class="mission-tier-example">"Fly 2 different routes in a single day"</div>
+        <div class="mission-tier-desc">Requires planning and commitment. Builds momentum.</div>
+      </div>
+      <div class="mission-tier" style="transition-delay:.2s">
+        <div class="mission-tier-icon">&#128171;</div>
+        <div class="mission-tier-name">Captain</div>
+        <div class="mission-tier-reward" style="color:var(--tier-narrow)">+250 NM</div>
+        <div class="mission-tier-example">"Accumulate 90+ minutes of focus today"</div>
+        <div class="mission-tier-desc">Serious focus. This separates the dedicated from the casual.</div>
+      </div>
+      <div class="mission-tier" style="transition-delay:.3s">
+        <div class="mission-tier-icon">&#128640;</div>
+        <div class="mission-tier-name">Commander</div>
+        <div class="mission-tier-reward" style="color:var(--tier-wide)">+350 NM</div>
+        <div class="mission-tier-example">"Maintain a 5-day streak with 60+ min flights"</div>
+        <div class="mission-tier-desc">Consistency is everything. Prove you can show up day after day.</div>
+      </div>
+      <div class="mission-tier" style="transition-delay:.4s">
+        <div class="mission-tier-icon">&#127942;</div>
+        <div class="mission-tier-name">Ace</div>
+        <div class="mission-tier-reward" style="color:var(--tier-epic)">+450 NM</div>
+        <div class="mission-tier-example">"Complete 3 flights of 60+ minutes"</div>
+        <div class="mission-tier-desc">Elite-level dedication. Only the most focused pilots reach this tier.</div>
+      </div>
+      <div class="mission-tier" style="transition-delay:.5s">
+        <div class="mission-tier-icon">&#128081;</div>
+        <div class="mission-tier-name">Legendary</div>
+        <div class="mission-tier-reward" style="color:var(--tier-legendary)">+800 NM</div>
+        <div class="mission-tier-example">"7-day streak + 120 min flight in a day"</div>
+        <div class="mission-tier-desc">The ultimate challenge. Streak mastery meets endurance.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats" id="stats">
+  <div class="container">
+    <div class="stats-row">
+      <div class="stat-item reveal"><div class="stat-num" data-target="58">0</div><div class="stat-label">AIRCRAFT</div></div>
+      <div class="stat-item reveal reveal-d1"><div class="stat-num" data-target="60">0</div><div class="stat-label">ROUTES</div></div>
+      <div class="stat-item reveal reveal-d2"><div class="stat-num" data-target="50">0</div><div class="stat-label">AIRLINES</div></div>
+      <div class="stat-item reveal reveal-d3"><div class="stat-num" data-target="8">0</div><div class="stat-label">TIERS</div></div>
+      <div class="stat-item reveal reveal-d4"><div class="stat-num" data-target="10">0</div><div class="stat-label">RANKS</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div style="text-align:center">
+      <span class="section-badge reveal">FAQ</span>
+      <h2 class="section-title reveal reveal-d1">Questions?</h2>
+      <p class="section-sub reveal reveal-d2">Everything you need to know about Skytime.</p>
+    </div>
+    <div class="faq-grid" id="faq-grid"></div>
+  </div>
+</section>
+
+<!-- MORE IS COMING -->
+<section class="coming reveal" style="padding:100px 0">
+  <div class="container" style="text-align:center">
+    <div class="coming-card" style="max-width:900px;padding:56px 48px;border-radius:28px">
+      <div style="display:inline-block;font-size:10px;font-weight:700;letter-spacing:3px;color:var(--gold);border:1px solid var(--gold-border);background:var(--gold-dim);padding:5px 14px;border-radius:16px;margin-bottom:20px">ON THE HORIZON</div>
+      <h3 style="font-size:clamp(28px,4vw,40px);letter-spacing:-1.5px;line-height:1.1">The Sky Has <span class="text-gold">No Limit</span></h3>
+      <p style="max-width:480px;margin:0 auto 36px">Every update brings new aircraft, routes, and ways to fly. This is just the beginning.</p>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:720px;margin:0 auto">
+        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:24px 16px;text-align:center;transition:border-color .3s,transform .3s" onmouseenter="this.style.borderColor='var(--gold-border)';this.style.transform='translateY(-4px)'" onmouseleave="this.style.borderColor='';this.style.transform=''">
+          <div style="font-size:32px;margin-bottom:10px">&#9992;&#65039;</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">New Aircraft</div>
+          <div style="font-size:11px;color:var(--text-dim)">More tiers. More legends.</div>
+        </div>
+        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:24px 16px;text-align:center;transition:border-color .3s,transform .3s" onmouseenter="this.style.borderColor='var(--gold-border)';this.style.transform='translateY(-4px)'" onmouseleave="this.style.borderColor='';this.style.transform=''">
+          <div style="font-size:32px;margin-bottom:10px">&#127758;</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">Global Routes</div>
+          <div style="font-size:11px;color:var(--text-dim)">Fly every continent.</div>
+        </div>
+        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:24px 16px;text-align:center;transition:border-color .3s,transform .3s" onmouseenter="this.style.borderColor='var(--gold-border)';this.style.transform='translateY(-4px)'" onmouseleave="this.style.borderColor='';this.style.transform=''">
+          <div style="font-size:32px;margin-bottom:10px">&#127942;</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">Seasonal Events</div>
+          <div style="font-size:11px;color:var(--text-dim)">Limited-time missions.</div>
+        </div>
+        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:24px 16px;text-align:center;transition:border-color .3s,transform .3s" onmouseenter="this.style.borderColor='var(--gold-border)';this.style.transform='translateY(-4px)'" onmouseleave="this.style.borderColor='';this.style.transform=''">
+          <div style="font-size:32px;margin-bottom:10px">&#128640;</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">Multiplayer</div>
+          <div style="font-size:11px;color:var(--text-dim)">Challenge your friends.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="download">
+  <div class="container">
+    <h2 class="reveal">Ready for <span class="text-gold">Takeoff?</span></h2>
+    <p class="reveal reveal-d1">Download Skytime free. Your first flight is waiting.</p>
+    <div class="cta-stores reveal reveal-d2">
+      <a href="#" class="store-btn"><span class="store-btn-icon">&#63743;</span><span class="store-btn-text"><small>Download on the</small>App Store</span></a>
+      <a href="#" class="store-btn"><span class="store-btn-icon">&#9654;</span><span class="store-btn-text"><small>Get it on</small>Google Play</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-left"><img src="assets/icon.png" alt="Skytime"><span>&copy; 2026 Skytime. All rights reserved.</span></div>
+      <ul class="footer-links"><li><a href="mailto:hk.aviation.share@gmail.com">Contact</a></li><li><a href="privacy.html">Privacy Policy</a></li><li><a href="#">Terms</a></li></ul>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="ac-modal-overlay" id="ac-modal" onclick="closeModal(event)">
+  <div class="ac-modal">
+    <button class="ac-modal-close" onclick="document.getElementById('ac-modal').classList.remove('open');document.body.style.overflow=''">&times;</button>
+    <div class="ac-modal-legendary">LEGENDARY</div>
+    <img class="ac-modal-img" id="modal-img" src="" alt="">
+    <div class="ac-modal-name" id="modal-name"></div>
+    <div class="ac-modal-tagline" id="modal-tagline"></div>
+    <div class="ac-modal-year" id="modal-year"></div>
+    <div class="ac-modal-desc" id="modal-desc"></div>
+    <div class="ac-modal-specs">
+      <div class="ac-modal-spec"><div class="ac-modal-spec-val" id="modal-alt"></div><div class="ac-modal-spec-label">MAX ALTITUDE</div></div>
+      <div class="ac-modal-spec"><div class="ac-modal-spec-val" id="modal-speed"></div><div class="ac-modal-spec-label">MAX SPEED</div></div>
+      <div class="ac-modal-spec"><div class="ac-modal-spec-val" id="modal-pax"></div><div class="ac-modal-spec-label">PASSENGERS</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══ DATA ═══ */
+const LEGENDARIES = [
+  {id:'wright-flyer',name:'Wright Flyer',tagline:'Where It All Began',year:'1903',desc:'12 seconds. 120 feet. The flight that started everything. Orville and Wilbur Wright proved powered, controlled flight was possible — changing civilization forever.',alt:'30 ft',speed:'21 kts',pax:'1',img:'assets/aircraft/wright-flyer.png'},
+  {id:'spirit-stlouis',name:'Spirit of St. Louis',tagline:'First Solo Transatlantic',year:'1927',desc:'Charles Lindbergh flew 3,600 miles alone across the Atlantic in 33.5 hours. No GPS. No autopilot. Just courage and a single engine.',alt:'16,400 ft',speed:'100 kts',pax:'1',img:'assets/aircraft/spirit-stlouis.png'},
+  {id:'p51',name:'P-51 Mustang',tagline:"WWII's Finest Fighter",year:'1942',desc:'The fighter that turned the tide over Europe. With its Merlin engine and laminar flow wing, the Mustang could escort bombers all the way to Berlin and back.',alt:'41,900 ft',speed:'350 kts',pax:'1',img:'assets/aircraft/p51.png'},
+  {id:'spitfire',name:'Supermarine Spitfire',tagline:'Battle of Britain Hero',year:'1936',desc:'The elliptical-winged legend that held the line during the darkest days of WWII. Its grace and performance made it the most iconic fighter ever built.',alt:'36,500 ft',speed:'310 kts',pax:'1',img:'assets/aircraft/spitfire.png'},
+  {id:'x1',name:'Bell X-1',tagline:'Sound Barrier Shattered',year:'1947',desc:'On October 14, 1947, Chuck Yeager broke Mach 1 in this bullet-shaped rocket plane — proving supersonic flight was survivable.',alt:'71,900 ft',speed:'700 kts',pax:'1',img:'assets/aircraft/x1.png'},
+  {id:'u2',name:'U-2 Dragon Lady',tagline:"Cold War's Eye in the Sky",year:'1955',desc:'Flying at 70,000 feet — above anything that could touch it — the U-2 gathered intelligence that shaped the Cold War. Still operational after 70 years.',alt:'70,000 ft',speed:'410 kts',pax:'1',img:'assets/aircraft/u2.png'},
+  {id:'concorde',name:'Concorde',tagline:'Supersonic Elegance',year:'1976',desc:'London to New York in 3 hours 30 minutes. The Concorde was the future of aviation — a future we lost in 2003. Nothing has matched it since.',alt:'60,000 ft',speed:'1,150 kts',pax:'100',img:'assets/aircraft/concorde.png'},
+  {id:'sr71',name:'SR-71 Blackbird',tagline:'Mach 3.3 — Still Untouched',year:'1966',desc:'The fastest air-breathing aircraft ever. Over 4,000 missiles fired at it. None ever hit. Its defense? Simply outrun them.',alt:'85,000 ft',speed:'1,900 kts',pax:'2',img:'assets/aircraft/sr71.png'},
+  {id:'b2',name:'B-2 Spirit',tagline:'Invisible to the World',year:'1989',desc:'A $2.1 billion flying wing with the radar cross-section of a bird. It can penetrate the most sophisticated air defenses undetected.',alt:'50,000 ft',speed:'475 kts',pax:'2',img:'assets/aircraft/b2.png'},
+  {id:'x15',name:'X-15',tagline:'Edge of Space',year:'1959',desc:'Mach 6.7. 354,200 feet. The X-15 flew so high its pilots earned astronaut wings. The fastest and highest-flying winged aircraft in history.',alt:'354,200 ft',speed:'3,500 kts',pax:'1',img:'assets/aircraft/x15.png'},
+];
+
+const RANKS = [
+  {name:'Student Pilot',hrs:'0 hrs',emoji:'\ud83e\udeaa',desc:'Your journey begins. Every ace was once a student. Set your first timer and take to the sky.',pct:10},
+  {name:'Second Officer',hrs:'1 hr',emoji:'\ud83d\udc68\u200d\u2708\ufe0f',desc:"You've proven you can focus. Welcome to the flight deck. You're trusted with basic duties.",pct:15},
+  {name:'First Officer',hrs:'3 hrs',emoji:'\ud83d\udc68\u200d\u2708\ufe0f',desc:'You sit in the right seat. The captain trusts your judgment. Regional routes await.',pct:25},
+  {name:'Senior First Officer',hrs:'8 hrs',emoji:'\u2b50',desc:'Ready for command. Your skills are undeniable. International routes are now within reach.',pct:35},
+  {name:'Captain',hrs:'15 hrs',emoji:'\ud83c\udf96\ufe0f',desc:'You command the aircraft. The responsibility is yours. Long-haul flights are your domain.',pct:45},
+  {name:'Senior Captain',hrs:'30 hrs',emoji:'\ud83c\udfc5',desc:'Veteran commander. You\'ve flown every weather, every route. The fleet respects you.',pct:55},
+  {name:'Training Captain',hrs:'60 hrs',emoji:'\ud83d\udc68\u200d\ud83c\udfeb',desc:'You train the next generation. Your knowledge runs deep. Future pilots look up to you.',pct:65},
+  {name:'Chief Pilot',hrs:'120 hrs',emoji:'\ud83d\udee1\ufe0f',desc:'Head of the fleet. You oversee all operations. Strategic decisions are in your hands.',pct:80},
+  {name:'Test Pilot',hrs:'250 hrs',emoji:'\ud83d\udd31',desc:'Pushing the envelope. You fly what others won\'t. Experimental aircraft are your specialty.',pct:90},
+  {name:'Ace',hrs:'500 hrs',emoji:'\ud83c\udfc6',desc:'The pinnacle. Only the most dedicated reach this altitude. You are aviation royalty.',pct:100},
+];
+
+const FAQS = [
+  {q:'Is Skytime really free?',a:'Yes. The full game is free. Every aircraft, every route, every rank can be earned through focus. Afterburner is optional and never required.'},
+  {q:'How does the focus timer work?',a:'Set your desired duration (10-120 min), pick your aircraft and sound, then tap Begin Takeoff. If you leave the app, your flight crashes and you lose half your earnings.'},
+  {q:'What are Nautical Miles (NM)?',a:"NM is Skytime's in-game currency. Earn them by completing focus sessions. Use NM to unlock aircraft, routes, callsigns, themes, and more."},
+  {q:'How many aircraft can I collect?',a:'58 aircraft across 8 tiers — from the Cessna 172 to the legendary Wright Flyer, SR-71 Blackbird, and Concorde. Each has real specs and unique artwork.'},
+  {q:'Does it work offline?',a:'Yes. Skytime works fully offline. Your progress is saved locally. Focus anywhere — on a plane, in a library, or off the grid.'},
+  {q:'Is there a streak system?',a:'Yes. Fly daily to build your streak. Miss a day and it resets — unless you have Streak Shields. Streaks unlock bonus rewards.'},
+  {q:'Can I use Skytime while studying?',a:'Absolutely. Skytime was designed for students. Set your study duration, pick ambient cabin sounds, and earn NM while you work.'},
+  {q:'What happens if I leave the app?',a:'Your flight crashes. You lose half your NM earnings for that session. Stay committed and you land safely with full rewards.'},
+  {q:'How do I unlock new aircraft?',a:'Earn NM through focus sessions and spend them in the Hangar. Higher-tier aircraft cost more NM, rewarding longer dedication.'},
+  {q:"What's the best strategy to earn NM quickly?",a:'Longer sessions earn more NM per minute. Use aircraft with NM bonuses and maintain your daily streak for multipliers.'},
+  {q:'Can I change my aircraft during a flight?',a:"No. Once you've taken off, your aircraft is locked until landing. Choose wisely before each flight."},
+  {q:'Is there multiplayer?',a:'Not yet — but competitive features and multiplayer challenges are on our roadmap. Stay tuned for updates.'},
+  {q:'How do Streak Shields work?',a:'Streak Shields protect your streak if you miss a day. Earn them through missions or purchase in the store. They activate automatically.'},
+  {q:'What platforms is Skytime available on?',a:'Skytime is available on iOS and Android. Download free from the App Store or Google Play.'},
+  {q:'How often is new content added?',a:'We regularly update Skytime with new aircraft, routes, missions, and features. The universe is always expanding.'},
+  {q:'Can I listen to my own music while using Skytime?',a:"Yes. Skytime's ambient sounds play alongside your music. Or mute the in-app audio and use your own."},
+  {q:"What's the difference between aircraft tiers?",a:'8 tiers from Starter to Legendary. Higher tiers feature faster, rarer aircraft with bigger NM bonuses and real historical significance.'},
+  {q:'How does Afterburner work?',a:'Afterburner is an optional subscription that doubles your NM earnings and unlocks exclusive aircraft. Cancel anytime.'},
+  {q:'Can I use Skytime for work productivity?',a:'Yes. Many users use Skytime as a Pomodoro-style timer for work. The gamification keeps you motivated through long work sessions.'},
+  {q:"What's the maximum flight duration?",a:'You can set flights from 1 to 120 minutes. Longer flights earn proportionally more NM.'},
+  {q:'How do missions work?',a:'Daily and weekly missions give you specific focus targets. Complete them for bonus NM, Streak Shields, and exclusive rewards.'},
+];
+
+const COAST={na:[[72,-168],[70,-141],[60,-139],[55,-131],[48,-124],[37,-122],[32,-117],[25,-110],[20,-105],[18,-88],[25,-80],[27,-82],[30,-84],[30,-88],[29,-90],[30,-94],[26,-97],[19,-96],[15,-93],[9,-79],[7,-77],[9,-75],[12,-72],[12,-82],[18,-87],[22,-85],[24,-81],[26,-80],[28,-80],[30,-81],[32,-80],[36,-76],[39,-74],[41,-71],[45,-66],[47,-60],[52,-56],[54,-58],[47,-53],[52,-56],[60,-64],[66,-62],[70,-55],[76,-68],[81,-80],[75,-95],[71,-156],[72,-168]],sa:[[12,-72],[7,-77],[4,-77],[0,-80],[-4,-81],[-6,-77],[-5,-35],[-8,-35],[-12,-37],[-18,-39],[-23,-43],[-28,-49],[-34,-54],[-40,-62],[-48,-66],[-52,-69],[-56,-69],[-56,-64],[-52,-73],[-46,-76],[-43,-73],[-38,-73],[-36,-73],[-33,-71],[-28,-65],[-22,-64],[-18,-62],[-13,-61],[-8,-60],[-5,-52],[-2,-50],[2,-52],[5,-60],[8,-62],[10,-67],[12,-72]],eu:[[36,-10],[38,-8],[40,-9],[43,-9],[44,-2],[43,3],[44,8],[46,2],[48,-5],[48,0],[51,2],[53,5],[55,8],[55,10],[56,13],[54,14],[54,10],[57,10],[60,5],[62,6],[64,14],[66,14],[68,16],[70,20],[70,28],[69,32],[65,28],[60,30],[58,27],[55,21],[54,18],[51,15],[50,20],[49,17],[47,15],[46,14],[44,12],[43,10],[42,3],[41,2],[39,0],[37,-2],[36,-6],[36,-10]],af:[[37,10],[35,12],[33,12],[31,32],[30,33],[27,34],[24,37],[20,37],[15,42],[12,44],[12,50],[8,50],[5,42],[2,42],[0,42],[-2,41],[-6,40],[-12,41],[-16,37],[-22,35],[-26,33],[-29,31],[-30,27],[-34,18],[-34,26],[-32,29],[-28,32],[-26,33],[-25,35],[-22,35],[-16,12],[-12,14],[-8,13],[-5,12],[0,10],[5,1],[5,-2],[7,-2],[5,2],[4,10],[6,2],[6,10],[8,0],[10,-1],[10,-10],[15,-17],[20,-17],[25,-15],[28,-13],[33,-8],[37,-10],[37,10]],as:[[42,28],[41,42],[38,44],[33,44],[30,48],[27,50],[26,56],[24,51],[21,40],[15,43],[12,44],[12,50],[8,50],[5,42],[-2,41],[-6,40],[-7,105],[-6,107],[-2,107],[1,104],[5,100],[8,98],[10,99],[15,100],[18,106],[21,108],[22,114],[28,121],[32,122],[35,129],[38,130],[35,133],[33,136],[34,132],[40,130],[42,132],[46,134],[46,143],[50,140],[54,137],[53,142],[59,150],[64,160],[66,180],[68,180],[70,170],[68,168],[65,170],[64,177],[62,180],[58,163],[55,155],[50,156],[52,158],[56,162],[54,155],[52,141],[55,136],[58,133],[62,130],[65,120],[68,100],[72,100],[72,70],[68,68],[60,60],[55,55],[55,61],[52,55],[50,52],[48,50],[45,40],[42,28]],au:[[-12,130],[-16,123],[-20,118],[-23,114],[-27,114],[-32,116],[-35,118],[-35,138],[-38,145],[-38,148],[-34,151],[-28,153],[-24,151],[-20,149],[-18,146],[-14,136],[-12,132],[-12,130]],gl:[[60,-43],[64,-52],[69,-54],[72,-56],[76,-60],[78,-72],[82,-44],[78,-18],[76,-19],[73,-22],[69,-28],[66,-36],[62,-44],[60,-43]],uk:[[50,-5],[51,-3],[52,1],[53,0],[54,-1],[55,-3],[56,-5],[57,-6],[58,-5],[58,-3],[56,-2],[55,-1],[53,1],[52,2],[51,1],[50,-5]],jp:[[31,131],[33,130],[34,132],[35,133],[36,136],[37,137],[38,139],[39,140],[40,140],[41,141],[42,140],[43,145],[44,145],[45,142],[43,141],[41,140],[39,140],[38,138],[36,140],[35,140],[34,135],[33,133],[31,131]],nz:[[-35,174],[-37,175],[-38,178],[-41,176],[-42,174],[-43,172],[-44,169],[-46,167],[-46,170],[-44,172],[-43,173],[-41,175],[-38,177],[-35,174]],id:[[-5,105],[-6,106],[-7,110],[-8,112],[-8,114],[-7,116],[-8,120],[-8,116],[-7,112],[-6,110],[-5,105]]};
+
+const ROUTES=[{from:'LHR',to:'JFK',lat1:51.5,lon1:-0.5,lat2:40.6,lon2:-73.8},{from:'JFK',to:'LAX',lat1:40.6,lon1:-73.8,lat2:33.9,lon2:-118.4},{from:'DXB',to:'SIN',lat1:25.2,lon1:55.3,lat2:1.4,lon2:103.9},{from:'NRT',to:'SYD',lat1:35.8,lon1:139.8,lat2:-33.9,lon2:151.2},{from:'CDG',to:'HKG',lat1:49,lon1:2.5,lat2:22.3,lon2:113.9},{from:'SIN',to:'LHR',lat1:1.4,lon1:103.9,lat2:51.5,lon2:-0.5},{from:'SYD',to:'LAX',lat1:-33.9,lon1:151.2,lat2:33.9,lon2:-118.4},{from:'JFK',to:'NRT',lat1:40.6,lon1:-73.8,lat2:35.8,lon2:139.8},{from:'LHR',to:'DXB',lat1:51.5,lon1:-0.5,lat2:25.2,lon2:55.3},{from:'LAX',to:'HNL',lat1:33.9,lon1:-118.4,lat2:21.3,lon2:-157.9},{from:'JFK',to:'GRU',lat1:40.6,lon1:-73.8,lat2:-23.4,lon2:-46.5},{from:'DXB',to:'JNB',lat1:25.2,lon1:55.3,lat2:-26.1,lon2:28.2},{from:'ICN',to:'BKK',lat1:37.5,lon1:126.5,lat2:13.7,lon2:100.5},{from:'FRA',to:'JFK',lat1:50,lon1:8.6,lat2:40.6,lon2:-73.8},{from:'AMS',to:'NRT',lat1:52.3,lon1:4.8,lat2:35.8,lon2:139.8},{from:'IST',to:'SIN',lat1:41,lon1:29,lat2:1.4,lon2:103.9},{from:'SFO',to:'HNL',lat1:37.6,lon1:-122.4,lat2:21.3,lon2:-157.9},{from:'LHR',to:'SIN',lat1:51.5,lon1:-0.5,lat2:1.4,lon2:103.9},{from:'DOH',to:'SYD',lat1:25.3,lon1:51.6,lat2:-33.9,lon2:151.2},{from:'EWR',to:'DXB',lat1:40.7,lon1:-74.2,lat2:25.2,lon2:55.3},{from:'LAX',to:'NRT',lat1:33.9,lon1:-118.4,lat2:35.8,lon2:139.8},{from:'CDG',to:'JFK',lat1:49,lon1:2.5,lat2:40.6,lon2:-73.8},{from:'HKG',to:'SIN',lat1:22.3,lon1:113.9,lat2:1.4,lon2:103.9},{from:'ICN',to:'NRT',lat1:37.5,lon1:126.5,lat2:35.8,lon2:139.8},{from:'SIN',to:'SYD',lat1:1.4,lon1:103.9,lat2:-33.9,lon2:151.2},{from:'DXB',to:'BKK',lat1:25.2,lon1:55.3,lat2:13.7,lon2:100.5},{from:'LHR',to:'IST',lat1:51.5,lon1:-0.5,lat2:41,lon2:29},{from:'FRA',to:'SIN',lat1:50,lon1:8.6,lat2:1.4,lon2:103.9},{from:'CDG',to:'DXB',lat1:49,lon1:2.5,lat2:25.2,lon2:55.3},{from:'LAX',to:'SFO',lat1:33.9,lon1:-118.4,lat2:37.6,lon2:-122.4},{from:'SYD',to:'AKL',lat1:-33.9,lon1:151.2,lat2:-36.8,lon2:174.8},{from:'LHR',to:'CDG',lat1:51.5,lon1:-0.5,lat2:49,lon2:2.5},{from:'JFK',to:'MIA',lat1:40.6,lon1:-73.8,lat2:25.8,lon2:-80.3},{from:'MIA',to:'GRU',lat1:25.8,lon1:-80.3,lat2:-23.4,lon2:-46.5},{from:'GRU',to:'EZE',lat1:-23.4,lon1:-46.5,lat2:-34.8,lon2:-58.5},{from:'IST',to:'DXB',lat1:41,lon1:29,lat2:25.2,lon2:55.3},{from:'SIN',to:'BKK',lat1:1.4,lon1:103.9,lat2:13.7,lon2:100.5},{from:'HKG',to:'NRT',lat1:22.3,lon1:113.9,lat2:35.8,lon2:139.8},{from:'DXB',to:'DOH',lat1:25.2,lon1:55.3,lat2:25.3,lon2:51.6},{from:'FRA',to:'LHR',lat1:50,lon1:8.6,lat2:51.5,lon2:-0.5},{from:'JFK',to:'ORD',lat1:40.6,lon1:-73.8,lat2:41.9,lon2:-87.9},{from:'ORD',to:'LAX',lat1:41.9,lon1:-87.9,lat2:33.9,lon2:-118.4},{from:'LHR',to:'CPT',lat1:51.5,lon1:-0.5,lat2:-33.9,lon2:18.4},{from:'JNB',to:'CPT',lat1:-26.1,lon1:28.2,lat2:-33.9,lon2:18.4},{from:'DXB',to:'NRT',lat1:25.2,lon1:55.3,lat2:35.8,lon2:139.8},{from:'ICN',to:'LAX',lat1:37.5,lon1:126.5,lat2:33.9,lon2:-118.4},{from:'HKG',to:'SYD',lat1:22.3,lon1:113.9,lat2:-33.9,lon2:151.2},{from:'CDG',to:'NRT',lat1:49,lon1:2.5,lat2:35.8,lon2:139.8},{from:'AMS',to:'JFK',lat1:52.3,lon1:4.8,lat2:40.6,lon2:-73.8},{from:'IST',to:'JFK',lat1:41,lon1:29,lat2:40.6,lon2:-73.8},{from:'SFO',to:'NRT',lat1:37.6,lon1:-122.4,lat2:35.8,lon2:139.8},{from:'GRU',to:'LHR',lat1:-23.4,lon1:-46.5,lat2:51.5,lon2:-0.5},{from:'JNB',to:'NRT',lat1:-26.1,lon1:28.2,lat2:35.8,lon2:139.8},{from:'ORD',to:'LHR',lat1:41.9,lon1:-87.9,lat2:51.5,lon2:-0.5},{from:'MIA',to:'LHR',lat1:25.8,lon1:-80.3,lat2:51.5,lon2:-0.5},{from:'BKK',to:'NRT',lat1:13.7,lon1:100.5,lat2:35.8,lon2:139.8},{from:'SIN',to:'DOH',lat1:1.4,lon1:103.9,lat2:25.3,lon2:51.6},{from:'EZE',to:'SCL',lat1:-34.8,lon1:-58.5,lat2:-33.4,lon2:-70.8},{from:'JNB',to:'IST',lat1:-26.1,lon1:28.2,lat2:41,lon2:29},{from:'AKL',to:'SIN',lat1:-36.8,lon1:174.8,lat2:1.4,lon2:103.9}];
+
+const AIRPORTS={};
+ROUTES.forEach(r=>{if(!AIRPORTS[r.from])AIRPORTS[r.from]={lat:r.lat1,lon:r.lon1};if(!AIRPORTS[r.to])AIRPORTS[r.to]={lat:r.lat2,lon:r.lon2}});
+
+function toX(lon){return(lon+180)*(1000/360)}
+function toY(lat){return(90-lat)*(500/180)}
+
+/* ═══ PARTICLES ═══ */
+(function(){const c=document.getElementById('particles-canvas'),x=c.getContext('2d');let s=[];
+function resize(){c.width=innerWidth;c.height=innerHeight}resize();addEventListener('resize',resize);
+for(let i=0;i<140;i++)s.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.5+.3,o:Math.random()*.5+.1,dx:(Math.random()-.5)*.15,dy:(Math.random()-.5)*.1,p:Math.random()*Math.PI*2});
+function draw(){x.clearRect(0,0,c.width,c.height);const f=Math.max(0,1-scrollY/(innerHeight*1.5));s.forEach(s=>{s.x+=s.dx;s.y+=s.dy;s.p+=.01;if(s.x<0)s.x=c.width;if(s.x>c.width)s.x=0;if(s.y<0)s.y=c.height;if(s.y>c.height)s.y=0;x.beginPath();x.arc(s.x,s.y,s.r,0,Math.PI*2);x.fillStyle=`rgba(238,238,232,${s.o*(.5+.5*Math.sin(s.p))*f})`;x.fill()});requestAnimationFrame(draw)}draw()})();
+
+/* ═══ NAV ═══ */
+addEventListener('scroll',()=>document.getElementById('main-nav').classList.toggle('scrolled',scrollY>60));
+function toggleNav(){document.getElementById('nav-links').classList.toggle('mobile-open')}
+
+/* ═══ SCROLL REVEAL ═══ */
+const ro=new IntersectionObserver(e=>e.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+/* ═══ PARALLAX ═══ */
+addEventListener('scroll',()=>{const g=document.querySelector('.hero-glow');if(g)g.style.transform=`translate(-50%,calc(-50% + ${scrollY*.2}px))`});
+
+/* ═══ HOW IT WORKS PHONE ANIMATIONS ═══ */
+(function(){const el=document.getElementById('how-timer');const nmEl=document.getElementById('how-nm');const successNmEl=document.getElementById('how-success-nm');const presetsEl=document.getElementById('how-presets');
+const vals=[10,25,50,90,120];const howBonus=0.55;let i=1;
+function calcMiniNM(min){return Math.round(min*2*(1+howBonus))}
+function syncStep1(){if(el)el.textContent=vals[i];const nm=calcMiniNM(vals[i]);if(nmEl)nmEl.textContent='+'+nm;if(successNmEl)successNmEl.textContent='+'+nm;if(presetsEl){presetsEl.querySelectorAll('.mini-preset').forEach((p,j)=>p.classList.toggle('active',j===i))}}
+setInterval(()=>{i=(i+1)%vals.length;syncStep1()},2500);
+const ce=document.getElementById('how-countdown');
+const totalFlightSec=25*60;const cycleDur=8000;let cycleStart=Date.now();
+const phases=['\ud83d\udede TAXIING','\ud83d\udeeb TAKEOFF','\u2b06\ufe0f CLIMBING','\u2708\ufe0f CRUISING','\u2708\ufe0f SMOOTH CRUISING','\u2b07\ufe0f DESCENDING','\ud83d\udeec LANDING'];const pe=document.getElementById('how-phase');
+function syncPhase(){const elapsed=((Date.now()-cycleStart)%cycleDur)/cycleDur;const pi=Math.min(phases.length-1,Math.floor(elapsed*phases.length));if(pe)pe.textContent=phases[pi];requestAnimationFrame(syncPhase)}
+syncPhase();
+function syncCountdown(){const elapsed=((Date.now()-cycleStart)%cycleDur)/cycleDur;const remaining=Math.max(0,Math.round(totalFlightSec*(1-elapsed)));const m=Math.floor(remaining/60);const s=remaining%60;if(ce)ce.textContent=`${m}:${s.toString().padStart(2,'0')}`;if(elapsed>=0.99)cycleStart=Date.now();requestAnimationFrame(syncCountdown)}
+syncCountdown();
+})();
+
+
+/* ═══ FLEET ═══ */
+const fg=document.getElementById('fleet-grid');
+const lockedIndices=[3,6,9];
+LEGENDARIES.forEach((ac,i)=>{const card=document.createElement('div');const isLocked=lockedIndices.includes(i);
+card.className=`ac-card reveal${isLocked?' locked':''} ${i>0?'reveal-d'+Math.min(i%5,5):''}`;
+if(isLocked){card.innerHTML=`<div class="lock-overlay"><span class="lock-overlay-icon">&#128274;</span></div><img class="ac-card-img" src="${ac.img}" alt="${ac.name}"><div class="ac-card-name">???</div><div class="ac-card-tag">Download to discover</div><div class="ac-card-badge">CLASSIFIED</div>`}
+else{card.onclick=()=>openModal(ac);card.innerHTML=`<img class="ac-card-img" src="${ac.img}" alt="${ac.name}"><div class="ac-card-name">${ac.name}</div><div class="ac-card-tag">${ac.tagline}</div><div class="ac-card-badge">LEGENDARY</div>`}
+fg.appendChild(card);ro.observe(card)});
+
+/* ═══ MODAL ═══ */
+function openModal(ac){document.getElementById('modal-img').src=ac.img;document.getElementById('modal-name').textContent=ac.name;document.getElementById('modal-tagline').textContent=ac.tagline;document.getElementById('modal-year').textContent='Introduced '+ac.year;document.getElementById('modal-desc').textContent=ac.desc;document.getElementById('modal-alt').textContent=ac.alt;document.getElementById('modal-speed').textContent=ac.speed;document.getElementById('modal-pax').textContent=ac.pax;document.getElementById('ac-modal').classList.add('open');document.body.style.overflow='hidden'}
+function closeModal(e){if(e.target===e.currentTarget){document.getElementById('ac-modal').classList.remove('open');document.body.style.overflow=''}}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('ac-modal').classList.remove('open');document.body.style.overflow=''}});
+
+/* ═══ MAP ═══ */
+(function(){const svg=document.getElementById('world-svg'),ns='http://www.w3.org/2000/svg';
+Object.values(COAST).forEach(coords=>{const p=document.createElementNS(ns,'path');p.setAttribute('d',coords.map((c,i)=>`${i===0?'M':'L'}${toX(c[1]).toFixed(1)},${toY(c[0]).toFixed(1)}`).join(' ')+' Z');p.setAttribute('fill','rgba(255,255,255,0.03)');p.setAttribute('stroke','rgba(255,255,255,0.12)');p.setAttribute('stroke-width','0.8');svg.appendChild(p)});
+ROUTES.forEach((r,i)=>{const x1=toX(r.lon1),y1=toY(r.lat1),x2=toX(r.lon2),y2=toY(r.lat2);if(Math.abs(r.lon1-r.lon2)>180)return;const mx=(x1+x2)/2,my=(y1+y2)/2,d=Math.sqrt((x2-x1)**2+(y2-y1)**2),a=Math.min(d*.2,60);const p=document.createElementNS(ns,'path');p.setAttribute('d',`M${x1.toFixed(1)},${y1.toFixed(1)} Q${mx.toFixed(1)},${(my-a).toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)}`);p.setAttribute('fill','none');p.setAttribute('stroke','rgba(212,168,67,0.2)');p.setAttribute('stroke-width','0.6');p.classList.add('map-route');const l=d*1.2;p.style.strokeDasharray=l;p.style.strokeDashoffset=l;p.style.transition=`stroke-dashoffset 2s ease ${(i*.03).toFixed(2)}s`;svg.appendChild(p)});
+Object.entries(AIRPORTS).forEach(([code,ap])=>{const cx=toX(ap.lon),cy=toY(ap.lat);const g=document.createElementNS(ns,'circle');g.setAttribute('cx',cx);g.setAttribute('cy',cy);g.setAttribute('r','4');g.setAttribute('fill','url(#dot-glow)');svg.appendChild(g);const d=document.createElementNS(ns,'circle');d.setAttribute('cx',cx);d.setAttribute('cy',cy);d.setAttribute('r','2');d.setAttribute('fill','#D4A843');svg.appendChild(d);const t=document.createElementNS(ns,'text');t.setAttribute('x',cx);t.setAttribute('y',cy-6);t.setAttribute('text-anchor','middle');t.setAttribute('fill','rgba(255,255,255,0.5)');t.setAttribute('font-size','6');t.setAttribute('font-weight','600');t.setAttribute('font-family','DM Sans,sans-serif');t.textContent=code;svg.appendChild(t)});
+new IntersectionObserver(e=>e.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('.map-route').forEach(r=>r.style.strokeDashoffset='0')}}),{threshold:.2}).observe(document.getElementById('map-container'))})();
+
+/* ═══ RANKS (Horizontal Bar) ═══ */
+(function(){const nodesEl=document.getElementById('rank-bar-nodes');const fill=document.getElementById('rank-bar-fill');
+const positions=[0,11,22,35,45,55,68,77,89,100];
+RANKS.forEach((r,i)=>{const n=document.createElement('div');n.className='rank-bar-node';n.style.left=positions[i]+'%';n.dataset.idx=i;
+n.innerHTML=`${r.emoji}<span class="rank-bar-label">${r.name}</span>`;
+n.onclick=()=>selectRank(i);nodesEl.appendChild(n)});
+function selectRank(i){const r=RANKS[i];
+document.getElementById('rd-emoji').textContent=r.emoji;document.getElementById('rd-name').textContent=r.name;document.getElementById('rd-hours').textContent=r.hrs+' required';document.getElementById('rd-desc').textContent=r.desc;document.getElementById('rd-fill').style.width=r.pct+'%';document.getElementById('rd-pct').textContent=`${i+1} of 10 ranks`;
+document.querySelectorAll('.rank-bar-node').forEach((n,j)=>{n.classList.toggle('active',j===i);n.classList.toggle('passed',j<i)})}
+new IntersectionObserver(e=>e.forEach(e=>{if(e.isIntersecting){fill.style.width='45%';selectRank(4)}}),{threshold:.2}).observe(document.getElementById('rank-bar-wrap'));
+selectRank(4)})();
+
+/* ═══ FAQ ═══ */
+(function(){const grid=document.getElementById('faq-grid');
+FAQS.forEach((f,i)=>{const item=document.createElement('div');item.className=`faq-item reveal${i>0?' reveal-d'+(i%3+1):''}`;
+item.innerHTML=`<div class="faq-q" onclick="toggleFaq(this)"><span>${f.q}</span><span class="faq-arrow">&#8964;</span></div><div class="faq-a"><div class="faq-a-inner">${f.a}</div></div>`;
+grid.appendChild(item);ro.observe(item)})})();
+function toggleFaq(el){const item=el.parentElement;const was=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(f=>{f.classList.remove('open');f.querySelector('.faq-a').style.maxHeight=null});if(!was){item.classList.add('open');item.querySelector('.faq-a').style.maxHeight=item.querySelector('.faq-a').scrollHeight+'px'}}
+
+/* ═══ COUNTERS ═══ */
+function animateCounter(el,target,dur=2000){const st=performance.now();(function tick(now){const p=Math.min((now-st)/dur,1);el.textContent=Math.round(target*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(tick)})(st)}
+new IntersectionObserver(e=>e.forEach(e=>{if(e.isIntersecting)e.target.querySelectorAll('[data-target]').forEach(c=>{if(!c.dataset.counted){c.dataset.counted='1';animateCounter(c,parseInt(c.dataset.target))}})}),{threshold:.3}).observe(document.querySelector('.stats'));
+new IntersectionObserver(e=>e.forEach(e=>{if(e.isIntersecting)e.target.querySelectorAll('[data-target]').forEach(c=>{if(!c.dataset.counted){c.dataset.counted='1';animateCounter(c,parseInt(c.dataset.target))}})}),{threshold:.3}).observe(document.querySelector('.map-stats'));
+
+/* ═══ AFTERBURNER PHRASES ═══ */
+(function(){const phrases=document.querySelectorAll('.ab-phrase');if(!phrases.length)return;let cur=0;
+setInterval(()=>{phrases[cur].classList.remove('active');cur=(cur+1)%phrases.length;phrases[cur].classList.add('active')},3000)})();
+
+/* ═══ SMOOTH SCROLL ═══ */
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href');if(id==='#')return;e.preventDefault();const t=document.querySelector(id);if(t){t.scrollIntoView({behavior:'smooth',block:'start'});document.getElementById('nav-links').classList.remove('mobile-open')}}));
+
+/* ═══ SOCIAL PROOF ═══ */
+(function(){
+const spSection=document.getElementById('social-proof');
+if(!spSection)return;
+/* Counter animation for social proof */
+new IntersectionObserver(e=>e.forEach(e=>{if(e.isIntersecting){
+const pEl=document.getElementById('sp-pilots');const nEl=document.getElementById('sp-nm');
+if(pEl&&!pEl.dataset.counted){pEl.dataset.counted='1';const st=performance.now();(function tick(now){const p=Math.min((now-st)/2000,1);pEl.textContent=Math.round(10000*(1-Math.pow(1-p,3))).toLocaleString();if(p<1)requestAnimationFrame(tick)})(st)}
+if(nEl&&!nEl.dataset.counted){nEl.dataset.counted='1';const st=performance.now();(function tick(now){const p=Math.min((now-st)/2500,1);const v=Math.round(2400000*(1-Math.pow(1-p,3)));nEl.textContent=v>=1000000?(v/1000000).toFixed(1)+'M':v.toLocaleString();if(p<1)requestAnimationFrame(tick)})(st)}
+}}),{threshold:.3}).observe(spSection);
+/* Testimonial rotation */
+const quotes=document.querySelectorAll('.sp-quote');let qi=0;
+setInterval(()=>{quotes[qi].classList.remove('active');qi=(qi+1)%quotes.length;quotes[qi].classList.add('active')},3000);
+})();
+
+/* ═══ THE STAKES ═══ */
+(function(){
+const grid=document.getElementById('stakes-grid');if(!grid)return;
+new IntersectionObserver(e=>e.forEach(e=>{if(e.isIntersecting){
+const safeBar=document.getElementById('stakes-safe-bar');
+const crashBar=document.getElementById('stakes-crash-bar');
+const safePanel=document.getElementById('stakes-safe');
+const crashPanel=document.getElementById('stakes-crash');
+if(safeBar)safeBar.style.width='100%';
+if(crashBar)crashBar.style.width='48%';
+if(safePanel)safePanel.classList.add('animate');
+if(crashPanel)setTimeout(()=>crashPanel.classList.add('animate'),800);
+}}),{threshold:.3}).observe(grid);
+})();
+
+/* (Fleet Wall + Cockpit JS removed) */
+
+/* ═══ CAREER COUNTERS ═══ */
+(function(){
+const careerStats=document.getElementById('career-stats');if(!careerStats)return;
+new IntersectionObserver(e=>e.forEach(e=>{if(e.isIntersecting){
+e.target.querySelectorAll('[data-target]').forEach(c=>{
+if(!c.dataset.counted){c.dataset.counted='1';
+const target=parseInt(c.dataset.target);const dur=target>10000?2500:2000;
+const st=performance.now();
+(function tick(now){const p=Math.min((now-st)/dur,1);
+c.textContent=Math.round(target*(1-Math.pow(1-p,3))).toLocaleString();
+if(p<1)requestAnimationFrame(tick)})(st)}});
+/* Animate career flights */
+setTimeout(()=>{const f0=document.getElementById('cf-0');if(f0)f0.classList.add('visible')},300);
+setTimeout(()=>{const f1=document.getElementById('cf-1');if(f1)f1.classList.add('visible')},600);
+setTimeout(()=>{const f2=document.getElementById('cf-2');if(f2)f2.classList.add('visible')},900);
+}}),{threshold:.3}).observe(careerStats);
+})();
+
+/* ═══ MISSIONS ═══ */
+(function(){
+const featured=document.getElementById('missions-featured');
+const tiersEl=document.getElementById('missions-tiers');
+if(!featured||!tiersEl)return;
+new IntersectionObserver(e=>e.forEach(e=>{if(e.isIntersecting){
+const fill=document.getElementById('missions-fill');if(fill)fill.style.width='33%';
+tiersEl.querySelectorAll('.mission-tier').forEach((t,i)=>{
+setTimeout(()=>t.classList.add('visible'),i*100)});
+}}),{threshold:.2}).observe(featured);
+})();
+</script>
+</body>
+</html>
