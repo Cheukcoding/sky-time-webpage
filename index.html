@@ -6,8 +6,9 @@
 <title>Skytime — Your Focus. Your Flight.</title>
 <meta name="description" content="Turn every focused minute into a real flight. Skytime is the aviation-themed productivity app that transforms focus sessions into immersive flight experiences.">
 <meta name="theme-color" content="#0C0C0E">
-<link rel="icon" type="image/png" href="assets/favicon.png">
-<link rel="apple-touch-icon" href="assets/favicon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon.png">
+<link rel="manifest" href="manifest.json">
 <meta property="og:title" content="Skytime — Your Focus. Your Flight.">
 <meta property="og:description" content="Turn every focused minute into a real flight. 58 aircraft. 60 routes. 26 airports. All earned through focus.">
 <meta property="og:type" content="website">
@@ -314,8 +315,7 @@ footer{padding:48px 0;border-top:1px solid var(--card-border);position:relative;
 .ab-2x{font-size:96px;font-weight:900;letter-spacing:-4px;background:linear-gradient(135deg,#FF7814,#FFB347,#FF5500);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:ab2xPulse 2s ease-in-out infinite;position:relative;line-height:1}
 @keyframes ab2xPulse{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.08);filter:brightness(1.3)}}
 .ab-2x-label{font-size:14px;font-weight:700;letter-spacing:4px;color:rgba(255,120,20,0.6);margin-top:4px}
-.ab-2x-ring{position:absolute;inset:-24px;border-radius:50%;border:2px solid rgba(255,120,20,0.15);animation:ab2xRing 2s ease-in-out infinite}
-@keyframes ab2xRing{0%,100%{transform:scale(1);opacity:0.5}50%{transform:scale(1.3);opacity:0}}
+.ab-2x-ring{display:none}
 .ab-phrases{height:28px;overflow:hidden;position:relative;margin:16px 0 24px}
 .ab-phrase{position:absolute;width:100%;text-align:center;font-size:16px;color:var(--text-mid);font-weight:600;opacity:0;transform:translateY(20px);transition:all .5s ease}
 .ab-phrase.active{opacity:1;transform:translateY(0)}
@@ -875,15 +875,15 @@ footer{padding-bottom:80px!important}
       </div>
       <div class="pilot-id-tags">
         <div class="pilot-id-tag">
-          <span class="pilot-id-tag-icon" style="font-size:22px">&#127941;</span>
+          <span class="pilot-id-tag-icon" style="font-size:20px;width:28px;height:28px;display:flex;align-items:center;justify-content:center">&#127941;</span>
           <span class="pilot-id-tag-label">Gold Wings</span>
         </div>
         <div class="pilot-id-tag">
-          <span class="pilot-id-tag-icon" style="font-size:22px;display:flex;align-items:center;justify-content:center"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/ef/a7/12/efa71273-ba79-47de-a993-92ab79e3e6aa/AppIcon-0-0-1x_U007emarketing-0-8-0-sRGB-0-85-220.png/512x512bb.jpg" alt="Emirates" style="width:22px;height:22px;border-radius:5px"></span>
+          <span class="pilot-id-tag-icon" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center"><img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/ef/a7/12/efa71273-ba79-47de-a993-92ab79e3e6aa/AppIcon-0-0-1x_U007emarketing-0-8-0-sRGB-0-85-220.png/512x512bb.jpg" alt="Emirates" style="width:24px;height:24px;border-radius:6px"></span>
           <span class="pilot-id-tag-label">Emirates</span>
         </div>
         <div class="pilot-id-tag">
-          <span class="pilot-id-tag-icon" style="font-size:22px">&#127991;&#65039;</span>
+          <span class="pilot-id-tag-icon" style="font-size:20px;width:28px;height:28px;display:flex;align-items:center;justify-content:center">&#127991;&#65039;</span>
           <span class="pilot-id-tag-label">HK-1997</span>
         </div>
       </div>
@@ -901,12 +901,12 @@ footer{padding-bottom:80px!important}
     </div>
     <div class="feat-grid">
       <div class="feat-card reveal"><div class="feat-icon"><div class="feat-icon-emoji">&#127908;</div></div><div class="feat-name">Callsigns</div><div class="feat-desc">Choose from legendary pilot callsigns. MAVERICK, GHOST RIDER, VIPER, ICEMAN, and 24 more.</div><div class="feat-count">28</div></div>
-      <div class="feat-card reveal reveal-d1"><div class="feat-icon"><div class="feat-icon-emoji">&#9992;&#65039;</div></div><div class="feat-name">Ambient Sounds</div><div class="feat-desc">Jet cabin rumble, storm fronts, high altitude winds, coastal approaches — immersive audio.</div><div class="feat-count">9</div></div>
+      <div class="feat-card reveal reveal-d1"><div class="feat-icon"><div class="feat-icon-emoji">&#127911;</div></div><div class="feat-name">Ambient Sounds</div><div class="feat-desc">Jet cabin rumble, storm fronts, high altitude winds, coastal approaches — immersive audio.</div><div class="feat-count">9</div></div>
       <div class="feat-card reveal reveal-d2"><div class="feat-icon"><div class="feat-icon-emoji">&#127899;&#65039;</div></div><div class="feat-name">Cockpit Themes</div><div class="feat-desc">Night Vision green, Stealth Black, Sunset Horizon, Arctic Ops — transform your cockpit.</div><div class="feat-count">5</div></div>
       <div class="feat-card reveal reveal-d3"><div class="feat-icon"><div class="feat-icon-emoji">&#127878;</div></div><div class="feat-name">Landing Animations</div><div class="feat-desc">Fireworks, water cannon salutes, formation flybys, confetti drops on every successful landing.</div><div class="feat-count">7</div></div>
-      <div class="feat-card reveal"><div class="feat-icon"><img src="assets/logbook-tab.png" alt="Badges"></div><div class="feat-name">Pilot Badges</div><div class="feat-desc">Collect 12 achievement badges from Silver Wings to the legendary Immortal Aviator.</div><div class="feat-count">12</div></div>
+      <div class="feat-card reveal"><div class="feat-icon"><div class="feat-icon-emoji">&#127894;</div></div><div class="feat-name">Pilot Badges</div><div class="feat-desc">Collect 12 achievement badges from Silver Wings to the legendary Immortal Aviator.</div><div class="feat-count">12</div></div>
       <div class="feat-card reveal reveal-d1"><div class="feat-icon"><div class="feat-icon-emoji">&#127991;&#65039;</div></div><div class="feat-name">Tail Numbers</div><div class="feat-desc">Custom registrations from N-ALPHA to SR-71X. Your aircraft, your identity in the sky.</div><div class="feat-count">20</div></div>
-      <div class="feat-card reveal reveal-d2"><div class="feat-icon"><img src="assets/store-tab.png" alt="Airlines"></div><div class="feat-name">50 Airlines</div><div class="feat-desc">Fly for Emirates, Singapore Airlines, British Airways, and 47 more real-world carriers.</div><div class="feat-count">50</div></div>
+      <div class="feat-card reveal reveal-d2"><div class="feat-icon"><div class="feat-icon-emoji">&#9992;&#65039;</div></div><div class="feat-name">50 Airlines</div><div class="feat-desc">Fly for Emirates, Singapore Airlines, British Airways, and 47 more real-world carriers.</div><div class="feat-count">50</div></div>
       <div class="feat-card reveal reveal-d3"><div class="feat-icon"><img src="assets/focus-tab.png" alt="Missions"></div><div class="feat-name">Missions</div><div class="feat-desc">Daily and weekly challenges that push your focus further. Extra rewards for completion.</div><div class="feat-count">&infin;</div></div>
     </div>
   </div>
