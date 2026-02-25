@@ -97,6 +97,37 @@ nav .container{display:flex;align-items:center;justify-content:space-between}
 .mini-preset.active{color:var(--gold);border-color:var(--gold-border);background:var(--gold-dim)}
 .mini-gold-btn{width:100%;padding:8px;border-radius:8px;background:linear-gradient(135deg,#D4A843,#C49B38);text-align:center;font-size:11px;font-weight:700;color:#0C0C0E;margin-top:auto}
 /* Phone 2 - Flight */
+.mini-plane-fly{animation:planeFly 4s ease-in-out infinite;filter:drop-shadow(0 4px 12px rgba(212,168,67,0.3))}
+@keyframes planeFly{
+0%{transform:translateY(0) rotate(-2deg)}
+25%{transform:translateY(-6px) rotate(-4deg)}
+50%{transform:translateY(-2px) rotate(-1deg)}
+75%{transform:translateY(-8px) rotate(-3deg)}
+100%{transform:translateY(0) rotate(-2deg)}
+}
+/* Phone 3 - Celebration */
+.mini-celebrate-plane{animation:celebratePlane 3s ease-in-out infinite}
+@keyframes celebratePlane{
+0%,100%{transform:translateY(0) rotate(0deg)}
+50%{transform:translateY(-4px) rotate(2deg)}
+}
+.mini-celebrate-nm{animation:celebrateNM 2s ease-in-out infinite}
+@keyframes celebrateNM{
+0%,100%{transform:scale(1)}
+15%{transform:scale(1.12)}
+30%{transform:scale(1)}
+}
+.mini-sparkle-wrap{position:relative;width:100%;display:flex;flex-direction:column;align-items:center}
+.mini-sparkle{position:absolute;width:4px;height:4px;border-radius:50%;pointer-events:none}
+.mini-sparkle:nth-child(1){background:#D4A843;top:-8px;left:20%;animation:sparkle1 2.5s ease-in-out infinite}
+.mini-sparkle:nth-child(2){background:#3FB06A;top:-4px;right:18%;animation:sparkle2 3s ease-in-out infinite .3s}
+.mini-sparkle:nth-child(3){background:#F0D78C;top:0px;left:30%;animation:sparkle3 2.8s ease-in-out infinite .6s}
+.mini-sparkle:nth-child(4){background:#D4A843;top:-6px;right:28%;animation:sparkle1 2.2s ease-in-out infinite .9s}
+.mini-sparkle:nth-child(5){background:#3FB06A;top:2px;left:15%;animation:sparkle2 2.6s ease-in-out infinite .4s}
+.mini-sparkle:nth-child(6){background:#F0D78C;top:-10px;right:12%;animation:sparkle3 3.2s ease-in-out infinite .7s}
+@keyframes sparkle1{0%,100%{opacity:0;transform:translateY(0) scale(0)}25%{opacity:1;transform:translateY(-12px) scale(1)}75%{opacity:0.5;transform:translateY(-20px) scale(0.6)}100%{opacity:0;transform:translateY(-28px) scale(0)}}
+@keyframes sparkle2{0%,100%{opacity:0;transform:translateY(0) scale(0)}30%{opacity:1;transform:translateY(-10px) scale(1.2)}70%{opacity:0.4;transform:translateY(-22px) scale(0.5)}100%{opacity:0;transform:translateY(-30px) scale(0)}}
+@keyframes sparkle3{0%,100%{opacity:0;transform:translateY(0) scale(0)}20%{opacity:1;transform:translateY(-14px) scale(0.8)}80%{opacity:0.3;transform:translateY(-24px) scale(0.4)}100%{opacity:0;transform:translateY(-32px) scale(0)}}
 .mini-flight-phase{font-size:10px;color:var(--gold);font-weight:700;letter-spacing:1px;margin-top:12px;animation:phase-cycle 6s linear infinite}
 @keyframes phase-cycle{0%,16%{opacity:1}17%{opacity:0}18%{opacity:1}100%{opacity:1}}
 .mini-altitude{width:100%;height:80px;margin:16px 0;position:relative;border-left:1px solid var(--card-border);border-bottom:1px solid var(--card-border)}
@@ -634,7 +665,7 @@ footer{padding-bottom:80px!important}
         <div class="mini-phone">
           <div class="mini-notch"></div>
           <div class="mini-screen" style="align-items:center">
-            <div style="margin-top:8px"><img src="assets/aircraft/concorde.png" alt="Concorde" style="width:80px;height:80px;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(212,168,67,0.3))"></div>
+            <div style="margin-top:8px"><img src="assets/aircraft/concorde.png" alt="Concorde" class="mini-plane-fly" style="width:80px;height:80px;object-fit:contain"></div>
             <div class="mini-countdown" id="how-countdown" style="margin-top:8px">18:42</div>
             <div class="mini-flight-phase" id="how-phase" style="margin-top:4px">&#9992;&#65039; CRUISING</div>
             <div class="mini-phase-text" style="margin-top:4px">FL510 &bull; 1,150 kts</div>
@@ -668,10 +699,14 @@ footer{padding-bottom:80px!important}
         <div class="mini-phone">
           <div class="mini-notch"></div>
           <div class="mini-screen" style="justify-content:center;align-items:center">
-            <img src="assets/aircraft/concorde.png" alt="Concorde" style="width:70px;height:70px;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));margin-bottom:6px">
+            <div class="mini-sparkle-wrap">
+              <div class="mini-sparkle"></div><div class="mini-sparkle"></div><div class="mini-sparkle"></div>
+              <div class="mini-sparkle"></div><div class="mini-sparkle"></div><div class="mini-sparkle"></div>
+              <img src="assets/aircraft/concorde.png" alt="Concorde" class="mini-celebrate-plane" style="width:70px;height:70px;object-fit:contain;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));margin-bottom:6px">
+            </div>
             <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:2px">Concorde</div>
             <div style="display:flex;align-items:center;gap:4px;margin-bottom:4px"><div style="width:5px;height:5px;border-radius:50%;background:var(--green)"></div><div style="font-size:9px;font-weight:700;color:var(--green);letter-spacing:2px">SAFE LANDING</div></div>
-            <div class="mini-success-nm" id="how-success-nm">+78</div>
+            <div class="mini-success-nm mini-celebrate-nm" id="how-success-nm">+78</div>
             <div class="mini-success-label">NAUTICAL MILES</div>
             <div class="mini-summary-card">
               <div class="mini-summary-title">FLIGHT SUMMARY</div>
@@ -775,7 +810,7 @@ footer{padding-bottom:80px!important}
 
 
 <!-- FLEET -->
-<section class="fleet mobile-collapse" id="fleet">
+<section class="fleet" id="fleet">
   <div class="container">
     <div style="text-align:center">
       <span class="section-badge reveal">The Collection</span>
@@ -848,12 +883,14 @@ footer{padding-bottom:80px!important}
 </section>
 
 <!-- PILOT IDENTIFICATION CARD -->
-<section class="passport reveal" style="padding:100px 0">
-  <div class="container" style="text-align:center">
-    <span class="section-badge">Your Identity</span>
-    <h2 class="section-title">Pilot Identification</h2>
-    <p class="section-sub">Your rank, callsign, airline, and badges — all in one aviation ID. Earned through focus.</p>
-    <div class="pilot-id">
+<section class="passport reveal mobile-collapse" style="padding:100px 0">
+  <div class="container">
+    <div style="text-align:center">
+      <span class="section-badge">Your Identity</span>
+      <h2 class="section-title">Pilot Identification</h2>
+      <p class="section-sub">Your rank, callsign, airline, and badges — all in one aviation ID. Earned through focus.</p>
+    </div>
+    <div class="pilot-id" style="text-align:center">
       <div class="pilot-id-header">
         <span class="pilot-id-header-text">PILOT IDENTIFICATION</span>
         <span class="pilot-id-dot"></span>
@@ -1024,8 +1061,12 @@ footer{padding-bottom:80px!important}
 </section>
 
 <!-- STATS -->
-<section class="stats" id="stats">
+<section class="stats mobile-collapse" id="stats">
   <div class="container">
+    <div style="text-align:center">
+      <span class="section-badge reveal">By The Numbers</span>
+      <h2 class="section-title reveal reveal-d1">Skytime in <span class="text-gold">Numbers</span></h2>
+    </div>
     <div class="stats-row">
       <div class="stat-item reveal"><div class="stat-num" data-target="58">0</div><div class="stat-label">AIRCRAFT</div></div>
       <div class="stat-item reveal reveal-d1"><div class="stat-num" data-target="60">0</div><div class="stat-label">ROUTES</div></div>
@@ -1037,7 +1078,7 @@ footer{padding-bottom:80px!important}
 </section>
 
 <!-- FAQ -->
-<section class="faq" id="faq">
+<section class="faq mobile-collapse" id="faq">
   <div class="container">
     <div style="text-align:center">
       <span class="section-badge reveal">FAQ</span>
@@ -1050,9 +1091,13 @@ footer{padding-bottom:80px!important}
 </section>
 
 <!-- MORE IS COMING -->
-<section class="coming reveal" style="padding:100px 0">
-  <div class="container" style="text-align:center">
-    <div class="coming-card" style="max-width:900px;padding:56px 48px;border-radius:28px">
+<section class="coming reveal mobile-collapse" style="padding:100px 0">
+  <div class="container">
+    <div style="text-align:center">
+      <span class="section-badge">On The Horizon</span>
+      <h2 class="section-title">What's <span class="text-gold">Next</span></h2>
+    </div>
+    <div class="coming-card" style="max-width:900px;margin:0 auto;padding:56px 48px;border-radius:28px;text-align:center">
       <div style="display:inline-block;font-size:10px;font-weight:700;letter-spacing:3px;color:var(--gold);border:1px solid var(--gold-border);background:var(--gold-dim);padding:5px 14px;border-radius:16px;margin-bottom:20px">ON THE HORIZON</div>
       <h3 style="font-size:clamp(28px,4vw,40px);letter-spacing:-1.5px;line-height:1.1">The Sky Has <span class="text-gold">No Limit</span></h3>
       <p style="max-width:480px;margin:0 auto 36px">Every update brings new aircraft, routes, and ways to fly. This is just the beginning.</p>
