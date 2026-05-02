@@ -159,14 +159,14 @@ nav .container{display:flex;align-items:center;justify-content:space-between}
 .ac-card-badge{display:inline-block;font-size:9px;font-weight:700;letter-spacing:2px;color:var(--tier-legendary);border:1px solid rgba(255,215,0,0.25);background:rgba(255,215,0,0.06);padding:4px 10px;border-radius:8px;margin-top:10px}
 /* Locked cards */
 .ac-card.locked{cursor:default}
-.ac-card.locked:hover{transform:none;border-color:var(--card-border);box-shadow:none}
+.ac-card.locked:hover{transform:none;border-color:var(--card-border);box-shadow:none;animation:card-shake 0.4s ease}
 .ac-card.locked::before{display:none}
-.ac-card.locked .ac-card-img{filter:grayscale(1) brightness(0.4);transform:none !important}
+.ac-card.locked .ac-card-img{filter:grayscale(1) brightness(0) opacity(0);transform:none !important;visibility:hidden}
 .ac-card.locked .ac-card-name{color:var(--text-dim)}
 .ac-card.locked .ac-card-tag{color:var(--text-dim)}
 .ac-card.locked .ac-card-badge{color:var(--text-dim);border-color:var(--card-border);background:var(--card-bg)}
-.lock-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3;pointer-events:none}
-.lock-overlay-icon{font-size:44px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.8));opacity:0.85}
+.lock-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:3;pointer-events:none;padding-bottom:60px}
+.lock-overlay-icon{font-size:72px;filter:drop-shadow(0 4px 16px rgba(0,0,0,0.8));opacity:0.9}
 
 .fleet-note{text-align:center;margin-top:40px;font-size:16px;color:var(--text-dim)}
 .fleet-note strong{color:var(--text-mid)}
@@ -305,7 +305,7 @@ footer{padding:48px 0;border-top:1px solid var(--card-border);position:relative;
 .rank-bar-node{position:absolute;transform:translate(-50%,-50%);top:50%;width:36px;height:36px;border-radius:50%;background:var(--bg);border:2px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;transition:all .3s;z-index:2}
 .rank-bar-node:hover,.rank-bar-node.active{border-color:var(--gold);box-shadow:0 0 16px rgba(212,168,67,0.25);transform:translate(-50%,-50%) scale(1.15)}
 .rank-bar-node.passed{border-color:var(--gold-border)}
-.rank-bar-label{position:absolute;top:28px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--text-dim);white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none;font-weight:600}
+.rank-bar-label{position:absolute;top:45px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--text-dim);white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none;font-weight:600}
 .rank-bar-node:hover .rank-bar-label,.rank-bar-node.active .rank-bar-label{opacity:1;color:var(--gold)}
 .rank-detail{display:flex;gap:40px;align-items:center;background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;padding:36px 40px;transition:all .4s ease;min-height:180px}
 .rank-detail-emoji{font-size:56px;flex-shrink:0}
@@ -324,7 +324,7 @@ footer{padding:48px 0;border-top:1px solid var(--card-border);position:relative;
 .pilot-id-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(63,176,106,0.5)}
 .pilot-id-body{display:flex;gap:20px;padding:24px;align-items:flex-start}
 .pilot-id-left{display:flex;flex-direction:column;align-items:center;gap:4px}
-.pilot-id-avatar{width:56px;height:56px;border-radius:14px;background:var(--card-bg);border:1px solid var(--card-border);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:var(--text-dim)}
+.pilot-id-avatar{width:56px;height:56px;border-radius:14px;background:var(--card-bg);border:1px solid var(--card-border);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;opacity:1}
 .pilot-id-rank-icon{font-size:20px}
 .pilot-id-right{flex:1}
 .pilot-id-callsign{font-size:20px;font-weight:800;letter-spacing:0.5px;margin-bottom:2px}
@@ -383,6 +383,7 @@ footer{padding:48px 0;border-top:1px solid var(--card-border);position:relative;
 .stakes-vs{display:flex;align-items:center;justify-content:center;padding:0 24px;font-size:24px;font-weight:800;color:var(--text-dim);letter-spacing:2px}
 .stakes-warning{max-width:900px;margin:24px auto 0;padding:16px 24px;border-radius:12px;background:rgba(226,74,63,0.06);border:1px solid rgba(226,74,63,0.2);text-align:center;font-size:13px;font-weight:600;color:var(--red)}
 @keyframes shake{0%,100%{transform:translateX(0)}10%,30%,50%,70%,90%{transform:translateX(-2px)}20%,40%,60%,80%{transform:translateX(2px)}}
+@keyframes card-shake{0%,100%{transform:translateX(0)}15%,45%,75%{transform:translateX(-3px)}30%,60%,90%{transform:translateX(3px)}}
 .stakes-panel.crash.animate{animation:shake 0.6s ease}
 @keyframes safe-glow{0%,100%{box-shadow:0 0 0 rgba(63,176,106,0)}50%{box-shadow:0 0 30px rgba(63,176,106,0.1)}}
 .stakes-panel.safe.animate{animation:safe-glow 2s ease-in-out infinite}
@@ -579,8 +580,9 @@ footer{padding-bottom:80px!important}
       <li><a href="#map">World Map</a></li>
       <li><a href="#ranks">Ranks</a></li>
       <li><a href="#features">Features</a></li>
+      <li><a href="faq.html">FAQ</a></li>
       <li><a href="privacy.html">Privacy</a></li>
-      <li><a href="#download" class="nav-cta">Download Free</a></li>
+      <li><a href="https://apps.apple.com/app/skytime/id6759454258" class="nav-cta" target="_blank" rel="noopener">Download Free</a></li>
     </ul>
     <div class="hamburger" id="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
   </div>
@@ -595,7 +597,7 @@ footer{padding-bottom:80px!important}
     <h1 class="reveal reveal-d2">Your Screen Time,<br><span class="gold-word">Reimagined.</span></h1>
     <p class="hero-sub reveal reveal-d3">Every focused minute earns <strong style="color:var(--gold)">Nautical Miles (NM)</strong> — your in-app currency for unlocking aircraft, routes &amp; upgrades. Stay off your phone. Fly further.</p>
     <div class="hero-btns reveal reveal-d4">
-      <a href="#download" class="btn-primary">Download Free</a>
+      <a href="https://apps.apple.com/app/skytime/id6759454258" class="btn-primary" target="_blank" rel="noopener">Download Free</a>
       <a href="#how" class="btn-outline">See How It Works</a>
     </div>
   </div>
@@ -897,7 +899,7 @@ footer{padding-bottom:80px!important}
       </div>
       <div class="pilot-id-body">
         <div class="pilot-id-left">
-          <div class="pilot-id-avatar" style="font-size:36px;width:72px;height:72px;border-radius:18px;background:linear-gradient(135deg,rgba(212,168,67,0.1),rgba(212,168,67,0.03))">&#128104;&#8205;&#9992;&#65039;</div>
+          <div class="pilot-id-avatar" style="font-size:36px;width:72px;height:72px;border-radius:18px;background:linear-gradient(135deg,rgba(212,168,67,0.15),rgba(212,168,67,0.05));opacity:1;filter:none">&#128104;&#8205;&#9992;&#65039;</div>
           <div class="pilot-id-rank-icon" style="font-size:24px">&#127942;</div>
         </div>
         <div class="pilot-id-right" style="text-align:left">
@@ -1077,18 +1079,6 @@ footer{padding-bottom:80px!important}
   </div>
 </section>
 
-<!-- FAQ -->
-<section class="faq mobile-collapse" id="faq">
-  <div class="container">
-    <div style="text-align:center">
-      <span class="section-badge reveal">FAQ</span>
-      <h2 class="section-title reveal reveal-d1">Questions?</h2>
-      <p class="section-sub reveal reveal-d2">Everything you need to know about Skytime.</p>
-    </div>
-    <div class="faq-grid" id="faq-grid"></div>
-    <div class="faq-show-more" id="faq-show-more" style="display:none"><button onclick="showAllFaq()">Show All Questions</button></div>
-  </div>
-</section>
 
 <!-- MORE IS COMING -->
 <section class="coming reveal mobile-collapse" style="padding:100px 0">
@@ -1102,22 +1092,22 @@ footer{padding-bottom:80px!important}
       <h3 style="font-size:clamp(28px,4vw,40px);letter-spacing:-1.5px;line-height:1.1">The Sky Has <span class="text-gold">No Limit</span></h3>
       <p style="max-width:480px;margin:0 auto 36px">Every update brings new aircraft, routes, and ways to fly. This is just the beginning.</p>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:720px;margin:0 auto">
-        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:24px 16px;text-align:center;transition:border-color .3s,transform .3s" onmouseenter="this.style.borderColor='var(--gold-border)';this.style.transform='translateY(-4px)'" onmouseleave="this.style.borderColor='';this.style.transform=''">
+        <div style="background:var(--card-bg);border:none;border-radius:16px;padding:24px 16px;text-align:center;transition:border-color .3s,transform .3s" onmouseenter="this.style.borderColor='var(--gold)';this.style.transform='translateY(-4px)'" onmouseleave="this.style.borderColor='';this.style.transform=''">
           <div style="font-size:32px;margin-bottom:10px">&#9992;&#65039;</div>
           <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">New Aircraft</div>
           <div style="font-size:11px;color:var(--text-dim)">More tiers. More legends.</div>
         </div>
-        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:24px 16px;text-align:center;transition:border-color .3s,transform .3s" onmouseenter="this.style.borderColor='var(--gold-border)';this.style.transform='translateY(-4px)'" onmouseleave="this.style.borderColor='';this.style.transform=''">
+        <div style="background:var(--card-bg);border:none;border-radius:16px;padding:24px 16px;text-align:center;transition:border-color .3s,transform .3s" onmouseenter="this.style.borderColor='var(--gold)';this.style.transform='translateY(-4px)'" onmouseleave="this.style.borderColor='';this.style.transform=''">
           <div style="font-size:32px;margin-bottom:10px">&#127758;</div>
           <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">Global Routes</div>
           <div style="font-size:11px;color:var(--text-dim)">Fly every continent.</div>
         </div>
-        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:24px 16px;text-align:center;transition:border-color .3s,transform .3s" onmouseenter="this.style.borderColor='var(--gold-border)';this.style.transform='translateY(-4px)'" onmouseleave="this.style.borderColor='';this.style.transform=''">
+        <div style="background:var(--card-bg);border:none;border-radius:16px;padding:24px 16px;text-align:center;transition:border-color .3s,transform .3s" onmouseenter="this.style.borderColor='var(--gold)';this.style.transform='translateY(-4px)'" onmouseleave="this.style.borderColor='';this.style.transform=''">
           <div style="font-size:32px;margin-bottom:10px">&#127942;</div>
           <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">Seasonal Events</div>
           <div style="font-size:11px;color:var(--text-dim)">Limited-time missions.</div>
         </div>
-        <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:24px 16px;text-align:center;transition:border-color .3s,transform .3s" onmouseenter="this.style.borderColor='var(--gold-border)';this.style.transform='translateY(-4px)'" onmouseleave="this.style.borderColor='';this.style.transform=''">
+        <div style="background:var(--card-bg);border:none;border-radius:16px;padding:24px 16px;text-align:center;transition:border-color .3s,transform .3s" onmouseenter="this.style.borderColor='var(--gold)';this.style.transform='translateY(-4px)'" onmouseleave="this.style.borderColor='';this.style.transform=''">
           <div style="font-size:32px;margin-bottom:10px">&#128640;</div>
           <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">Multiplayer</div>
           <div style="font-size:11px;color:var(--text-dim)">Challenge your friends.</div>
@@ -1133,7 +1123,7 @@ footer{padding-bottom:80px!important}
     <h2 class="reveal">Ready for <span class="text-gold">Takeoff?</span></h2>
     <p class="reveal reveal-d1">Download Skytime free. Your first flight is waiting.</p>
     <div class="cta-stores reveal reveal-d2">
-      <a href="#" class="store-btn"><span class="store-btn-icon">&#63743;</span><span class="store-btn-text"><small>Download on the</small>App Store</span></a>
+      <a href="https://apps.apple.com/app/skytime/id6759454258" class="store-btn" target="_blank" rel="noopener"><span class="store-btn-icon">&#63743;</span><span class="store-btn-text"><small>Download on the</small>App Store</span></a>
       <a href="#" class="store-btn" style="opacity:0.5;pointer-events:none;position:relative"><span class="store-btn-icon">&#9654;</span><span class="store-btn-text"><small>Coming Soon on</small>Google Play</span></a>
     </div>
   </div>
@@ -1151,7 +1141,7 @@ footer{padding-bottom:80px!important}
 <!-- STICKY DOWNLOAD BAR (mobile) -->
 <div class="sticky-download-bar" id="sticky-download">
   <span class="sticky-download-label">&#9992;&#65039; Your first flight awaits</span>
-  <a href="#download" class="sticky-download-btn">&#63743; Download Free</a>
+  <a href="https://apps.apple.com/app/skytime/id6759454258" class="sticky-download-btn" target="_blank" rel="noopener">&#63743; Download Free</a>
 </div>
 
 <!-- MODAL -->
@@ -1200,29 +1190,6 @@ const RANKS = [
   {name:'Ace',hrs:'500 hrs',emoji:'\ud83c\udfc6',desc:'The pinnacle. Only the most dedicated reach this altitude. You are aviation royalty.',pct:100},
 ];
 
-const FAQS = [
-  {q:'Is Skytime really free?',a:'Yes. The full game is free. Every aircraft, every route, every rank can be earned through focus. Afterburner is optional and never required.'},
-  {q:'How does the focus timer work?',a:'Set your desired duration (10-120 min), pick your aircraft and sound, then tap Begin Takeoff. If you leave the app, your flight crashes and you earn zero nautical miles for that session.'},
-  {q:'What are Nautical Miles (NM)?',a:"NM is Skytime's in-game currency. Earn them by completing focus sessions. Use NM to unlock aircraft, routes, callsigns, themes, and more."},
-  {q:'How many aircraft can I collect?',a:'58 aircraft across 8 tiers — from the Cessna 172 to the legendary Wright Flyer, SR-71 Blackbird, and Concorde. Each has real specs and unique artwork.'},
-  {q:'Does it work offline?',a:'Yes. Skytime works fully offline. Your progress is saved locally. Focus anywhere — on a plane, in a library, or off the grid.'},
-  {q:'Is there a streak system?',a:'Yes. Fly daily to build your streak. Miss a day and it resets — unless you have Streak Shields. Streaks unlock bonus rewards.'},
-  {q:'Can I use Skytime while studying?',a:'Absolutely. Skytime was designed for students. Set your study duration, pick ambient cabin sounds, and earn NM while you work.'},
-  {q:'What happens if I leave the app?',a:'Your flight crashes. You earn zero NM for that session — all progress is lost. Stay committed and you land safely with full rewards.'},
-  {q:'How do I unlock new aircraft?',a:'Earn NM through focus sessions and spend them in the Hangar. Higher-tier aircraft cost more NM, rewarding longer dedication.'},
-  {q:"What's the best strategy to earn NM quickly?",a:'Longer sessions earn more NM per minute. Use aircraft with NM bonuses and maintain your daily streak for multipliers.'},
-  {q:'Can I change my aircraft during a flight?',a:"No. Once you've taken off, your aircraft is locked until landing. Choose wisely before each flight."},
-  {q:'Is there multiplayer?',a:'Not yet — but competitive features and multiplayer challenges are on our roadmap. Stay tuned for updates.'},
-  {q:'How do Streak Shields work?',a:'Streak Shields protect your streak if you miss a day. Earn them through missions or purchase in the store. They activate automatically.'},
-  {q:'What platforms is Skytime available on?',a:'Skytime is available now on iOS — download free from the App Store. Android support is coming soon.'},
-  {q:'How often is new content added?',a:'We regularly update Skytime with new aircraft, routes, missions, and features. The universe is always expanding.'},
-  {q:'Can I listen to my own music while using Skytime?',a:"Yes. Skytime's ambient sounds play alongside your music. Or mute the in-app audio and use your own."},
-  {q:"What's the difference between aircraft tiers?",a:'8 tiers from Starter to Legendary. Higher tiers feature faster, rarer aircraft with bigger NM bonuses and real historical significance.'},
-  {q:'How does Afterburner work?',a:'Afterburner is an optional subscription that doubles your NM earnings and unlocks exclusive aircraft. Cancel anytime.'},
-  {q:'Can I use Skytime for work productivity?',a:'Yes. Many users use Skytime as a Pomodoro-style timer for work. The gamification keeps you motivated through long work sessions.'},
-  {q:"What's the maximum flight duration?",a:'You can set flights from 1 to 120 minutes. Longer flights earn proportionally more NM.'},
-  {q:'How do missions work?',a:'Daily and weekly missions give you specific focus targets. Complete them for bonus NM, Streak Shields, and exclusive rewards.'},
-];
 
 const COAST={na:[[72,-168],[70,-141],[60,-139],[55,-131],[48,-124],[37,-122],[32,-117],[25,-110],[20,-105],[18,-88],[25,-80],[27,-82],[30,-84],[30,-88],[29,-90],[30,-94],[26,-97],[19,-96],[15,-93],[9,-79],[7,-77],[9,-75],[12,-72],[12,-82],[18,-87],[22,-85],[24,-81],[26,-80],[28,-80],[30,-81],[32,-80],[36,-76],[39,-74],[41,-71],[45,-66],[47,-60],[52,-56],[54,-58],[47,-53],[52,-56],[60,-64],[66,-62],[70,-55],[76,-68],[81,-80],[75,-95],[71,-156],[72,-168]],sa:[[12,-72],[7,-77],[4,-77],[0,-80],[-4,-81],[-6,-77],[-5,-35],[-8,-35],[-12,-37],[-18,-39],[-23,-43],[-28,-49],[-34,-54],[-40,-62],[-48,-66],[-52,-69],[-56,-69],[-56,-64],[-52,-73],[-46,-76],[-43,-73],[-38,-73],[-36,-73],[-33,-71],[-28,-65],[-22,-64],[-18,-62],[-13,-61],[-8,-60],[-5,-52],[-2,-50],[2,-52],[5,-60],[8,-62],[10,-67],[12,-72]],eu:[[36,-10],[38,-8],[40,-9],[43,-9],[44,-2],[43,3],[44,8],[46,2],[48,-5],[48,0],[51,2],[53,5],[55,8],[55,10],[56,13],[54,14],[54,10],[57,10],[60,5],[62,6],[64,14],[66,14],[68,16],[70,20],[70,28],[69,32],[65,28],[60,30],[58,27],[55,21],[54,18],[51,15],[50,20],[49,17],[47,15],[46,14],[44,12],[43,10],[42,3],[41,2],[39,0],[37,-2],[36,-6],[36,-10]],af:[[37,10],[35,12],[33,12],[31,32],[30,33],[27,34],[24,37],[20,37],[15,42],[12,44],[12,50],[8,50],[5,42],[2,42],[0,42],[-2,41],[-6,40],[-12,41],[-16,37],[-22,35],[-26,33],[-29,31],[-30,27],[-34,18],[-34,26],[-32,29],[-28,32],[-26,33],[-25,35],[-22,35],[-16,12],[-12,14],[-8,13],[-5,12],[0,10],[5,1],[5,-2],[7,-2],[5,2],[4,10],[6,2],[6,10],[8,0],[10,-1],[10,-10],[15,-17],[20,-17],[25,-15],[28,-13],[33,-8],[37,-10],[37,10]],as:[[42,28],[41,42],[38,44],[33,44],[30,48],[27,50],[26,56],[24,51],[21,40],[15,43],[12,44],[12,50],[8,50],[5,42],[-2,41],[-6,40],[-7,105],[-6,107],[-2,107],[1,104],[5,100],[8,98],[10,99],[15,100],[18,106],[21,108],[22,114],[28,121],[32,122],[35,129],[38,130],[35,133],[33,136],[34,132],[40,130],[42,132],[46,134],[46,143],[50,140],[54,137],[53,142],[59,150],[64,160],[66,180],[68,180],[70,170],[68,168],[65,170],[64,177],[62,180],[58,163],[55,155],[50,156],[52,158],[56,162],[54,155],[52,141],[55,136],[58,133],[62,130],[65,120],[68,100],[72,100],[72,70],[68,68],[60,60],[55,55],[55,61],[52,55],[50,52],[48,50],[45,40],[42,28]],au:[[-12,130],[-16,123],[-20,118],[-23,114],[-27,114],[-32,116],[-35,118],[-35,138],[-38,145],[-38,148],[-34,151],[-28,153],[-24,151],[-20,149],[-18,146],[-14,136],[-12,132],[-12,130]],gl:[[60,-43],[64,-52],[69,-54],[72,-56],[76,-60],[78,-72],[82,-44],[78,-18],[76,-19],[73,-22],[69,-28],[66,-36],[62,-44],[60,-43]],uk:[[50,-5],[51,-3],[52,1],[53,0],[54,-1],[55,-3],[56,-5],[57,-6],[58,-5],[58,-3],[56,-2],[55,-1],[53,1],[52,2],[51,1],[50,-5]],jp:[[31,131],[33,130],[34,132],[35,133],[36,136],[37,137],[38,139],[39,140],[40,140],[41,141],[42,140],[43,145],[44,145],[45,142],[43,141],[41,140],[39,140],[38,138],[36,140],[35,140],[34,135],[33,133],[31,131]],nz:[[-35,174],[-37,175],[-38,178],[-41,176],[-42,174],[-43,172],[-44,169],[-46,167],[-46,170],[-44,172],[-43,173],[-41,175],[-38,177],[-35,174]],id:[[-5,105],[-6,106],[-7,110],[-8,112],[-8,114],[-7,116],[-8,120],[-8,116],[-7,112],[-6,110],[-5,105]]};
 
@@ -1238,7 +1205,7 @@ function toY(lat){return(90-lat)*(500/180)}
 (function(){const c=document.getElementById('particles-canvas'),x=c.getContext('2d');let s=[];
 function resize(){c.width=innerWidth;c.height=innerHeight}resize();addEventListener('resize',resize);
 for(let i=0;i<140;i++)s.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.5+.3,o:Math.random()*.5+.1,dx:(Math.random()-.5)*.15,dy:(Math.random()-.5)*.1,p:Math.random()*Math.PI*2});
-function draw(){x.clearRect(0,0,c.width,c.height);const f=Math.max(0,1-scrollY/(innerHeight*1.5));s.forEach(s=>{s.x+=s.dx;s.y+=s.dy;s.p+=.01;if(s.x<0)s.x=c.width;if(s.x>c.width)s.x=0;if(s.y<0)s.y=c.height;if(s.y>c.height)s.y=0;x.beginPath();x.arc(s.x,s.y,s.r,0,Math.PI*2);x.fillStyle=`rgba(238,238,232,${s.o*(.5+.5*Math.sin(s.p))*f})`;x.fill()});requestAnimationFrame(draw)}draw()})();
+function draw(){x.clearRect(0,0,c.width,c.height);const f=Math.max(0.15,1-scrollY/(innerHeight*4));s.forEach(s=>{s.x+=s.dx;s.y+=s.dy;s.p+=.01;if(s.x<0)s.x=c.width;if(s.x>c.width)s.x=0;if(s.y<0)s.y=c.height;if(s.y>c.height)s.y=0;x.beginPath();x.arc(s.x,s.y,s.r,0,Math.PI*2);x.fillStyle=`rgba(238,238,232,${s.o*(.5+.5*Math.sin(s.p))*f})`;x.fill()});requestAnimationFrame(draw)}draw()})();
 
 /* ═══ NAV ═══ */
 addEventListener('scroll',()=>document.getElementById('main-nav').classList.toggle('scrolled',scrollY>60));
@@ -1296,16 +1263,11 @@ n.innerHTML=`${r.emoji}<span class="rank-bar-label">${r.name}</span>`;
 n.onclick=()=>selectRank(i);nodesEl.appendChild(n)});
 function selectRank(i){const r=RANKS[i];
 document.getElementById('rd-emoji').textContent=r.emoji;document.getElementById('rd-name').textContent=r.name;document.getElementById('rd-hours').textContent=r.hrs+' required';document.getElementById('rd-desc').textContent=r.desc;document.getElementById('rd-fill').style.width=r.pct+'%';document.getElementById('rd-pct').textContent=`${i+1} of 10 ranks`;
+fill.style.width=positions[i]+'%';
 document.querySelectorAll('.rank-bar-node').forEach((n,j)=>{n.classList.toggle('active',j===i);n.classList.toggle('passed',j<i)})}
 new IntersectionObserver(e=>e.forEach(e=>{if(e.isIntersecting){fill.style.width='45%';selectRank(4)}}),{threshold:.2}).observe(document.getElementById('rank-bar-wrap'));
 selectRank(4)})();
 
-/* ═══ FAQ ═══ */
-(function(){const grid=document.getElementById('faq-grid');
-FAQS.forEach((f,i)=>{const item=document.createElement('div');item.className=`faq-item reveal${i>0?' reveal-d'+(i%3+1):''}`;
-item.innerHTML=`<div class="faq-q" onclick="toggleFaq(this)"><span>${f.q}</span><span class="faq-arrow">&#8964;</span></div><div class="faq-a"><div class="faq-a-inner">${f.a}</div></div>`;
-grid.appendChild(item);ro.observe(item)})})();
-function toggleFaq(el){const item=el.parentElement;const was=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(f=>{f.classList.remove('open');f.querySelector('.faq-a').style.maxHeight=null});if(!was){item.classList.add('open');item.querySelector('.faq-a').style.maxHeight=item.querySelector('.faq-a').scrollHeight+'px'}}
 
 /* ═══ COUNTERS ═══ */
 function animateCounter(el,target,dur=2000){const st=performance.now();(function tick(now){const p=Math.min((now-st)/dur,1);el.textContent=Math.round(target*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(tick)})(st)}
