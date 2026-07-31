@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ — Skytime</title>
+<meta name="description" content="Frequently asked questions about Skytime — the aviation-themed productivity app.">
+<meta name="theme-color" content="#0C0C0E">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0C0C0E; --bg-alt:#12120F; --gold:#D4A843; --gold-dim:rgba(212,168,67,0.08);
+  --gold-border:rgba(212,168,67,0.25); --gold-light:rgba(212,168,67,0.6);
+  --text:#EEEEE8; --text-dim:rgba(255,255,255,0.4); --text-mid:rgba(255,255,255,0.6);
+  --text-light:rgba(255,255,255,0.8);
+  --border:rgba(255,255,255,0.1); --card-border:rgba(255,255,255,0.07);
+  --card-bg:rgba(255,255,255,0.04);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:'DM Sans',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+a{text-decoration:none;color:inherit}
+
+/* Nav */
+.faq-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(12,12,14,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--card-border);padding:16px 0}
+.faq-nav .container{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between}
+.faq-nav-logo{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;letter-spacing:-0.5px}
+.faq-nav-logo img{width:32px;height:32px;border-radius:8px}
+.faq-nav a.back{font-size:14px;color:var(--text-mid);font-weight:600;transition:color .2s}
+.faq-nav a.back:hover{color:var(--gold)}
+
+/* Content */
+.faq-wrap{max-width:800px;margin:0 auto;padding:120px 24px 80px}
+.faq-header{text-align:center;margin-bottom:56px}
+.faq-badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-border);background:var(--gold-dim);padding:6px 16px;border-radius:20px;margin-bottom:20px}
+.faq-title{font-size:clamp(36px,5vw,56px);font-weight:800;line-height:1.1;letter-spacing:-2px;margin-bottom:16px}
+.faq-sub{font-size:17px;color:var(--text-mid);max-width:520px;margin:0 auto;line-height:1.7}
+
+/* FAQ Items */
+.faq-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.faq-item{border:1px solid var(--card-border);border-radius:14px;overflow:hidden;transition:border-color .3s}
+.faq-item.open{border-color:var(--gold-border)}
+.faq-q{padding:20px 24px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:15px;font-weight:600;color:var(--text-light);transition:color .2s;user-select:none;gap:12px}
+.faq-item.open .faq-q{color:var(--gold)}
+.faq-arrow{font-size:18px;transition:transform .3s;color:var(--text-dim);flex-shrink:0}
+.faq-item.open .faq-arrow{transform:rotate(180deg);color:var(--gold)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(0.22,1,0.36,1)}
+.faq-a-inner{padding:0 24px 20px;font-size:14px;color:var(--text-mid);line-height:1.7}
+
+/* CTA */
+.faq-cta{text-align:center;margin-top:64px;padding:48px 32px;border-radius:20px;border:1px solid var(--gold-border);background:var(--gold-dim)}
+.faq-cta h3{font-size:24px;font-weight:800;margin-bottom:8px}
+.faq-cta p{font-size:15px;color:var(--text-mid);margin-bottom:20px}
+.faq-cta a{display:inline-block;background:linear-gradient(135deg,#D4A843,#C49B38);color:#0C0C0E;font-size:15px;font-weight:700;padding:14px 32px;border-radius:12px;transition:transform .2s,box-shadow .2s}
+.faq-cta a:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(212,168,67,0.3)}
+
+/* Footer */
+.faq-footer{text-align:center;padding:40px 24px;border-top:1px solid var(--card-border);margin-top:64px;color:var(--text-dim);font-size:13px;font-weight:600}
+
+/* Categories */
+.faq-category{margin-bottom:40px}
+.faq-category-title{font-size:13px;font-weight:700;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:16px;padding-left:4px}
+
+@media(max-width:600px){
+  .faq-wrap{padding:100px 16px 60px}
+  .faq-q{padding:16px 18px;font-size:14px}
+  .faq-a-inner{padding:0 18px 16px;font-size:13px}
+  .faq-title{font-size:clamp(28px,6vw,36px)}
+}
+</style>
+</head>
+<body>
+<nav class="faq-nav">
+  <div class="container">
+    <a href="index.html" class="faq-nav-logo"><img src="assets/icon.png" alt="Skytime">Skytime</a>
+    <a href="index.html" class="back">&larr; Back to Home</a>
+  </div>
+</nav>
+
+<div class="faq-wrap">
+  <div class="faq-header">
+    <div class="faq-badge">FAQ</div>
+    <h1 class="faq-title">Frequently Asked <span style="color:var(--gold)">Questions</span></h1>
+    <p class="faq-sub">Everything you need to know about Skytime.</p>
+  </div>
+
+  <!-- Getting Started -->
+  <div class="faq-category">
+    <div class="faq-category-title">Getting Started</div>
+    <div class="faq-grid" id="faq-started"></div>
+  </div>
+
+  <!-- Gameplay -->
+  <div class="faq-category">
+    <div class="faq-category-title">Gameplay</div>
+    <div class="faq-grid" id="faq-gameplay"></div>
+  </div>
+
+  <!-- Aircraft & Content -->
+  <div class="faq-category">
+    <div class="faq-category-title">Aircraft & Content</div>
+    <div class="faq-grid" id="faq-content"></div>
+  </div>
+
+  <!-- Afterburner & Platform -->
+  <div class="faq-category">
+    <div class="faq-category-title">Afterburner & Platform</div>
+    <div class="faq-grid" id="faq-platform"></div>
+  </div>
+
+  <div class="faq-cta">
+    <h3>Still have questions?</h3>
+    <p>Reach out to us — we'd love to hear from you.</p>
+    <a href="mailto:hk.aviation.share@gmail.com">Contact Us</a>
+  </div>
+</div>
+
+<div class="faq-footer">&copy; 2026 Skytime. All rights reserved.</div>
+
+<script>
+const FAQS_STARTED = [
+  {q:'Is Skytime really free?',a:'Yes. The full game is free. Every aircraft, every route, every rank can be earned through focus. Afterburner is optional and never required.'},
+  {q:'How does the focus timer work?',a:'Set your desired duration (10-120 min), pick your aircraft and sound, then tap Begin Takeoff. If you leave the app, your flight crashes and you earn zero nautical miles for that session.'},
+  {q:'What are Nautical Miles (NM)?',a:"NM is Skytime's in-game currency. Earn them by completing focus sessions. Use NM to unlock aircraft, routes, callsigns, themes, and more."},
+  {q:'Can I use Skytime while studying?',a:'Absolutely. Skytime was designed for students. Set your study duration, pick ambient cabin sounds, and earn NM while you work.'},
+  {q:'Can I use Skytime for work productivity?',a:'Yes. Many users use Skytime as a Pomodoro-style timer for work. The gamification keeps you motivated through long work sessions.'},
+];
+
+const FAQS_GAMEPLAY = [
+  {q:'What happens if I leave the app?',a:'Your flight crashes. You earn zero NM for that session — all progress is lost. Stay committed and you land safely with full rewards.'},
+  {q:'Can I change my aircraft during a flight?',a:"No. Once you've taken off, your aircraft is locked until landing. Choose wisely before each flight."},
+  {q:"What's the maximum flight duration?",a:'You can set flights from 1 to 120 minutes. Longer flights earn proportionally more NM.'},
+  {q:"What's the best strategy to earn NM quickly?",a:'Longer sessions earn more NM per minute. Use aircraft with NM bonuses and maintain your daily streak for multipliers.'},
+  {q:'Is there a streak system?',a:'Yes. Fly daily to build your streak. Miss a day and it resets — unless you have Streak Shields. Streaks unlock bonus rewards.'},
+  {q:'How do Streak Shields work?',a:'Streak Shields protect your streak if you miss a day. Earn them through missions or purchase in the store. They activate automatically.'},
+  {q:'How do missions work?',a:'Daily and weekly missions give you specific focus targets. Complete them for bonus NM, Streak Shields, and exclusive rewards.'},
+];
+
+const FAQS_CONTENT = [
+  {q:'How many aircraft can I collect?',a:'58 aircraft across 8 tiers — from the Cessna 172 to the legendary Wright Flyer, SR-71 Blackbird, and Concorde. Each has real specs and unique artwork.'},
+  {q:'How do I unlock new aircraft?',a:'Earn NM through focus sessions and spend them in the Hangar. Higher-tier aircraft cost more NM, rewarding longer dedication.'},
+  {q:"What's the difference between aircraft tiers?",a:'8 tiers from Starter to Legendary. Higher tiers feature faster, rarer aircraft with bigger NM bonuses and real historical significance.'},
+  {q:'Does it work offline?',a:'Yes. Skytime works fully offline. Your progress is saved locally. Focus anywhere — on a plane, in a library, or off the grid.'},
+  {q:'Can I listen to my own music while using Skytime?',a:"Yes. Skytime's ambient sounds play alongside your music. Or mute the in-app audio and use your own."},
+  {q:'How often is new content added?',a:'We regularly update Skytime with new aircraft, routes, missions, and features. The universe is always expanding.'},
+];
+
+const FAQS_PLATFORM = [
+  {q:'How does Afterburner work?',a:'Afterburner is an optional subscription that doubles your NM earnings and unlocks exclusive aircraft. Cancel anytime.'},
+  {q:'What platforms is Skytime available on?',a:'Skytime is available now on iOS — download free from the App Store. Android support is coming soon.'},
+  {q:'Is there multiplayer?',a:'Not yet — but competitive features and multiplayer challenges are on our roadmap. Stay tuned for updates.'},
+];
+
+function renderFaqs(data, containerId) {
+  const grid = document.getElementById(containerId);
+  data.forEach(f => {
+    const item = document.createElement('div');
+    item.className = 'faq-item';
+    item.innerHTML = `<div class="faq-q" onclick="toggleFaq(this)"><span>${f.q}</span><span class="faq-arrow">&#8964;</span></div><div class="faq-a"><div class="faq-a-inner">${f.a}</div></div>`;
+    grid.appendChild(item);
+  });
+}
+
+renderFaqs(FAQS_STARTED, 'faq-started');
+renderFaqs(FAQS_GAMEPLAY, 'faq-gameplay');
+renderFaqs(FAQS_CONTENT, 'faq-content');
+renderFaqs(FAQS_PLATFORM, 'faq-platform');
+
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const was = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(f => {
+    f.classList.remove('open');
+    f.querySelector('.faq-a').style.maxHeight = null;
+  });
+  if (!was) {
+    item.classList.add('open');
+    item.querySelector('.faq-a').style.maxHeight = item.querySelector('.faq-a').scrollHeight + 'px';
+  }
+}
+</script>
+</body>
+</html>
