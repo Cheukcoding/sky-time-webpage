@@ -566,6 +566,48 @@ footer{padding-bottom:80px!important}
 .section-sub{font-size:15px}
 .coming-card [style*="grid-template-columns:repeat(4"]{grid-template-columns:1fr 1fr!important}
 }
+
+/* ── MICRO-INTERACTIONS (tilt-card + glow-button) ──────────────────────
+   Vanilla ports of amicro.vercel.app components (upstream is React +
+   framer-motion). The .amicro-tilt / .amicro-glow classes are added by JS
+   only on a fine pointer without prefers-reduced-motion, so these rules
+   stay dormant for touch, reduced-motion and no-JS visitors. */
+
+/* tilt-card → fleet cards.
+   Composes with the existing hover lift rather than replacing it: rotation
+   comes from the spring, translateY from --tilt-lift. The :hover rule is
+   restated so the base hover transform can't clobber the spring. overflow
+   goes visible because Safari flattens preserve-3d under overflow:hidden,
+   which would kill the translateZ float on the aircraft art. */
+.amicro-tilt .ac-card:not(.locked){
+  transform:perspective(800px) rotateX(var(--tilt-rx,0deg)) rotateY(var(--tilt-ry,0deg)) translateY(var(--tilt-lift,0px));
+  transform-style:preserve-3d;transition:border-color .3s,box-shadow .3s;overflow:visible}
+.amicro-tilt .ac-card:not(.locked):hover{
+  transform:perspective(800px) rotateX(var(--tilt-rx,0deg)) rotateY(var(--tilt-ry,0deg)) translateY(var(--tilt-lift,0px))}
+/* the gold bar was clipped to the card radius; round it now the card doesn't clip */
+.amicro-tilt .ac-card:not(.locked)::before{border-radius:20px 20px 0 0}
+.amicro-tilt .ac-card:not(.locked) .ac-card-img,
+.amicro-tilt .ac-card:not(.locked):hover .ac-card-img{
+  transform:translateZ(var(--tilt-z,0px)) scale(var(--tilt-img-s,1)) rotate(var(--tilt-img-r,0deg));
+  transition:transform .3s}
+
+/* glow-button → hero + download CTAs.
+   The glow is a ::before at z-index:-1 inside an isolated stacking context,
+   so it paints above the button's background but below its text — no DOM
+   wrapping, and .store-btn's icon+text flex layout is untouched. */
+.amicro-glow [data-amicro-glow]{position:relative;overflow:hidden;isolation:isolate}
+.amicro-glow [data-amicro-glow]::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;
+  opacity:var(--glow-o,0);transition:opacity .3s;
+  background:radial-gradient(120px circle at var(--glow-x,50%) var(--glow-y,50%),var(--glow-c,rgba(212,168,67,.35)),transparent 80%)}
+.amicro-glow .btn-primary[data-amicro-glow]{--glow-c:rgba(255,255,255,.5)}
+.amicro-glow .store-btn[data-amicro-glow]{--glow-c:rgba(212,168,67,.45)}
+.amicro-glow .btn-outline[data-amicro-glow]{--glow-c:rgba(212,168,67,.35)}
+
+@media (prefers-reduced-motion:reduce){
+  .amicro-tilt .ac-card:not(.locked),
+  .amicro-tilt .ac-card:not(.locked):hover{transform:none}
+  .amicro-glow [data-amicro-glow]::before{display:none}
+}
 </style>
 </head>
 <body>
@@ -1446,6 +1488,79 @@ function showAllFaq(){
 document.querySelectorAll('.faq-item.mobile-hidden').forEach(function(el){el.classList.remove('mobile-hidden')});
 var btn=document.getElementById('faq-show-more');if(btn)btn.style.display='none';
 }
+
+/* ═══ MICRO-INTERACTIONS (tilt-card + glow-button) ═══
+   Vanilla ports of amicro.vercel.app components; upstream ships React +
+   framer-motion, these use the same spring parameters with no dependencies.
+   Both effects are cursor-driven, so a coarse pointer gets nothing rather
+   than a degraded version, and reduced-motion opts out entirely. */
+(function(){
+if(!matchMedia('(pointer: fine)').matches||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+
+/* N-axis spring, framer-motion parameterisation (stiffness/damping/mass).
+   Semi-implicit Euler, substepped so a long frame can't destabilise it. */
+function springN(cfg,n,onUpdate){
+  var k=cfg.stiffness,c=cfg.damping,m=cfg.mass||1;
+  var val=new Array(n).fill(0),vel=new Array(n).fill(0),tgt=new Array(n).fill(0),raf=0,last=0;
+  function step(now){
+    var dt=Math.min((now-last)/1000,1/30);last=now;
+    var sub=Math.max(1,Math.ceil(dt*240)),h=dt/sub,i,s;
+    for(s=0;s<sub;s++)for(i=0;i<n;i++){vel[i]+=((-k*(val[i]-tgt[i]))-c*vel[i])/m*h;val[i]+=vel[i]*h}
+    onUpdate(val);
+    for(i=0;i<n;i++)if(Math.abs(val[i]-tgt[i])>0.002||Math.abs(vel[i])>0.002){raf=requestAnimationFrame(step);return}
+    for(i=0;i<n;i++){val[i]=tgt[i];vel[i]=0}
+    onUpdate(val);raf=0;
+  }
+  return{to:function(){for(var i=0;i<n;i++)tgt[i]=arguments[i]||0;
+    if(!raf){last=performance.now();raf=requestAnimationFrame(step)}}};
+}
+
+/* tilt-card — upstream: 15deg, perspective 800px, art on translateZ(40px),
+   spring {stiffness:200,damping:20,mass:0.5}. Dialled to 12deg here: the
+   fleet grid is 5 cards wide, so these are far smaller than the 320px demo
+   card and 15deg over-reads at this size. Locked cards keep their shake. */
+var MAX=12;
+document.querySelectorAll('#fleet-grid .ac-card:not(.locked)').forEach(function(card){
+  var sp=springN({stiffness:200,damping:20,mass:0.5},3,function(v){
+    card.style.setProperty('--tilt-rx',v[0].toFixed(3)+'deg');
+    card.style.setProperty('--tilt-ry',v[1].toFixed(3)+'deg');
+    card.style.setProperty('--tilt-lift',v[2].toFixed(2)+'px');
+  });
+  card.addEventListener('pointermove',function(e){
+    var r=card.getBoundingClientRect();if(!r.width||!r.height)return;
+    /* normalised to -0.5 … 0.5 around the card centre, as upstream */
+    var px=(e.clientX-r.left)/r.width-0.5,py=(e.clientY-r.top)/r.height-0.5;
+    sp.to(-py*2*MAX,px*2*MAX,-8);
+  });
+  card.addEventListener('pointerenter',function(){
+    card.style.setProperty('--tilt-z','40px');
+    card.style.setProperty('--tilt-img-s','1.12');
+    card.style.setProperty('--tilt-img-r','-2deg');
+  });
+  card.addEventListener('pointerleave',function(){
+    card.style.setProperty('--tilt-z','0px');
+    card.style.setProperty('--tilt-img-s','1');
+    card.style.setProperty('--tilt-img-r','0deg');
+    sp.to(0,0,0);
+  });
+});
+document.body.classList.add('amicro-tilt');
+
+/* glow-button — upstream: radial-gradient(120px circle at cursor), fading
+   in on hover. The disabled Google Play placeholder is left inert. */
+document.querySelectorAll('.hero-btns .btn-primary,.hero-btns .btn-outline,.cta-stores .store-btn').forEach(function(el){
+  if(getComputedStyle(el).pointerEvents==='none')return;
+  el.setAttribute('data-amicro-glow','');
+  el.addEventListener('pointermove',function(e){
+    var r=el.getBoundingClientRect();
+    el.style.setProperty('--glow-x',(e.clientX-r.left).toFixed(1)+'px');
+    el.style.setProperty('--glow-y',(e.clientY-r.top).toFixed(1)+'px');
+  });
+  el.addEventListener('pointerenter',function(){el.style.setProperty('--glow-o','1')});
+  el.addEventListener('pointerleave',function(){el.style.setProperty('--glow-o','0')});
+});
+document.body.classList.add('amicro-glow');
+})();
 </script>
 </body>
 </html>
