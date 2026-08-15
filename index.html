@@ -603,10 +603,51 @@ footer{padding-bottom:80px!important}
 .amicro-glow .store-btn[data-amicro-glow]{--glow-c:rgba(212,168,67,.45)}
 .amicro-glow .btn-outline[data-amicro-glow]{--glow-c:rgba(212,168,67,.35)}
 
+/* specular highlight → a soft light sweeping the tilted card face.
+   Lives at translateZ(60px) so, inside the card's preserve-3d context, it
+   renders above the aircraft art (which floats at 40px) — like light on
+   glass over the whole card. Driven by the same cursor position the tilt
+   spring already tracks. */
+.amicro-tilt .ac-card:not(.locked)::after{content:'';position:absolute;inset:0;border-radius:20px;
+  pointer-events:none;transform:translateZ(60px);opacity:var(--spec-o,0);transition:opacity .3s;
+  background:radial-gradient(180px circle at var(--spec-x,50%) var(--spec-y,50%),
+             rgba(255,255,255,.14),rgba(255,255,255,.04) 45%,transparent 70%)}
+
+/* character stagger → hero headline. Words are wrapped inline-block so a
+   narrow viewport can't line-break mid-word between character spans. The
+   .gold-word gradient is re-applied per character (background-clip:text
+   doesn't survive onto transformed child spans); JS sets background-size/
+   position from measurement so the sweep still reads as one gradient. */
+.amicro-word{display:inline-block}
+.amicro-char{display:inline-block;opacity:0;transform:translateY(15px);
+  transition:opacity .4s cubic-bezier(.22,1,.36,1),transform .4s cubic-bezier(.22,1,.36,1)}
+.amicro-char.in{opacity:1;transform:none}
+.amicro-char--space{white-space:pre}
+.amicro-chars .hero h1 .gold-word{background:none;-webkit-text-fill-color:currentColor}
+.amicro-chars .hero h1 .gold-word .amicro-char{
+  background-image:linear-gradient(135deg,#D4A843,#F0D78C,#D4A843);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+
+/* film grain → full-page animated noise at 5% opacity. Pure CSS (SVG
+   feTurbulence data URI), so it works with JS disabled and on touch too.
+   The layer is 3x viewport (inset:-100%) so the stepped drift never shows
+   an edge; z-index 3000 sits above the modal overlay (2000). */
+body::after{content:'';position:fixed;inset:-100%;z-index:3000;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat:repeat;background-size:300px 300px;
+  animation:amicroGrain .8s steps(1) infinite}
+@keyframes amicroGrain{
+  0%,100%{transform:translate(0,0)}12.5%{transform:translate(-2%,-3%)}25%{transform:translate(1%,-2%)}
+  37.5%{transform:translate(-3%,1%)}50%{transform:translate(2%,2%)}62.5%{transform:translate(-1%,3%)}
+  75%{transform:translate(3%,-1%)}87.5%{transform:translate(-2%,2%)}}
+
 @media (prefers-reduced-motion:reduce){
   .amicro-tilt .ac-card:not(.locked),
   .amicro-tilt .ac-card:not(.locked):hover{transform:none}
   .amicro-glow [data-amicro-glow]::before{display:none}
+  .amicro-tilt .ac-card:not(.locked)::after{display:none}
+  .amicro-char{opacity:1;transform:none;transition:none}
+  body::after{animation:none}
 }
 </style>
 </head>
@@ -1531,16 +1572,21 @@ document.querySelectorAll('#fleet-grid .ac-card:not(.locked)').forEach(function(
     /* normalised to -0.5 … 0.5 around the card centre, as upstream */
     var px=(e.clientX-r.left)/r.width-0.5,py=(e.clientY-r.top)/r.height-0.5;
     sp.to(-py*2*MAX,px*2*MAX,-8);
+    /* specular highlight follows the raw cursor position */
+    card.style.setProperty('--spec-x',(e.clientX-r.left).toFixed(1)+'px');
+    card.style.setProperty('--spec-y',(e.clientY-r.top).toFixed(1)+'px');
   });
   card.addEventListener('pointerenter',function(){
     card.style.setProperty('--tilt-z','40px');
     card.style.setProperty('--tilt-img-s','1.12');
     card.style.setProperty('--tilt-img-r','-2deg');
+    card.style.setProperty('--spec-o','1');
   });
   card.addEventListener('pointerleave',function(){
     card.style.setProperty('--tilt-z','0px');
     card.style.setProperty('--tilt-img-s','1');
     card.style.setProperty('--tilt-img-r','0deg');
+    card.style.setProperty('--spec-o','0');
     sp.to(0,0,0);
   });
 });
@@ -1560,6 +1606,64 @@ document.querySelectorAll('.hero-btns .btn-primary,.hero-btns .btn-outline,.cta-
   el.addEventListener('pointerleave',function(){el.style.setProperty('--glow-o','0')});
 });
 document.body.classList.add('amicro-glow');
+})();
+
+/* ═══ CHARACTER STAGGER (hero headline) ═══
+   Per-character rise-in on load — an entrance effect, so unlike the cursor
+   effects above it runs on touch devices too; only prefers-reduced-motion
+   opts out. Splitting text into spans wrecks screen-reader output, so the
+   heading gets an aria-label carrying the original string. */
+(function(){
+if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+var h=document.querySelector('.hero-content h1');if(!h)return;
+var label=[].map.call(h.childNodes,function(n){return n.nodeName==='BR'?' ':n.textContent})
+  .join('').replace(/\s+/g,' ').trim();
+var chars=[];
+function walk(src,dest){
+  [].forEach.call(src.childNodes,function(node){
+    if(node.nodeType===3){
+      /* split into words + spaces; words get an inline-block wrapper so a
+         narrow viewport can't line-break mid-word between char spans */
+      node.textContent.split(/(\s+)/).forEach(function(part){
+        if(!part)return;
+        if(/^\s+$/.test(part)){
+          var sp=document.createElement('span');
+          sp.className='amicro-char amicro-char--space';sp.textContent=' ';
+          dest.appendChild(sp);chars.push(sp);return;
+        }
+        var w=document.createElement('span');w.className='amicro-word';
+        Array.from(part).forEach(function(ch){
+          var s=document.createElement('span');s.className='amicro-char';
+          s.textContent=ch;w.appendChild(s);chars.push(s);
+        });
+        dest.appendChild(w);
+      });
+    }else if(node.nodeName==='BR'){dest.appendChild(document.createElement('br'));
+    }else if(node.nodeType===1){var c=node.cloneNode(false);walk(node,c);dest.appendChild(c);}
+  });
+}
+var frag=document.createDocumentFragment();
+walk(h,frag);
+h.innerHTML='';h.appendChild(frag);
+h.setAttribute('aria-label',label);
+h.classList.remove('reveal','reveal-d2');
+h.style.opacity='1';h.style.transform='none';
+/* re-point the gold gradient: each char carries the full gradient sized to
+   the word and offset to its own position, so the sweep reads as one */
+function paintGold(){
+  var w=h.querySelector('.gold-word');if(!w)return;
+  var wr=w.getBoundingClientRect();if(!wr.width)return;
+  w.querySelectorAll('.amicro-char').forEach(function(s){
+    s.style.backgroundSize=wr.width.toFixed(1)+'px 100%';
+    s.style.backgroundPosition=(wr.left-s.getBoundingClientRect().left).toFixed(1)+'px 0';
+  });
+}
+paintGold();
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(paintGold);
+window.addEventListener('resize',paintGold);
+/* 200ms start keeps step with the surrounding reveal-d1..d4 cascade */
+chars.forEach(function(s,i){setTimeout(function(){s.classList.add('in')},200+i*15)});
+document.body.classList.add('amicro-chars');
 })();
 </script>
 </body>

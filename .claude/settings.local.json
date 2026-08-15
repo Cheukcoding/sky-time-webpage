@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dig:*)",
+      "Bash(head:*)",
+      "Bash(echo SSL cert not available:*)",
+      "Bash(sips:*)",
+      "Bash(git pull:*)",
+      "Bash(git stash:*)",
+      "Bash(git:*)"
+    ]
+  }
+}
